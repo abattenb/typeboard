@@ -1,0 +1,217 @@
+/*
+Type Board
+Author: Andrew Battenburg
+*/
+
+
+
+/* ==========================================================================
+   Global
+   ========================================================================== */
+
+:root {
+    --column-font-size: 1rem;
+
+}
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+h1 {
+    font-family: Tahoma;
+    padding: 0 1rem;
+}
+
+
+
+
+/* ==========================================================================
+    Type Board Controls
+   ========================================================================== */
+
+
+.typeboard_controls{
+    margin: 1rem;
+    padding: 1rem 0;
+    border-bottom: .1rem solid var(--accent-color);
+}
+
+
+/* ==========================================================================
+    Text Board
+   ========================================================================== */
+
+#text_board {
+    padding: 1rem;
+}
+#text_board textarea {
+    width: 100%;
+}
+
+#text_board .text_sample {
+    font-size: var(--column-font-size);
+
+}
+#text_board pre {
+    margin: 1rem 0;
+}
+
+
+/* ==========================================================================
+   Type Column
+   ========================================================================== */
+
+#char_board {
+    display: flex;
+}
+
+.type_column {}
+
+.type_column {
+    flex: 1;
+}
+.type_column .charmap {
+    padding: 0 1rem;
+    border-right: .1rem solid var(--accent-color);
+}
+.type_column:last-of-type .charmap {
+    margin-right: 0;
+    border-right: none;
+}
+
+
+.type_column .charmap {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-content: flex-start;
+}
+
+.type_column .charmap div {
+
+    line-height: 1.5;
+    font-size: var(--column-font-size);
+    width: calc(1.5 * var(--column-font-size));
+    align-self: center;
+    text-align: center;
+    border: .1rem solid var(--background-color);
+
+}
+.type_column .charmap div:hover,
+.type_column .charmap div:focus {
+    border: .1rem solid var(--text-color);
+}
+
+
+.type_column .header {
+    display: flex;
+    align-items: center;
+    position: relative;
+    font-style: normal;
+    font-weight: normal;
+    border-bottom: .1rem solid var(--accent-color);
+    margin: 0 1rem 1rem 1rem;
+}
+.type_column .header h2 {
+    margin: .5rem 0;
+    font-weight: normal;
+}
+.type_column .header button {
+    position: absolute;
+    right: 0;
+}
+
+
+
+/* ==========================================================================
+    Modifiers
+   ========================================================================== */
+
+
+.italics {
+    font-style: italic;
+}
+
+/* ==========================================================================
+    Buttons
+   ========================================================================== */
+
+button, .button {
+    font-size: 1rem;
+    background: none;
+    text-decoration: none;
+    padding: .2rem .5rem;
+    border: .1rem solid var(--text-color);
+    transform: translateY(-.1rem);
+    box-shadow: 0 .1rem 0 var(--text-color);
+    border-radius: .1rem;
+
+    transition: .1s all;
+
+}
+button:hover,
+button:focus,
+.button:hover,
+.button:focus {
+    transform: translateY(-.2rem);
+    box-shadow: 0 .2rem 0 #333;
+    transition: .1s all;
+}
+
+button:active,
+.button:active {
+    transform: translateY(0rem);
+    box-shadow: 0 0rem 0 #333;
+    transition: .1s all;
+}
+
+
+/* ==========================================================================
+   Themes
+   ========================================================================== */
+
+:root .theme_white {
+    --background-color: #FFF;
+    --text-color: #111;
+    --accent-color: #CCC;
+}
+
+:root .theme_blue {
+    --background-color: #FFF;
+    --text-color: rgb(60, 90, 200);
+    --accent-color: #CCC;
+}
+:root .theme_grey {
+    --background-color: #FAFAFA;
+    --text-color: #666;
+    --accent-color: #CCC;
+
+}
+
+:root .theme_black {
+    --background-color: #222;
+    --text-color: #FFF;
+    --accent-color: #CCC;
+}
+:root .theme_yellow {
+    --background-color: #222;
+    --text-color: rgba(255,230,0,1);
+    --accent-color: #CCC;
+}
+
+:root .theme_red {
+    --background-color: #222;
+    --text-color: rgba(255,40,0,1);
+    --accent-color: #CCC;
+}
+
+
+
+/* ==========================================================================
+    Util
+   ========================================================================== */
+
+.hidden, *[hidden] {
+    display: none;
+}
