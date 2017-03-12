@@ -6,16 +6,13 @@
  */
 'use strict';
 
-
-//Todo: Increase/Decrease font weight (100-900)
 //Todo: Redo clearing of settings
 
 
 //Global Variables          I know, I know
 var typeColumnArray = [];
-var typeSize = "1"; //in REM
 
-var settings = {
+var init_settings = {
     "theme" : "theme_white",
     "fontSize" : "1",
     "fontWeight" : "400",
@@ -23,6 +20,8 @@ var settings = {
     "sampleText" : "Sphinx of black quartz, judge my vow.",
     "numberColumns" : 3 //Going to be the typeface id array
 };
+
+var settings;
 
 
 //Adds a new Type Column to the right
@@ -86,24 +85,27 @@ function toggleItalics() {
 //TODO: clear settings
 function clearSettings() {
     document.cookie = '';
+    loadSettings();
 }
 
 //If Settings cookie doesnt exist, create
 function checkSettingsExist(){
     if(document.cookie == "" || document.cookie == null) {
+        settings = init_settings;
         document.cookie = JSON.stringify(settings);
     }
 }
 
-//Updates font size
-function updateSize(size){
-
-    document.getElementById('type_board').style.setProperty('--column-font-size', size + 'rem', null);
-    document.getElementById('output_size').innerHTML = String(size + 'rem');
-    document.getElementById('fontSize').value = settings.fontSize;
-
-    updateSettings("fontSize", size);
-
+//Changes CSS theme
+function updateTheme(newTheme){
+    var options = document.getElementById('theme').getElementsByTagName('option');
+    //Remove all selected attributes
+    for(var i = 0; i < options.length; i++) {
+        options[i].removeAttribute('selected');
+    }
+    document.getElementsByTagName('body')[0].className = "theme " + newTheme;
+    document.getElementById('theme').querySelector('[value=' + newTheme + ']').setAttribute('selected', '');
+    updateSettings('theme', newTheme);
 }
 
 
@@ -131,35 +133,35 @@ function loadSettings(){
     if(settings.italic){
         document.getElementById('type_board').classList.toggle('italics');
     }
-
     //Font-Size
     updateSize(settings.fontSize);
-
     //Sample Text
     updateSample(settings.sampleText);
-
     //Theme
     updateTheme(settings.theme);
+    //Font Weight
+    updateWeight(settings.fontWeight);
 
-    console.log(settings);
+}
+
+//Updates font size
+function updateSize(size){
+    document.getElementById('type_board').style.setProperty('--column-font-size', size + 'rem', null);
+    document.getElementById('output_size').innerHTML = String(size + 'rem');
+    document.getElementById('fontSize').value = settings.fontSize;
+    updateSettings("fontSize", size);
 }
 
 
-//Changes CSS theme
-function updateTheme(newTheme){
-    var options = document.getElementById('theme').getElementsByTagName('option');
 
-    //Remove all selected attributes
-    for(var i = 0; i < options.length; i++) {
-        options[i].removeAttribute('selected');
-    }
-
-    document.getElementsByTagName('body')[0].className = "theme " + newTheme;
-    document.getElementById('theme').querySelector('[value=' + newTheme + ']').setAttribute('selected', '');
-
-    updateSettings('theme', newTheme);
-    console.log(settings);
+//Updates font weight, from 100 - 900
+function updateWeight(weight) {
+    document.getElementById('type_board').style.setProperty('--font-weight', weight, null);
+    document.getElementById('output_weight').innerHTML = String(weight);
+    document.getElementById('fontWeight').value = settings.fontWeight;
+    updateSettings("fontWeight", weight);
 }
+
 
 
 window.addEventListener('load', function() {
@@ -192,6 +194,11 @@ window.addEventListener('load', function() {
         updateSize(this.value);
     }, false);
 
+    //Font Weight slider
+    document.getElementById('fontWeight').addEventListener('input', function(){
+        updateWeight(this.value);
+    }, false);
+
     //Sample Textarea
     document.getElementById('text_input').addEventListener('input', function(){
         updateSample(this.value);
@@ -213,15 +220,9 @@ window.addEventListener('load', function() {
        addCharMapColumn();
     }, false);
 
-
-
-    //Settings
+    //Clear Settings
    document.getElementById('clearSettings').addEventListener('click', function(){
        clearSettings();
     }, false);
-   //document.getElementById('updateSettings').addEventListener('click', function(){
-   //    updateSettings();
-   // }, false);
-
 
 });
