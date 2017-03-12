@@ -21,7 +21,7 @@ var init_settings = {
     "numberColumns" : 3 //Going to be the typeface id array
 };
 
-var settings;
+var settings = [];
 
 
 //Adds a new Type Column to the right
@@ -38,7 +38,7 @@ function addCharMapColumn() {
             document.getElementById('char_board').appendChild(columnCharMap);
         }
     }
-    xhttp.open("GET", "../charmap.html", true);
+    xhttp.open("GET", "../typeboard/charmap.html", true);
     xhttp.send();
 }
 
@@ -90,7 +90,7 @@ function clearSettings() {
 
 //If Settings cookie doesnt exist, create
 function checkSettingsExist(){
-    if(document.cookie == "" || document.cookie == null) {
+    if(document.cookie == '' || document.cookie == null) {
         settings = init_settings;
         document.cookie = JSON.stringify(settings);
     }
@@ -123,7 +123,11 @@ function updateSample(text_value){
 //Inits app data with settings
 function loadSettings(){
     //If no settings, create
+
+
     checkSettingsExist();
+
+
 
     //Apply cookie settings to app
     settings = JSON.parse(document.cookie);
@@ -168,6 +172,7 @@ window.addEventListener('load', function() {
 
     //Load settings from cookie
     loadSettings();
+
 
 
     //Init Columns
