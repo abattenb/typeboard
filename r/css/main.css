@@ -12,6 +12,7 @@ Author: Andrew Battenburg
 :root {
     --column-font-size: 1rem;
     --font-weight: 400;
+    --font-style: normal;
 }
 
 body {
@@ -72,6 +73,8 @@ h1 {
 #text_board .text_sample {
     font-size: var(--column-font-size);
     font-weight: var(--font-weight);
+    font-style: var(--font-style);
+
 
     margin: .5rem 0;
 }
@@ -112,6 +115,7 @@ h1 {
     line-height: 1.5;
     font-size: var(--column-font-size);
     font-weight: var(--font-weight);
+    font-style: var(--font-style);
     width: calc(1.5 * var(--column-font-size));
     align-self: center;
     text-align: center;

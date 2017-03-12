@@ -16,7 +16,7 @@ var init_settings = {
     "theme" : "theme_white",
     "fontSize" : "1",
     "fontWeight" : "400",
-    "italic" : false,
+    "italic" : "normal",
     "sampleText" : "Sphinx of black quartz, judge my vow.",
     "numberColumns" : 3 //Going to be the typeface id array
 };
@@ -70,16 +70,10 @@ function updateSettings(settingsKey, settingsValue){
     }
     //Update cookie
     document.cookie = JSON.stringify(settings);
+    console.log(settings);
+
 }
 
-
-
-//Toggles italics
-function toggleItalics() {
-    updateSettings("italic", !settings.italic);
-    //TODO: check toggle status first
-    document.getElementById('type_board').classList.toggle('italics');
-}
 
 //Clears settings cookie
 //TODO: clear settings
@@ -123,20 +117,13 @@ function updateSample(text_value){
 //Inits app data with settings
 function loadSettings(){
     //If no settings, create
-
-
     checkSettingsExist();
-
-
 
     //Apply cookie settings to app
     settings = JSON.parse(document.cookie);
 
     //Italic
-    //TODO: Update italics?
-    if(settings.italic){
-        document.getElementById('type_board').classList.toggle('italics');
-    }
+    updateItalics(settings.italic);
     //Font-Size
     updateSize(settings.fontSize);
     //Sample Text
@@ -146,7 +133,28 @@ function loadSettings(){
     //Font Weight
     updateWeight(settings.fontWeight);
 
+
 }
+
+//Reads italic toggle state boolean
+function toggleItalics(italicChecked){
+    italicChecked ? updateItalics('italic') : updateItalics('normal');
+}
+
+//Update italics, accepts 'italic' or 'normal'
+function updateItalics(italic) {
+    //Sets the checkbox
+    if (italic == 'normal'){
+        document.getElementById('toggleItalics').checked = false;
+    } else {
+        document.getElementById('toggleItalics').checked = true;
+    }
+
+    document.getElementById('type_board').style.setProperty('--font-style', italic, null);
+    updateSettings("italic", italic);
+}
+
+
 
 //Updates font size
 function updateSize(size){
@@ -216,8 +224,8 @@ window.addEventListener('load', function() {
 
 
     //Italics
-    document.getElementById('toggleItalics').addEventListener('click', function(){
-        toggleItalics();
+    document.getElementById('toggleItalics').addEventListener('change', function(){
+        toggleItalics(this.checked);
     }, false);
 
     //Add Typeface
