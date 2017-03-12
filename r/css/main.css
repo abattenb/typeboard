@@ -11,8 +11,8 @@ Author: Andrew Battenburg
 
 :root {
     --column-font-size: 1rem;
-
 }
+
 body {
     background-color: var(--background-color);
     color: var(--text-color);
@@ -43,18 +43,34 @@ h1 {
    ========================================================================== */
 
 #text_board {
-    padding: 1rem;
+    margin: 1rem;
+
 }
-#text_board textarea {
+#text_board pre {
     width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    font-family: inherit;
+    margin-top: 0;
+
+}
+
+
+#text_board pre::-webkit-scrollbar {
+    height: .5rem;
+}
+
+#text_board pre::-webkit-scrollbar-track {
+     background-color: var(--accent-color);
+ }
+
+#text_board pre::-webkit-scrollbar-thumb {
+    background-color: var(--text-color);
 }
 
 #text_board .text_sample {
     font-size: var(--column-font-size);
-
-}
-#text_board pre {
-    margin: 1rem 0;
+    margin: .5rem 0;
 }
 
 
@@ -134,7 +150,7 @@ h1 {
 }
 
 /* ==========================================================================
-    Buttons
+    Buttons, Inputs
    ========================================================================== */
 
 button, .button {
@@ -147,7 +163,7 @@ button, .button {
     box-shadow: 0 .1rem 0 var(--text-color);
     border-radius: .1rem;
 
-    transition: .1s all;
+    transition: .1s box-shadow, .1s transform;
 
 }
 button:hover,
@@ -155,15 +171,29 @@ button:focus,
 .button:hover,
 .button:focus {
     transform: translateY(-.2rem);
-    box-shadow: 0 .2rem 0 #333;
-    transition: .1s all;
+    box-shadow: 0 .2rem 0 var(--text-color);
+    transition: .1s box-shadow, .1s transform;
 }
 
 button:active,
 .button:active {
     transform: translateY(0rem);
-    box-shadow: 0 0rem 0 #333;
-    transition: .1s all;
+    box-shadow: 0 0rem 0 var(--text-color);
+    transition: .1s box-shadow, .1s transform;
+}
+
+select {
+    background-color: transparent;
+}
+select option {
+    color: black;
+}
+
+textarea {
+    width: 100%;
+    background-color: transparent;
+    border-color: var(--accent-color);
+    box-sizing: border-box;
 }
 
 
@@ -171,39 +201,45 @@ button:active,
    Themes
    ========================================================================== */
 
-:root .theme_white {
+.theme {
+    transition: .2s all;
+}
+
+.theme.theme_white {
     --background-color: #FFF;
     --text-color: #111;
     --accent-color: #CCC;
+
 }
 
-:root .theme_blue {
+.theme.theme_blue {
     --background-color: #FFF;
     --text-color: rgb(60, 90, 200);
-    --accent-color: #CCC;
+    --accent-color: rgb(180, 190, 240);
 }
-:root .theme_grey {
+
+.theme.theme_grey {
     --background-color: #FAFAFA;
     --text-color: #666;
     --accent-color: #CCC;
-
 }
 
-:root .theme_black {
-    --background-color: #222;
+.theme.theme_black {
+    --background-color: #111;
     --text-color: #FFF;
-    --accent-color: #CCC;
+    --accent-color: #666;
 }
-:root .theme_yellow {
+
+.theme.theme_yellow {
     --background-color: #222;
     --text-color: rgba(255,230,0,1);
-    --accent-color: #CCC;
+    --accent-color: rgba(90,90,75,1);
 }
 
-:root .theme_red {
+.theme.theme_red {
     --background-color: #222;
     --text-color: rgba(255,40,0,1);
-    --accent-color: #CCC;
+    --accent-color: rgba(70,55,50,1);
 }
 
 

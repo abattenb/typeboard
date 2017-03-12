@@ -39,7 +39,7 @@ function addCharMapColumn() {
             document.getElementById('char_board').appendChild(columnCharMap);
         }
     }
-    xhttp.open("GET", "../typeboard/charmap.html", true);
+    xhttp.open("GET", "../charmap.html", true);
     xhttp.send();
 }
 
@@ -154,7 +154,7 @@ function updateTheme(newTheme){
         options[i].removeAttribute('selected');
     }
 
-    document.getElementsByTagName('body')[0].className = newTheme;
+    document.getElementsByTagName('body')[0].className = "theme " + newTheme;
     document.getElementById('theme').querySelector('[value=' + newTheme + ']').setAttribute('selected', '');
 
     updateSettings('theme', newTheme);
