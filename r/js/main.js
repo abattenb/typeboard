@@ -11,7 +11,7 @@
 
 //Global Variables          I know, I know
 var typeColumnArray = [];
-
+var settings = [];
 var init_settings = {
     "theme" : "theme_black_white",
     "fontSize" : "1",
@@ -20,9 +20,6 @@ var init_settings = {
     "sampleText" : "Sphinx of black quartz, judge my vow.",
     "numberColumns" : 3 //Going to be the typeface id array
 };
-
-var settings = [];
-
 
 //Adds a new Type Column to the right
 function addCharMapColumn() {
@@ -50,7 +47,6 @@ function genColumnID(){
     });
 }
 
-
 //Remove the parent column with class 'type_column'
 function removeTypeColumn(childObj) {
     var testObj = childObj.parentElement;
@@ -60,8 +56,6 @@ function removeTypeColumn(childObj) {
     testObj.remove();
 }
 
-
-
 //Update Settings cookie with current settings
 function updateSettings(settingsKey, settingsValue){
     //Set dymanically new value based on key, if found
@@ -70,13 +64,10 @@ function updateSettings(settingsKey, settingsValue){
     }
     //Update cookie
     document.cookie = JSON.stringify(settings);
-    console.log(settings);
-
+    //console.log(settings);
 }
 
-
 //Clears settings cookie
-//TODO: clear settings
 function clearSettings() {
     document.cookie = '';
     loadSettings();
@@ -102,10 +93,13 @@ function updateTheme(newTheme){
         }
     }
     document.getElementsByTagName('body')[0].className = "theme " + newTheme;
-    document.getElementById('themeSelector').querySelector('[value=' + newTheme + ']').setAttribute('selected', '');
+
+    var themeOption = document.getElementById('themeSelector').querySelector('[value=' + newTheme + ']');
+    if(themeOption){
+        themeOption.setAttribute('selected', '')
+    }
     updateSettings('theme', newTheme);
 }
-
 
 //Updates all the sample texts
 function updateSample(text_value){
@@ -117,8 +111,7 @@ function updateSample(text_value){
     updateSettings("sampleText", text_value);
 }
 
-
-//Reads italic toggle state boolean
+//Reads italic toggle state boolean from checkbox
 function toggleItalics(italicChecked){
     italicChecked ? updateItalics('italic') : updateItalics('normal');
 }
@@ -135,7 +128,6 @@ function updateItalics(italic) {
     updateSettings("italic", italic);
 }
 
-
 //Updates font size
 function updateSize(size){
     document.getElementById('type_board').style.setProperty('--column-font-size', size + 'rem', null);
@@ -143,7 +135,6 @@ function updateSize(size){
     document.getElementById('fontSize').value = settings.fontSize;
     updateSettings("fontSize", size);
 }
-
 
 //Updates font weight, from 100 - 900
 function updateWeight(weight) {
@@ -159,24 +150,37 @@ function loadSettings(){
     //If no settings, create
     checkSettingsExist();
 
-    //Apply cookie settings to app
+    //Load and Apply cookie settings to app
     settings = JSON.parse(document.cookie);
 
-    //Italic
-    updateItalics(settings.italic);
-    //Font-Size
-    updateSize(settings.fontSize);
-    //Sample Text
-    updateSample(settings.sampleText);
-    //Theme
-    updateTheme(settings.theme);
-    //Font Weight
-    updateWeight(settings.fontWeight);
-
+    updateItalics(settings.italic);         //Italic
+    updateSize(settings.fontSize);          //Font-Size
+    updateSample(settings.sampleText);      //Sample Text
+    updateTheme(settings.theme);            //Theme
+    updateWeight(settings.fontWeight);      //Font Weight
 
 }
 
+
+//typeboard = function(){
+//    var test = "HELLO WORLD";
+//    function getTest(){
+//        return test;
+//    }
+//    return {
+//        test:test
+//    }
+//}
+
+
 window.addEventListener('load', function() {
+
+    //var typeboard2 = new typeboard;
+    //
+    //console.log(typeboard2.test());
+
+
+
     //Load settings from cookie
     loadSettings();
 
