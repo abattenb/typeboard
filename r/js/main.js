@@ -13,7 +13,7 @@
 var typeColumnArray = [];
 
 var init_settings = {
-    "theme" : "theme_white",
+    "theme" : "theme_black_white",
     "fontSize" : "1",
     "fontWeight" : "400",
     "italic" : "normal",
@@ -92,13 +92,17 @@ function checkSettingsExist(){
 
 //Changes CSS theme
 function updateTheme(newTheme){
-    var options = document.getElementById('theme').getElementsByTagName('option');
-    //Remove all selected attributes
-    for(var i = 0; i < options.length; i++) {
-        options[i].removeAttribute('selected');
+    var group = document.getElementById('themeSelector').getElementsByTagName('optgroup');
+    //Loop through optgroup tags
+    for(var i = 0; i < group.length; i++) {
+        var option = group[i].getElementsByTagName('option');
+        //Remove all selected attributes on option tag
+        for(var j = 0; j < option.length; j++){
+            option[j].removeAttribute('selected');
+        }
     }
     document.getElementsByTagName('body')[0].className = "theme " + newTheme;
-    document.getElementById('theme').querySelector('[value=' + newTheme + ']').setAttribute('selected', '');
+    document.getElementById('themeSelector').querySelector('[value=' + newTheme + ']').setAttribute('selected', '');
     updateSettings('theme', newTheme);
 }
 
@@ -111,6 +115,42 @@ function updateSample(text_value){
     }
     document.getElementById('text_input').innerHTML = text_value;
     updateSettings("sampleText", text_value);
+}
+
+
+//Reads italic toggle state boolean
+function toggleItalics(italicChecked){
+    italicChecked ? updateItalics('italic') : updateItalics('normal');
+}
+
+//Update italics, accepts 'italic' or 'normal'
+function updateItalics(italic) {
+    //Sets the checkbox
+    if (italic == 'normal'){
+        document.getElementById('toggleItalics').checked = false;
+    } else {
+        document.getElementById('toggleItalics').checked = true;
+    }
+    document.getElementById('type_board').style.setProperty('--font-style', italic, null);
+    updateSettings("italic", italic);
+}
+
+
+//Updates font size
+function updateSize(size){
+    document.getElementById('type_board').style.setProperty('--column-font-size', size + 'rem', null);
+    document.getElementById('output_size').innerHTML = String(size + 'rem');
+    document.getElementById('fontSize').value = settings.fontSize;
+    updateSettings("fontSize", size);
+}
+
+
+//Updates font weight, from 100 - 900
+function updateWeight(weight) {
+    document.getElementById('type_board').style.setProperty('--font-weight', weight, null);
+    document.getElementById('output_weight').innerHTML = String(weight);
+    document.getElementById('fontWeight').value = settings.fontWeight;
+    updateSettings("fontWeight", weight);
 }
 
 //Loads settings from local cookie if exists
@@ -136,52 +176,9 @@ function loadSettings(){
 
 }
 
-//Reads italic toggle state boolean
-function toggleItalics(italicChecked){
-    italicChecked ? updateItalics('italic') : updateItalics('normal');
-}
-
-//Update italics, accepts 'italic' or 'normal'
-function updateItalics(italic) {
-    //Sets the checkbox
-    if (italic == 'normal'){
-        document.getElementById('toggleItalics').checked = false;
-    } else {
-        document.getElementById('toggleItalics').checked = true;
-    }
-
-    document.getElementById('type_board').style.setProperty('--font-style', italic, null);
-    updateSettings("italic", italic);
-}
-
-
-
-//Updates font size
-function updateSize(size){
-    document.getElementById('type_board').style.setProperty('--column-font-size', size + 'rem', null);
-    document.getElementById('output_size').innerHTML = String(size + 'rem');
-    document.getElementById('fontSize').value = settings.fontSize;
-    updateSettings("fontSize", size);
-}
-
-
-
-//Updates font weight, from 100 - 900
-function updateWeight(weight) {
-    document.getElementById('type_board').style.setProperty('--font-weight', weight, null);
-    document.getElementById('output_weight').innerHTML = String(weight);
-    document.getElementById('fontWeight').value = settings.fontWeight;
-    updateSettings("fontWeight", weight);
-}
-
-
-
 window.addEventListener('load', function() {
-
     //Load settings from cookie
     loadSettings();
-
-
 
     //Init Columns
     addCharMapColumn();
@@ -218,7 +215,7 @@ window.addEventListener('load', function() {
     }, false);
 
     //Theme
-    document.getElementById('theme').addEventListener('input', function(){
+    document.getElementById('themeSelector').addEventListener('input', function(){
         updateTheme(this.value);
     }, false);
 

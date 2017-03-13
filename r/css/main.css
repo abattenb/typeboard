@@ -194,7 +194,7 @@ button:active,
 select {
     background-color: transparent;
 }
-select option {
+select option, select optgroup {
     color: black;
 }
 
@@ -214,41 +214,63 @@ textarea {
     transition: .2s all;
 }
 
-.theme.theme_white {
-    --background-color: #FFF;
-    --text-color: #111;
-    --accent-color: #CCC;
+/*Light Themes*/
 
+.theme.theme_black_white {
+    --background-color:         rgba(255,255,255,1);
+    --text-color:               rgba(17,17,17,1);
+    --accent-color:             rgba(205,205,205,1);
 }
 
-.theme.theme_blue {
-    --background-color: #FFF;
-    --text-color: rgb(60, 90, 200);
-    --accent-color: rgb(180, 190, 240);
+.theme.theme_blue_white {
+    --background-color:         rgba(252,252,255,1);
+    --text-color:               rgb(65, 95, 210);
+    --accent-color:             rgb(180, 190, 240);
 }
 
-.theme.theme_grey {
-    --background-color: #FAFAFA;
-    --text-color: #666;
-    --accent-color: #CCC;
+.theme.theme_grey_grey {
+    --background-color:         rgba(245,245,245,1);
+    --text-color:               rgba(100,100,100,1);
+    --accent-color:             rgba(205,205,205,1);
 }
 
-.theme.theme_black {
-    --background-color: #111;
-    --text-color: #FFF;
-    --accent-color: #666;
+/*Dark Themes*/
+
+.theme.theme_white_black {
+    --background-color:         rgba(17,17,17,1);
+    --text-color:               rgba(255,255,255,1);
+    --accent-color:             rgba(100,100,100,1);
 }
 
-.theme.theme_yellow {
-    --background-color: #222;
-    --text-color: rgba(255,230,0,1);
-    --accent-color: rgba(90,90,75,1);
+.theme.theme_red_midnight {
+    --background-color:         rgba(15,15,32,1);
+    --text-color:               rgba(255,20,0,1);
+    --accent-color:             rgba(70,55,50,1);
 }
 
-.theme.theme_red {
-    --background-color: #222;
-    --text-color: rgba(255,20,0,1);
-    --accent-color: rgba(70,55,50,1);
+.theme.theme_yellow_charcoal {
+    --background-color:         rgba(32,32,32,1);
+    --text-color:               rgba(255,230,0,1);
+    --accent-color:             rgba(90,90,75,1);
+}
+
+.theme.theme_green_black {
+    --background-color:         rgba(0,0,0,1);
+    --text-color:               rgba(0,255,0,1);
+    --accent-color:             rgba(90,90,75,1);
+}
+
+/*Color Themes*/
+
+.theme.theme_yellow_pink {
+    --background-color:         rgba(255, 0, 100, 1);
+    --text-color:               rgba(255, 255, 0, 1);
+    --accent-color:             rgba(155, 30, 80, 1);
+}
+.theme.theme_peach_lavender {
+    --background-color:         rgba(65, 30, 65, 1);
+    --text-color:               rgba(250, 175, 150,1);
+    --accent-color:             rgba(155, 30, 80, 1);
 }
 
 
