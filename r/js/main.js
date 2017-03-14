@@ -6,7 +6,7 @@
 window.addEventListener('load', function() {
     //Start Typeboard
     Typeboard.init();
-    
+
 
     //
     // Init Eventlisteners
@@ -52,9 +52,15 @@ window.addEventListener('load', function() {
         Typeboard.addCharMapColumn();
     }, false);
 
+    //Random color theme
+   document.getElementById('random').addEventListener('click', function(){
+       Typeboard.randomColors();
+    }, false);
+
     //Clear Settings
    document.getElementById('clearSettings').addEventListener('click', function(){
        Typeboard.clearSettings();
     }, false);
+
 
 });
