@@ -47,10 +47,10 @@ window.addEventListener('load', function() {
         Typeboard.toggleItalics(this.checked);
     }, false);
 
-    //Add Typeface
-    document.getElementById('addCharMapRow').addEventListener('click', function(){
-        Typeboard.addCharMapColumn();
-    }, false);
+    ////Add Typeface
+    //document.getElementById('addCharMapRow').addEventListener('click', function(){
+    //    Typeboard.addTypeColumn();
+    //}, false);
 
     //Random color theme
    document.getElementById('random').addEventListener('click', function(){
