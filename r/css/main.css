@@ -17,26 +17,53 @@ Author: Andrew Battenburg
     --background-color:         rgba(255,255,255,0.996);
     --text-color:               rgba(17,17,17,0.996);
     --accent-color:             rgba(205,205,205,1);
+
+    /*transform: translateZ(0);*/
 }
 
 html {
+    overflow: hidden;
+}
+
+aside {
+    position: fixed;
+    padding: 1rem;
+    top: 0;
+    bottom: 0;
+    width: 20rem;
+    border-right: .1rem solid var(--accent-color);
+    box-sizing: border-box;
+}
+
+main {
+    margin-left: 20rem;
+    height: 100vh;
     overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 body {
+    /*display: flex;*/
     background-color: var(--background-color);
     color: var(--text-color);
 }
 
 h1 {
     font-family: Tahoma;
-    padding: 0 1rem;
+    padding: 0;
+    margin: 0 0 1rem 0;
+}
+
+hr {
+    margin: 1rem 0;
+    height:0;
+    border: none;
+    border-top: .1rem solid var(--accent-color);
 }
 
 ::selection {
     color: var(--background-color);
     background-color: var(--text-color);
-    opacity: .999;
 }
 
 ::placeholder {
@@ -52,16 +79,56 @@ h1 {
 
 
 /* ==========================================================================
-    Type Board Controls
+    Scroll Bars
    ========================================================================== */
-
-
-.typeboard_controls{
-    margin: 1rem;
-    padding: 1rem 0;
-    border-bottom: .1rem solid var(--accent-color);
+main::-webkit-scrollbar,
+#text_board pre::-webkit-scrollbar {
+    height: .5rem;
+    width: .5rem;
 }
 
+main::-webkit-scrollbar-track,
+#text_board pre::-webkit-scrollbar-track {
+    background-color: var(--accent-color);
+}
+
+main::-webkit-scrollbar-thumb,
+#text_board pre::-webkit-scrollbar-thumb {
+    background-color: var(--text-color);
+}
+
+/* ==========================================================================
+    Type Dropdown
+   ========================================================================== */
+#typeDropdown{
+    box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 1rem;
+    cursor: text;
+}
+/*#typeDropdown:before{*/
+    /*content:"\f00d";*/
+    /*font-family: FontAwesome;*/
+    /*flex: 0;*/
+/*}*/
+
+
+/* ==========================================================================
+    Type List
+   ========================================================================== */
+
+#type_list{}
+
+#type_list button {
+    display: flex;
+    width: 100%;
+}
+#type_list button:after {
+    content:"\f00d";
+    font-family: FontAwesome;
+    flex: 0;
+    margin-left: auto;
+}
 
 /* ==========================================================================
     Text Board
@@ -81,24 +148,10 @@ h1 {
 }
 
 
-#text_board pre::-webkit-scrollbar {
-    height: .5rem;
-}
-
-#text_board pre::-webkit-scrollbar-track {
-     background-color: var(--accent-color);
- }
-
-#text_board pre::-webkit-scrollbar-thumb {
-    background-color: var(--text-color);
-}
-
 #text_board .text_sample {
     font-size: var(--column-font-size);
     font-weight: var(--font-weight);
     font-style: var(--font-style);
-
-
     margin: .5rem 0;
 }
 
@@ -150,24 +203,14 @@ h1 {
     border: .1rem solid var(--text-color);
 }
 
-
-.type_column .header {
-    display: flex;
-    align-items: center;
-    position: relative;
+.type_column h2 {
     font-style: normal;
-    font-weight: normal;
     border-bottom: .1rem solid var(--accent-color);
     margin: 0 1rem 1rem 1rem;
-}
-.type_column .header h2 {
-    margin: .5rem 0;
+    padding-bottom: .5rem;
     font-weight: normal;
 }
-.type_column .header button {
-    position: absolute;
-    right: 0;
-}
+
 
 
 
@@ -323,6 +366,12 @@ textarea {
     --background-color:         rgba(15, 56, 15, 0.996);
     --text-color:               rgba(155, 188, 15, 0.996);
     --accent-color:             rgba(48, 98, 48, 0.996);
+}
+
+.theme.theme_navy_sea {
+    --background-color:         rgba(64, 255, 174, 0.996);
+    --text-color:               rgba(20, 17, 91, 0.996);
+    --accent-color:             rgba(182, 187, 74, 1);
 }
 
 

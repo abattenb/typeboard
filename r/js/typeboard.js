@@ -34,6 +34,11 @@ Typeboard = (function () {
     var charmap;
 
 
+
+    /* ==========================================================================
+     Add / Remove Typefaces
+     ========================================================================== */
+
     //http://stackoverflow.com/a/2117523
     var genColumnID = function(){
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -54,42 +59,82 @@ Typeboard = (function () {
     }
 
     //Generates an id and adds the typeface to the user settings
-    var addTypeface = function (typeface) {
-        var typeId = genColumnID();
-        var typeElement = JSON.parse('{"id": "' + typeId + '","typeface" : "' + typeface + '"}');
-        settings.typeArray.push(typeElement);
+    var addTypeface = function (typeId, typeface) {
+        //Generate a new typeface id
+        //var typeId = genColumnID();
 
-        updateSettings('typeArray', settings.typeArray);
+        //Creates a new typeface entry for settings
+        var oldArray = settings.typeArray;
+        var typeElement = JSON.parse('{"id": "' + typeId + '","typeface" : "' + typeface + '"}');
+
+        oldArray.push(typeElement);
+        //Updates settings
+        updateSettings('typeArray', oldArray);
+
+
+        //Creates a type control button on side pane
+        var typeControl = document.createElement('button');
+        typeControl.innerHTML = typeface;
+        typeControl.setAttribute('type_id', typeId);
+        document.getElementById('type_list').appendChild(typeControl);
+
         addTypeColumn(typeId, typeface);
-        addSample(typeId);
+        addSample(typeId, typeface);
+
+    }
+
+    //Removes a typeface
+    var removeTypeface = function (typeId){
+        //Returns everything but the entry with the ID
+        var newArray = settings.typeArray.filter(function (e){return e.id !== typeId});
+        updateSettings('typeArray', newArray);
+
+        //Remove from sample
+        removeSample(typeId);
+
+        //Remove from type column
+        removeTypeColumn(typeId)
+
+        //Remove button
+        document.querySelector("#type_list button[type_id='" + typeId + "'").remove();
+
     }
 
     //Adds a new Type Column to the DOM on the right
-    var addTypeColumn = function(columnId, typeface) {
+    var addTypeColumn = function(typeId, typeface) {
         var columnCharMap = document.createElement('div');
         columnCharMap.innerHTML = charmap;
         columnCharMap.className = 'type_column';
         columnCharMap.getElementsByTagName('h2')[0].innerHTML = typeface;
-        columnCharMap.setAttribute('type_id', columnId);
+        columnCharMap.setAttribute('type_id', typeId);
         columnCharMap.style.fontFamily = typeface;
-
         document.getElementById('char_board').appendChild(columnCharMap);
     }
 
     //Remove the parent column with class 'type_column'
-    var removeTypeColumn = function(childObj) {
-        var parentObj = childObj.parentElement;
-        while(!parentObj.classList.contains('type_column')) {
-            parentObj = parentObj.parentNode;
-        }
-        var typeId = parentObj.getAttribute('type_id');
-        //Returns everything but the entry with the ID
-        settings.typeArray = settings.typeArray.filter(function (e){return e.id !== typeId});
-        updateSettings('typeArray', settings.typeArray);
-
-        parentObj.remove();
-        removeSample(typeId);
+    var removeTypeColumn = function(typeId) {
+        document.querySelector("#char_board [type_id='" + typeId + "'").remove();
     }
+
+    var addSample = function(typeId, typeface){
+        var sampleElement = document.createElement('div');
+        sampleElement.className = 'text_sample';
+        sampleElement.setAttribute('type_id', typeId);
+        sampleElement.style.fontFamily = typeface;
+        sampleElement.innerHTML = settings.sampleText;
+        document.querySelector('#text_board pre').appendChild(sampleElement);
+    }
+
+    var removeSample = function(typeId){
+        document.querySelector("#text_board [type_id='" + typeId + "'").remove();
+    }
+
+
+
+
+    /* ==========================================================================
+     Updates
+     ========================================================================== */
 
     //Update Settings cookie with current settings
     var updateSettings = function(settingsKey, settingsValue){
@@ -104,47 +149,18 @@ Typeboard = (function () {
 
     //Clears settings cookie
     var clearSettings = function() {
-        for(var i = 0; i < settings.typeArray.length; i++){
-            var type_id = settings.typeArray[i].id;
-            //Clears type columns DOM
-            document.querySelector('#char_board').innerHTML = '';
-            //Clears samples
-            document.querySelector('#text_board pre').innerHTML = '';
-        }
-        
+        //Clears type columns DOM
+        document.querySelector('#char_board').innerHTML = '';
+        //Clears samples
+        document.querySelector('#text_board pre').innerHTML = '';
+        //Clears type list
+        document.querySelector('#type_list').innerHTML = '';
+        //Clears settings
+        settings = '';
         //clear cookie
         document.cookie = '';
         //clear random color settings
         document.getElementsByTagName('body')[0].style = '';
-        loadSettings();
-    }
-
-    //If Settings cookie doesnt exist, gen cookie, initial settings
-    var checkSettingsExist = function(){
-        if(document.cookie == '' || document.cookie == null) {
-
-            var init_settings = {
-                "typeArray" : [
-                    //{
-                    //    "id": 0,
-                    //    "typeface" : "Arial"
-                    //}
-                ],
-                "theme" : "theme_black_white",
-                "fontSize" : "1",
-                "fontWeight" : "400",
-                "italic" : "normal",
-                "sampleText" : "Sphinx of black quartz, judge my vow."
-            };
-
-            //Seeds with Arial, Times New Roman
-            init_settings.typeArray.push(JSON.parse('{"id": "' + genColumnID() + '","typeface" : "Arial"}'));
-            init_settings.typeArray.push(JSON.parse('{"id": "' + genColumnID() + '","typeface" : "Times New Roman"}'));
-            init_settings.typeArray.push(JSON.parse('{"id": "' + genColumnID() + '","typeface" : "Courier"}'));
-            //settings.typeArray.push(JSON.parse('{"id": "' + genColumnID() + '","typeface" : "Arial"}'));
-            settings = init_settings;
-            document.cookie = JSON.stringify(settings);
-        }
     }
 
     //Changes CSS theme
@@ -211,43 +227,6 @@ Typeboard = (function () {
         updateSettings("fontWeight", weight);
     }
 
-    var addSample = function(type_id){
-        var sampleElement = document.createElement('div');
-        sampleElement.className = 'text_sample';
-        sampleElement.setAttribute('type_id', type_id);
-        sampleElement.style.fontFamily = settings.typeArray.filter(function (e){return e.id == type_id})[0].typeface;
-        sampleElement.innerHTML = settings.sampleText;
-        document.querySelector('#text_board pre').appendChild(sampleElement);
-    }
-    
-    var removeSample = function(type_id){
-        document.querySelector("#text_board [type_id='" + type_id + "'").remove();
-    }
-    
-    
-    //Loads settings from local cookie if exists
-    //Inits app data with settings
-    var loadSettings = function(){
-        //If no settings, create
-        checkSettingsExist();
-
-        //Load and Apply cookie settings to app
-        settings = JSON.parse(document.cookie);
-
-        updateItalics(settings.italic);         //Italic
-        updateSize(settings.fontSize);          //Font-Size
-        updateSample(settings.sampleText);      //Sample Text
-        updateTheme(settings.theme);            //Theme
-        updateWeight(settings.fontWeight);      //Font Weight
-
-        var numTypefaces = settings.typeArray.length;
-        for(var i = 0; i < numTypefaces; i++) {
-            //Loads type columns into DOM
-            addTypeColumn(settings.typeArray[i].id, settings.typeArray[i].typeface);
-            //Loads samples into DOM  
-            addSample(settings.typeArray[i].id)
-        }
-    }
 
     //TODO: Implement better color random function
     //TODO: Add 'unwind' function to get previous random
@@ -278,6 +257,56 @@ Typeboard = (function () {
     }
 
 
+    //Loads settings from local cookie if exists
+    //Inits app data with settings
+    var loadSettings = function(){
+        //If no settings cookie, create with default
+        if(document.cookie == '' || document.cookie == null) {
+            settings = {
+                "typeArray" : [
+                    //{
+                    //    "id": 0,
+                    //    "typeface" : "Arial"
+                    //}
+                ],
+                "theme" : "theme_black_white",
+                "fontSize" : "1",
+                "fontWeight" : "400",
+                "italic" : "normal",
+                "sampleText" : "Sphinx of black quartz, judge my vow."
+            };
+            //Seeds with Arial, Times New Roman, Courier
+            addTypeface(genColumnID(), 'Arial');
+            addTypeface(genColumnID(), 'Times New Roman');
+            addTypeface(genColumnID(), 'Courier');
+
+            document.cookie = JSON.stringify(settings);
+
+        } else {
+            //Cookie found, load and Apply cookie settings to app
+            settings = JSON.parse(document.cookie);
+
+            //Clear out typefaces to readd to DOM
+            var temp_settings = settings.typeArray;
+            settings.typeArray = [];
+
+            //Adds typeface elements into DOM
+            for(var i = 0; i < temp_settings.length; i++) {
+                addTypeface(temp_settings[i].id, temp_settings[i].typeface);
+            }
+
+        }
+
+        //Update app with settings
+        updateItalics(settings.italic);         //Italic
+        updateSize(settings.fontSize);          //Font-Size
+        updateSample(settings.sampleText);      //Sample Text
+        updateTheme(settings.theme);            //Theme
+        updateWeight(settings.fontWeight);      //Font Weight
+
+    }
+
+
     var init = function () {
         //Loads settings from cookie
         loadGFontsList();
@@ -296,7 +325,7 @@ Typeboard = (function () {
                 suggest(matches);},
             onSelect: function(e, term, item){
                 var typeName = item.getAttribute('data-val');
-                addTypeface(typeName);
+                addTypeface(genColumnID(), typeName);
                 document.getElementById('typeDropdown').value = "";
             }
         });
@@ -312,13 +341,7 @@ Typeboard = (function () {
             console.log(gFontsList.length + " Google fonts loaded.")
             console.log("Typeboard init successful!");
 
-
-
-
-
-        }, 500);
-
-
+        }, 300);
 
     };
 
@@ -326,7 +349,7 @@ Typeboard = (function () {
     return {
         init:init,
         loadSettings:loadSettings,
-        removeTypeColumn:removeTypeColumn,
+        removeTypeface:removeTypeface,
         updateSize:updateSize,
         updateWeight:updateWeight,
         updateSample:updateSample,

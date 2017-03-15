@@ -12,14 +12,12 @@ window.addEventListener('load', function() {
     // Init Eventlisteners
     //
 
-    //Remove Column
-    document.getElementById('char_board').addEventListener('click', function(event) {
-        if (event.target.classList.contains('column_remove')) {
-            event.preventDefault();
-            Typeboard.removeTypeColumn(event.target);
+    //Remove Typeface
+    document.getElementById('type_list').addEventListener('click', function(event) {
+        if (event.target.hasAttributes('type_id')) {
+            Typeboard.removeTypeface(event.target.getAttribute('type_id'));
         }
     });
-
 
     //Font Size slider
     document.getElementById('fontSize').addEventListener('input', function(){
@@ -41,16 +39,10 @@ window.addEventListener('load', function() {
         Typeboard.updateTheme(this.value);
     }, false);
 
-
     //Italics
     document.getElementById('toggleItalics').addEventListener('change', function(){
         Typeboard.toggleItalics(this.checked);
     }, false);
-
-    ////Add Typeface
-    //document.getElementById('addCharMapRow').addEventListener('click', function(){
-    //    Typeboard.addTypeColumn();
-    //}, false);
 
     //Random color theme
    document.getElementById('random').addEventListener('click', function(){
@@ -60,6 +52,7 @@ window.addEventListener('load', function() {
     //Clear Settings
    document.getElementById('clearSettings').addEventListener('click', function(){
        Typeboard.clearSettings();
+       Typeboard.loadSettings();
     }, false);
 
 
