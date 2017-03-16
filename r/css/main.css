@@ -14,6 +14,7 @@ Author: Andrew Battenburg
     --column-font-size: 1rem;
     --font-weight: 400;
     --font-style: normal;
+    --letter-spacing: 0rem;
     --background-color:         rgba(255,255,255,0.996);
     --text-color:               rgba(17,17,17,0.996);
     --accent-color:             rgba(205,205,205,1);
@@ -33,6 +34,7 @@ aside {
     width: 20rem;
     border-right: .1rem solid var(--accent-color);
     box-sizing: border-box;
+    overflow-y: auto;
 }
 
 main {
@@ -50,8 +52,10 @@ body {
 
 h1 {
     font-family: Tahoma;
-    padding: 0;
+    padding-bottom: 1rem;
     margin: 0 0 1rem 0;
+    border-bottom: .1rem solid var(--accent-color);
+
 }
 
 hr {
@@ -59,15 +63,6 @@ hr {
     height:0;
     border: none;
     border-top: .1rem solid var(--accent-color);
-}
-
-::selection {
-    color: var(--background-color);
-    background-color: var(--text-color);
-}
-
-::placeholder {
-    color: var(--accent-color);
 }
 
 /*Blank font for when a font doesn't load*/
@@ -79,23 +74,152 @@ hr {
 
 
 /* ==========================================================================
+    Text Selection
+   ========================================================================== */
+
+::selection {
+    color: var(--background-color);
+    background-color: var(--text-color);
+}
+
+::-moz-selection {
+    color: var(--background-color);
+    background-color: var(--text-color);
+}
+
+
+
+
+/* ==========================================================================
     Scroll Bars
    ========================================================================== */
+
 main::-webkit-scrollbar,
+aside::-webkit-scrollbar,
+.autocomplete-suggestions::-webkit-scrollbar,
 #text_board pre::-webkit-scrollbar {
     height: .5rem;
     width: .5rem;
 }
 
 main::-webkit-scrollbar-track,
+aside::-webkit-scrollbar-track,
+.autocomplete-suggestions::-webkit-scrollbar-track,
 #text_board pre::-webkit-scrollbar-track {
     background-color: var(--accent-color);
 }
 
 main::-webkit-scrollbar-thumb,
+aside::-webkit-scrollbar-thumb,
+.autocomplete-suggestions::-webkit-scrollbar-thumb,
 #text_board pre::-webkit-scrollbar-thumb {
     background-color: var(--text-color);
 }
+
+/* ==========================================================================
+    Controls
+   ========================================================================== */
+
+.typeboard_controls {}
+.typeboard_controls .control{
+    display: flex;
+}
+.typeboard_controls .control > *{
+    align-self: center;
+}
+.typeboard_controls .control span {
+    flex: 0 5rem;
+    text-align: right;
+}
+.typeboard_controls .control button {
+    margin-left: 1rem;
+}
+
+/* ==========================================================================
+    Sliders
+   ========================================================================== */
+input[type=range] {
+    -webkit-appearance: none;
+    margin: 1rem 0;
+    width: 100%;
+}
+input[type=range]:focus {
+    /*outline: none;*/
+}
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: .5rem;
+    cursor: pointer;
+    background: var(--accent-color);
+}
+
+input[type=range]::-webkit-slider-thumb {
+    height: 1rem;
+    width: 1rem;
+    background: var(--text-color);
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -.25rem;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+    background: var(--accent-color);
+}
+
+input[type=range]::-moz-range-track {
+    width: 100%;
+    height: .5rem;
+    cursor: pointer;
+    background: var(--accent-color);
+}
+input[type=range]::-moz-range-thumb {
+    height: 1rem;
+    width: 1rem;
+    background: var(--text-color);
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -.25rem;
+    border-radius: 0;
+    border: none;
+}
+input[type=range]::-ms-track {
+    width: 100%;
+    height: 8.4px;
+    cursor: pointer;
+    animate: 0.2s;
+    background: transparent;
+    border-color: transparent;
+    border-width: 16px 0;
+    color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+    background: var(--accent-color);
+    border: 0.2px solid #010101;
+    border-radius: 2.6px;
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+input[type=range]::-ms-fill-upper {
+    background: var(--accent-color);
+    border: 0.2px solid #010101;
+    border-radius: 2.6px;
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+input[type=range]::-ms-thumb {
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    border: 1px solid #000000;
+    height: 36px;
+    width: 16px;
+    border-radius: 3px;
+    background: #ffffff;
+    cursor: pointer;
+}
+input[type=range]:focus::-ms-fill-lower {
+    background: var(--accent-color);
+}
+input[type=range]:focus::-ms-fill-upper {
+    background: var(--accent-color);
+}
+
+
 
 /* ==========================================================================
     Type Dropdown
@@ -122,6 +246,8 @@ main::-webkit-scrollbar-thumb,
 #type_list button {
     display: flex;
     width: 100%;
+    height: 2rem;
+    line-height: 1;
 }
 #type_list button:after {
     content:"\f00d";
@@ -152,6 +278,7 @@ main::-webkit-scrollbar-thumb,
     font-size: var(--column-font-size);
     font-weight: var(--font-weight);
     font-style: var(--font-style);
+    letter-spacing: var(--letter-spacing);
     margin: .5rem 0;
 }
 
@@ -171,11 +298,11 @@ main::-webkit-scrollbar-thumb,
 }
 .type_column .charmap {
     padding: 0 1rem;
-    border-right: .1rem solid var(--accent-color);
+    box-shadow: 1px 0px 0px var(--accent-color);
 }
 .type_column:last-of-type .charmap {
     margin-right: 0;
-    border-right: none;
+    box-shadow: none;
 }
 
 
@@ -205,6 +332,7 @@ main::-webkit-scrollbar-thumb,
 
 .type_column h2 {
     font-style: normal;
+    line-height: 1;
     border-bottom: .1rem solid var(--accent-color);
     margin: 0 1rem 1rem 1rem;
     padding-bottom: .5rem;
@@ -227,7 +355,14 @@ main::-webkit-scrollbar-thumb,
     Buttons, Inputs
    ========================================================================== */
 
+::placeholder {
+    color: var(--accent-color);
+}
+
+
+
 button, .button {
+    display: flex;
     font-size: 1rem;
     background: none;
     text-decoration: none;
@@ -257,7 +392,13 @@ button:active,
     transition: .1s box-shadow, .1s transform;
 }
 
+button i,
+.button i {
+    margin-right: .5rem;
+}
+
 select {
+    width: 100%;
     background-color: transparent;
 }
 select option, select optgroup {
@@ -267,24 +408,51 @@ select option, select optgroup {
 textarea {
     width: 100%;
     background-color: transparent;
-    border-color: var(--accent-color);
+    border: .1rem solid var(--accent-color);
     box-sizing: border-box;
 }
 
+label.button {
+    display: inline-block;
+}
 
 /* ==========================================================================
    AutoComplete
    ========================================================================== */
 
 .autocomplete-suggestions {
-    text-align: left; cursor: default; border: 1px solid #ccc; border-top: 0; background: #fff; box-shadow: -1px 1px 3px rgba(0,0,0,.1);
+    text-align: left;
+    cursor: default;
+    color: var(--text-color);
+    border: 1px solid var(--accent-color);
+    border-top: 0;
+    background: var(--background-color);
+    box-shadow: -1px 1px 3px var(--accent-color);
 
     /* core styles should not be changed */
-    position: absolute; display: none; z-index: 9999; max-height: 254px; overflow: hidden; overflow-y: auto; box-sizing: border-box;
+    position: absolute;
+    display: none;
+    z-index: 9999;
+    max-height: 254px;
+    overflow: hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
 }
-.autocomplete-suggestion { position: relative; padding: 0 .6em; line-height: 23px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 1.02em; color: #333; }
-.autocomplete-suggestion b { font-weight: normal; color: #1f8dd6; }
-.autocomplete-suggestion.selected { background: #f0f0f0; }
+.autocomplete-suggestion {
+    position: relative;
+    padding: 0 .6em;
+    line-height: 23px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1.02rem;
+    color: var(--text-color);
+}
+.autocomplete-suggestion b {
+    font-weight: 400;
+    text-decoration: underline;
+}
+.autocomplete-suggestion.selected { background: var(--accent-color); }
 
 
 
@@ -337,7 +505,7 @@ textarea {
     --accent-color:             rgba(70,55,50,1);
 }
 
-.theme.theme_yellow_charcoal {
+.theme.theme_yellow_coal {
     --background-color:         rgba(32,32,32,0.996);
     --text-color:               rgba(255,238,0,0.996);
     --accent-color:             rgba(90,90,75,1);
@@ -356,11 +524,6 @@ textarea {
     --text-color:               rgba(255, 255, 0, 0.996);
     --accent-color:             rgba(155, 30, 80, 1);
 }
-.theme.theme_peach_lavender {
-    --background-color:         rgba(65, 30, 65, 0.996);
-    --text-color:               rgba(250, 175, 150,0.996);
-    --accent-color:             rgba(155, 30, 80, 1);
-}
 
 .theme.theme_lime_forest {
     --background-color:         rgba(15, 56, 15, 0.996);
@@ -372,6 +535,16 @@ textarea {
     --background-color:         rgba(64, 255, 174, 0.996);
     --text-color:               rgba(20, 17, 91, 0.996);
     --accent-color:             rgba(182, 187, 74, 1);
+}
+.theme.theme_sky_blue {
+    --background-color:         rgba(7, 46, 248, 0.996);
+    --text-color:               rgba(113, 243, 216, 0.996);
+    --accent-color:             rgba(219, 102, 68, 1);
+}
+.theme.theme_navy_gold {
+    --background-color:         rgba(228, 180, 20, 0.996);
+    --text-color:               rgba(15, 80, 135, 0.996);
+    --accent-color:             rgba(228, 73, 98, 1);
 }
 
 

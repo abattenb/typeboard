@@ -33,6 +33,9 @@ Typeboard = (function () {
     var gFontsList = [];
     var charmap;
 
+    //Used to both seed initial typefaces and prevent calling font APIs
+    var localTypefaces = ['Arial', 'Times New Roman', 'Courier'];
+
 
 
     /* ==========================================================================
@@ -66,8 +69,8 @@ Typeboard = (function () {
         //Creates a new typeface entry for settings
         var oldArray = settings.typeArray;
         var typeElement = JSON.parse('{"id": "' + typeId + '","typeface" : "' + typeface + '"}');
-
         oldArray.push(typeElement);
+
         //Updates settings
         updateSettings('typeArray', oldArray);
 
@@ -76,10 +79,30 @@ Typeboard = (function () {
         var typeControl = document.createElement('button');
         typeControl.innerHTML = typeface;
         typeControl.setAttribute('type_id', typeId);
+        typeControl.style.fontFamily = typeface;
         document.getElementById('type_list').appendChild(typeControl);
 
+        //Adds type column to DOM
         addTypeColumn(typeId, typeface);
+
+        //Adds type sample to DOM
         addSample(typeId, typeface);
+
+        //Fetches typeface from Google fonts using WebFont
+        getGFont(typeface);
+    }
+
+    var getGFont = function(typeface){
+        if(!localTypefaces.includes(typeface)){
+            var completeFamily = typeface;
+            completeFamily = completeFamily + ':100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i';
+
+            WebFont.load({
+                google: {
+                    families: [completeFamily]
+                }
+            });
+        }
 
     }
 
@@ -215,7 +238,7 @@ Typeboard = (function () {
     var updateSize = function(size){
         document.getElementById('type_board').style.setProperty('--column-font-size', size + 'rem', null);
         document.getElementById('output_size').innerHTML = String(size + 'rem');
-        document.getElementById('fontSize').value = settings.fontSize;
+        document.getElementById('fontSize').value = size;
         updateSettings("fontSize", size);
     }
 
@@ -223,8 +246,16 @@ Typeboard = (function () {
     var updateWeight = function(weight) {
         document.getElementById('type_board').style.setProperty('--font-weight', weight, null);
         document.getElementById('output_weight').innerHTML = String(weight);
-        document.getElementById('fontWeight').value = settings.fontWeight;
+        document.getElementById('fontWeight').value = weight;
         updateSettings("fontWeight", weight);
+    }
+
+    //Updates letter-spacing, from -10 to 10
+    var updateLetterspacing = function(letterspacing) {
+        document.getElementById('type_board').style.setProperty('--letter-spacing', letterspacing + 'rem', null);
+        document.getElementById('output_letterspacing').innerHTML = String(letterspacing + 'rem');
+        document.getElementById('letterSpacing').value = letterspacing;
+        updateSettings("letterSpacing", letterspacing);
     }
 
 
@@ -272,13 +303,14 @@ Typeboard = (function () {
                 "theme" : "theme_black_white",
                 "fontSize" : "1",
                 "fontWeight" : "400",
+                "letterSpacing" : "0",
                 "italic" : "normal",
                 "sampleText" : "Sphinx of black quartz, judge my vow."
             };
             //Seeds with Arial, Times New Roman, Courier
-            addTypeface(genColumnID(), 'Arial');
-            addTypeface(genColumnID(), 'Times New Roman');
-            addTypeface(genColumnID(), 'Courier');
+            for(var i = 0; i < localTypefaces.length; i++){
+                addTypeface(genColumnID(), localTypefaces[i]);
+            }
 
             document.cookie = JSON.stringify(settings);
 
@@ -298,11 +330,12 @@ Typeboard = (function () {
         }
 
         //Update app with settings
-        updateItalics(settings.italic);         //Italic
-        updateSize(settings.fontSize);          //Font-Size
-        updateSample(settings.sampleText);      //Sample Text
-        updateTheme(settings.theme);            //Theme
-        updateWeight(settings.fontWeight);      //Font Weight
+        updateItalics(settings.italic);                 //Italic
+        updateSize(settings.fontSize);                  //Font-Size
+        updateSample(settings.sampleText);              //Sample Text
+        updateTheme(settings.theme);                    //Theme
+        updateWeight(settings.fontWeight);              //Font Weight
+        updateLetterspacing(settings.letterSpacing);    //Letterspacing
 
     }
 
@@ -312,10 +345,11 @@ Typeboard = (function () {
         loadGFontsList();
         loadCharMap();
 
+
         //https://goodies.pixabay.com/javascript/auto-complete/demo.html
         new autoComplete({
             selector: 'input[id="typeDropdown"]',
-            minChars: 1,
+            minChars: 2,
             source: function(term, suggest){
                 term = term.toLowerCase();
                 var choices = gFontsList;
@@ -339,7 +373,6 @@ Typeboard = (function () {
             console.log("  .-/.-/                            ");
             console.log(" (_/(_/                             ");
             console.log(gFontsList.length + " Google fonts loaded.")
-            console.log("Typeboard init successful!");
 
         }, 300);
 
@@ -352,6 +385,7 @@ Typeboard = (function () {
         removeTypeface:removeTypeface,
         updateSize:updateSize,
         updateWeight:updateWeight,
+        updateLetterspacing:updateLetterspacing,
         updateSample:updateSample,
         updateTheme:updateTheme,
         toggleItalics:toggleItalics,

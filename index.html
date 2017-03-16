@@ -18,51 +18,62 @@
     <h1>Typeboard</h1>
 
     <div class="typeboard_controls">
-        <input type="range" id="fontSize" value="1.0" min="0.1" max="10.0" step="0.1">
-        <br>
-        <span id="output_size"></span>
+
+        <div class="control">
+            <input type="range" id="fontSize" value="1.0" min="0.1" max="10.0" step="0.1">
+            <span id="output_size"></span>
+        </div>
+
+
+        <div class="control">
+            <input type="range" id="fontWeight" value="400" min="100" max="900" step="100">
+            <span id="output_weight"></span>
+        </div>
+
+        <div class="control">
+           <input type="range" id="letterSpacing" value="0" min="-3" max="5" step="0.05">
+            <span id="output_letterspacing"></span>
+        </div>
 
         <br>
-        <input type="range" id="fontWeight" value="400" min="100" max="900" step="100">
-        <br>
-        <span id="output_weight"></span>
-
-        <br>
-
         <label for="toggleItalics" class="button">
             <input type="checkbox" id="toggleItalics">
             Italics
         </label>
 
-        <br>
+        <hr>
 
-        <select id="themeSelector" class="button">
-            <!--Themes need to be in a optgroup-->
-            <optgroup label="Light Themes">
-                <option selected value="theme_black_white">Black / White</option>
-                <option value="theme_blue_white">Blue / White</option>
-                <option value="theme_tangerine_grey">Tangerine / Grey</option>
-                <option value="theme_grey_grey">Grey / Grey</option>
-            </optgroup>
-            <optgroup label="Dark Themes">
-                <option value="theme_red_midnight">Red / Midnight</option>
-                <option value="theme_yellow_charcoal">Yellow / Charcoal</option>
-                <option value="theme_white_black">White / Black</option>
-                <option value="theme_green_black">Green / Black</option>
-            </optgroup>
-            <optgroup label="Color Themes">
-                <option value="theme_yellow_pink">Yellow / Pink</option>
-                <option value="theme_peach_lavender">Peach / Lavender</option>
-                <option value="theme_navy_sea">Navy / Sea</option>
-                <option value="theme_lime_forest">Lime / Forest</option>
-            </optgroup>
-        </select>
+        <div class="control">
 
-        <br>
-        <button type="button" id="random">
-            <i class="fa fa-magic"></i>
-            Random
-        </button>
+            <select id="themeSelector" class="button">
+                <!--Themes need to be in a optgroup-->
+                <optgroup label="Light Themes">
+                    <option selected value="theme_black_white">Black / White</option>
+                    <option value="theme_blue_white">Blue / White</option>
+                    <option value="theme_tangerine_grey">Tangerine / Grey</option>
+                    <option value="theme_grey_grey">Grey / Grey</option>
+                </optgroup>
+                <optgroup label="Dark Themes">
+                    <option value="theme_red_midnight">Red / Midnight</option>
+                    <option value="theme_yellow_coal">Yellow / Coal</option>
+                    <option value="theme_white_black">White / Black</option>
+                    <option value="theme_green_black">Green / Black</option>
+                </optgroup>
+                <optgroup label="Color Themes">
+                    <option value="theme_yellow_pink">Yellow / Pink</option>
+                    <option value="theme_navy_sea">Navy / Sea</option>
+                    <option value="theme_lime_forest">Lime / Forest</option>
+                    <option value="theme_sky_blue">Sky / Blue</option>
+                    <option value="theme_navy_gold">Navy / Gold</option>
+                </optgroup>
+            </select>
+
+
+            <button type="button" id="random">
+                <i class="fa fa-magic"></i>
+                Random
+            </button>
+        </div>
 
         <hr>
 
@@ -85,8 +96,6 @@
     <div id="type_board">
         <div id="text_board">
             <textarea id="text_input" placeholder="Sample Text"></textarea>
-
-            <!--Has to be appended because we want the properties of pre rag-->
             <pre></pre>
         </div>
         <div id="char_board"></div>
@@ -101,8 +110,9 @@
 
 
 <script src="https://use.fontawesome.com/42c9dfa299.js"></script>
-<script src="r/js/typeboard.js"></script>
 <script src="r/js/auto-complete.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+<script src="r/js/typeboard.js"></script>
 <script src="r/js/main.js"></script>
 
 </body>
@@ -126,5 +136,5 @@ Notes:
 
 Starting server: https://www.npmjs.com/package/http-server
 AutoComplete: https://goodies.pixabay.com/javascript/auto-complete/demo.html
-
+Webfont Loader: https://github.com/typekit/webfontloader
 -->

@@ -1,8 +1,6 @@
 'use strict';
 
 
-
-
 window.addEventListener('load', function() {
     //Start Typeboard
     Typeboard.init();
@@ -28,6 +26,12 @@ window.addEventListener('load', function() {
     document.getElementById('fontWeight').addEventListener('input', function(){
         Typeboard.updateWeight(this.value);
     }, false);
+
+    //Letterspacing slider
+    document.getElementById('letterSpacing').addEventListener('input', function(){
+        Typeboard.updateLetterspacing(this.value);
+    }, false);
+
 
     //Sample Textarea
     document.getElementById('text_input').addEventListener('input', function(){
