@@ -55,7 +55,12 @@ h1 {
     padding-bottom: 1rem;
     margin: 0 0 1rem 0;
     border-bottom: .1rem solid var(--accent-color);
+}
 
+.logo {
+    float: left;
+    margin-right: 1rem;
+    fill: var(--text-color);
 }
 
 hr {
@@ -63,6 +68,14 @@ hr {
     height:0;
     border: none;
     border-top: .1rem solid var(--accent-color);
+}
+
+footer {
+    font-size: .8rem;
+    text-align: center;
+}
+footer a {
+    color: var(--text-color);
 }
 
 /*Blank font for when a font doesn't load*/
@@ -128,7 +141,7 @@ aside::-webkit-scrollbar-thumb,
     align-self: center;
 }
 .typeboard_controls .control span {
-    flex: 0 5rem;
+    flex: 0 6rem;
     text-align: right;
 }
 .typeboard_controls .control button {
@@ -230,11 +243,6 @@ input[type=range]:focus::-ms-fill-upper {
     margin-bottom: 1rem;
     cursor: text;
 }
-/*#typeDropdown:before{*/
-    /*content:"\f00d";*/
-    /*font-family: FontAwesome;*/
-    /*flex: 0;*/
-/*}*/
 
 
 /* ==========================================================================
@@ -250,10 +258,12 @@ input[type=range]:focus::-ms-fill-upper {
     line-height: 1;
 }
 #type_list button:after {
-    content:"\f00d";
-    font-family: FontAwesome;
+    content:"\00d7";
+    font-family: Arial;
+    font-weight: bold;
     flex: 0;
     margin-left: auto;
+    font-size: 1.2rem;
 }
 
 /* ==========================================================================
@@ -261,7 +271,8 @@ input[type=range]:focus::-ms-fill-upper {
    ========================================================================== */
 
 #text_board {
-    margin: 1rem;
+    margin: 2rem 1rem;
+    border-bottom: .1rem solid var(--accent-color);
 
 }
 #text_board pre {
@@ -337,6 +348,8 @@ input[type=range]:focus::-ms-fill-upper {
     margin: 0 1rem 1rem 1rem;
     padding-bottom: .5rem;
     font-weight: normal;
+    min-height: 3rem;
+    word-break: break-word;
 }
 
 
@@ -359,8 +372,6 @@ input[type=range]:focus::-ms-fill-upper {
     color: var(--accent-color);
 }
 
-
-
 button, .button {
     display: flex;
     font-size: 1rem;
@@ -370,11 +381,11 @@ button, .button {
     border: .1rem solid var(--text-color);
     transform: translateY(-.1rem);
     box-shadow: 0 .1rem 0 var(--text-color);
-    border-radius: .1rem;
-
+    /*border-radius: .1rem;*/
     transition: .1s box-shadow, .1s transform;
-
 }
+
+
 button:hover,
 button:focus,
 .button:hover,
@@ -392,10 +403,14 @@ button:active,
     transition: .1s box-shadow, .1s transform;
 }
 
-button i,
-.button i {
+button svg,
+.button svg {
+    height: 1rem;
+    fill: var(--text-color);
     margin-right: .5rem;
+    align-self: center;
 }
+
 
 select {
     width: 100%;
@@ -410,6 +425,7 @@ textarea {
     background-color: transparent;
     border: .1rem solid var(--accent-color);
     box-sizing: border-box;
+    margin-bottom: 1rem;
 }
 
 label.button {

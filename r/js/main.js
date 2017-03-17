@@ -49,8 +49,13 @@ window.addEventListener('load', function() {
     }, false);
 
     //Random color theme
-   document.getElementById('random').addEventListener('click', function(){
+    document.getElementById('random_colors').addEventListener('click', function(){
        Typeboard.randomColors();
+    }, false);
+
+    //Random color theme
+    document.getElementById('random_typeface').addEventListener('click', function(){
+       Typeboard.randomTypeface();
     }, false);
 
     //Clear Settings

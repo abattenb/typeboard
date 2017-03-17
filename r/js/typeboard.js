@@ -6,15 +6,17 @@
  */
 
 
+//TODO: Favorites
 //TODO: Redo the way cookies are handled (path, expire)
 //TODO: Save random colors into palette
-//TODO: Letter Spacing adjustment
-//TODO: Line-height adjustment
 //TODO: Header + paragraph
+//TODO: Line-height adjustment
 //TODO: Handling async delays on ajax loads
-//TODO: Refactor removeTypeColumn into removeTypeface
-
-
+//TODO: Generate CSS code
+//TODO: Generate share url + read from url
+//TODO: Add local typefaces to dropdown list?
+//TODO: Fix IE (lol)
+//TODO: Google Analyics + Domain
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //TODO: RESTRICT GOOGLE API KEY BEFORE SHARING
@@ -92,6 +94,8 @@ Typeboard = (function () {
         getGFont(typeface);
     }
 
+    //Fetches a typeface from Google Fonts with all weights and styles
+    //Excludes local typefaces
     var getGFont = function(typeface){
         if(!localTypefaces.includes(typeface)){
             var completeFamily = typeface;
@@ -261,16 +265,29 @@ Typeboard = (function () {
 
     //TODO: Implement better color random function
     //TODO: Add 'unwind' function to get previous random
-    //Casts the three main colors with a random hex
-    //DANGEROUS, YOU MAY NEVER SEE THOSE COLORS AGAIN!!!
-    //http://stackoverflow.com/questions/1484506/random-color-generator-in-javascript
+    //Casts the three main colors with a random rgba
+    //Recommend using 0.996 for alpha for text selection hack
     var randomColors = function(){
-        var textColor = "#" + Math.random().toString(16).slice(-6).toString();
-        var backgroundColor =  "#" + Math.random().toString(16).slice(-6).toString();
-        var accentColor = "#" + Math.random().toString(16).slice(-6).toString();
+        var textColor = randomRGBA(0.996);
+        var backgroundColor =  randomRGBA(0.996);
+        var accentColor = randomRGBA(0.996);
         document.getElementsByTagName('body')[0].style.setProperty('--text-color', textColor, null);
         document.getElementsByTagName('body')[0].style.setProperty('--background-color', backgroundColor, null);
         document.getElementsByTagName('body')[0].style.setProperty('--accent-color', accentColor, null);
+    }
+
+    //Accepts an opacity value
+    //Returns a random RGBA formatted for CSS
+    var randomRGBA = function(opacity){
+        var red = Math.floor(Math.random() * 257);
+        var green = Math.floor(Math.random() * 257);
+        var blue = Math.floor(Math.random() * 257);
+        return "rgba(" + red + ", " + green + ", " + blue + ", " + opacity + ")";
+    }
+
+    var randomTypeface = function() {
+        var random = Math.floor(Math.random() * (gFontsList.length + 1 ));
+        addTypeface(genColumnID(),gFontsList[random].family);
     }
 
 
@@ -374,7 +391,7 @@ Typeboard = (function () {
             console.log(" (_/(_/                             ");
             console.log(gFontsList.length + " Google fonts loaded.")
 
-        }, 300);
+        }, 600);
 
     };
 
@@ -390,7 +407,8 @@ Typeboard = (function () {
         updateTheme:updateTheme,
         toggleItalics:toggleItalics,
         clearSettings:clearSettings,
-        randomColors:randomColors
+        randomColors:randomColors,
+        randomTypeface:randomTypeface
 
     };
 }());
