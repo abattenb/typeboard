@@ -6,17 +6,24 @@
  */
 
 
-//TODO: Favorites
+//TODO: Google Analyics + Domain
+//TODO: Handling async delays on ajax loads
+//TODO: Test
+//TODO: Mobile... layout
+
+//TODO: Favorites/Hide Type
+//TODO: Generate CSS code
 //TODO: Redo the way cookies are handled (path, expire)
 //TODO: Save random colors into palette
-//TODO: Header + paragraph
-//TODO: Line-height adjustment
-//TODO: Handling async delays on ajax loads
-//TODO: Generate CSS code
+//TODO: Add 'unwind' function to get previous random
+
 //TODO: Generate share url + read from url
 //TODO: Add local typefaces to dropdown list?
-//TODO: Fix IE (lol)
-//TODO: Google Analyics + Domain
+
+//TODO: Header + paragraph
+//TODO: Line-height adjustment
+
+
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //TODO: RESTRICT GOOGLE API KEY BEFORE SHARING
@@ -263,8 +270,6 @@ Typeboard = (function () {
     }
 
 
-    //TODO: Implement better color random function
-    //TODO: Add 'unwind' function to get previous random
     //Casts the three main colors with a random rgba
     //Recommend using 0.996 for alpha for text selection hack
     var randomColors = function(){
@@ -363,6 +368,21 @@ Typeboard = (function () {
         loadCharMap();
 
 
+
+        var browserCanUseCssVariables = function() {
+            return window.CSS && window.CSS.supports && window.CSS.supports('--fake-var', 0);
+        }
+
+        if (!browserCanUseCssVariables()){
+            document.getElementById('featureDetection').className = '';
+            document.getElementById('featureDetection').getElementsByTagName('button')[0].addEventListener('click', function(){
+                document.getElementById('featureDetection').className = 'hidden';
+            });
+
+            //alert('Your browser does not support CSS Variables and/or CSS.supports. :-(');
+        }
+
+
         //https://goodies.pixabay.com/javascript/auto-complete/demo.html
         new autoComplete({
             selector: 'input[id="typeDropdown"]',
@@ -382,10 +402,12 @@ Typeboard = (function () {
         });
 
 
+
+
         setTimeout(function() {
             loadSettings();
             console.log("                  /)              /)");
-            console.log("_/_     __    _  (/_ ____   __  _(/ ");
+            console.log("_/_      __   _  (/_ __ __  __  _(/ ");
             console.log("(__(_/_ /_)__(/_/_) (_)(_(_/ (_(_(_ ");
             console.log("  .-/.-/                            ");
             console.log(" (_/(_/                             ");

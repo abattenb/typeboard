@@ -37,6 +37,12 @@ aside {
     overflow-y: auto;
 }
 
+.logo {
+    float: left;
+    margin-right: 1rem;
+    fill: var(--text-color);
+    width: 3.6rem;
+}
 main {
     margin-left: 20rem;
     height: 100vh;
@@ -51,16 +57,15 @@ body {
 }
 
 h1 {
-    font-family: Tahoma;
-    padding-bottom: 1rem;
-    margin: 0 0 1rem 0;
-    border-bottom: .1rem solid var(--accent-color);
+    font-family: Tahoma, sans-serif;
+    padding: 0;
+    margin: 0 0 .2rem 0;
 }
 
-.logo {
-    float: left;
-    margin-right: 1rem;
-    fill: var(--text-color);
+.sub_header {
+    font-size: .8rem;
+    position: relative;
+    left: 0.3rem;
 }
 
 hr {
@@ -73,6 +78,7 @@ hr {
 footer {
     font-size: .8rem;
     text-align: center;
+    line-height: 1.75;
 }
 footer a {
     color: var(--text-color);
@@ -101,6 +107,46 @@ footer a {
 }
 
 
+
+
+/* ==========================================================================
+    Feature Modal
+   ========================================================================== */
+
+#featureDetection {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    background: white;
+    padding: 1rem;
+    overflow: auto;
+}
+
+#featureDetection * {
+    max-width: 35rem;
+    margin: 0 auto;
+
+}
+
+#featureDetection h1 {
+    font-size: 1.5rem;
+}
+
+#featureDetection p {
+    line-height: 1.45;
+    margin-bottom: 1rem;
+}
+
+#featureDetection img {
+    position: relative;
+    width: 100px;
+    left: 46%;
+    top: 2rem;
+
+}
 
 
 /* ==========================================================================
@@ -438,11 +484,13 @@ label.button {
 
 .autocomplete-suggestions {
     text-align: left;
-    cursor: default;
+    cursor: pointer;
     color: var(--text-color);
     border: 1px solid var(--accent-color);
     border-top: 0;
     background: var(--background-color);
+    background: white;
+
     box-shadow: -1px 1px 3px var(--accent-color);
 
     /* core styles should not be changed */
@@ -461,7 +509,7 @@ label.button {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 1.02rem;
+    font-size: 1rem;
     color: var(--text-color);
 }
 .autocomplete-suggestion b {
