@@ -344,13 +344,13 @@ Typeboard = (function () {
 
             //Cookie found, load and Apply cookie settings to app
             try {
+                console.log(settings);
                 settings = JSON.parse(document.cookie);
 
             } catch (e) {
                 console.log(e);
+                console.log(settings);
                 clearSettings();
-                loadSettings();
-
             }
 
 
