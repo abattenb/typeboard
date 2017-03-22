@@ -314,13 +314,8 @@ Typeboard = (function () {
     //Toggles open and close the mobile menu
     var toggleMenu = function () {
         var toggleClass = document.getElementsByTagName('aside')[0].className;
-
         document.getElementsByTagName('aside')[0].className  = (toggleClass == 'open') ? '' : 'open';
-
-
         document.getElementsByTagName('aside')[0].scrollTop = 0;
-
-
     }
 
 
@@ -330,12 +325,7 @@ Typeboard = (function () {
         //If no settings cookie, create with default
         if(document.cookie == '' || document.cookie == null) {
             settings = {
-                "typeArray" : [
-                    //{
-                    //    "id": 0,
-                    //    "typeface" : "Arial"
-                    //}
-                ],
+                "typeArray" : [],
                 "theme" : "theme_black_white",
                 "fontSize" : "1",
                 "fontWeight" : "400",
