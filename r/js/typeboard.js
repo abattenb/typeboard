@@ -16,6 +16,7 @@
 //TODO: Redo the way cookies are handled (path, expire)
 //TODO: Save random colors into palette
 //TODO: Add 'unwind' function to get previous random
+//TODO: Add direct color adjustment
 
 //TODO: Generate share url + read from url
 //TODO: Add local typefaces to dropdown list?
@@ -25,12 +26,12 @@
 
 
 
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //TODO: RESTRICT GOOGLE API KEY BEFORE SHARING
 //TODO: RESTRICT GOOGLE API KEY BEFORE SHARING
 //TODO: RESTRICT GOOGLE API KEY BEFORE SHARING
 //TODO: RESTRICT GOOGLE API KEY BEFORE SHARING
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 'use strict';
 Typeboard = (function () {
@@ -127,7 +128,7 @@ Typeboard = (function () {
         removeSample(typeId);
 
         //Remove from type column
-        removeTypeColumn(typeId)
+        removeTypeColumn(typeId);
 
         //Remove button
         document.querySelector("#type_list button[type_id='" + typeId + "'").remove();
@@ -337,10 +338,20 @@ Typeboard = (function () {
             document.cookie = JSON.stringify(settings);
 
         } else {
-            //Cookie found, load and Apply cookie settings to app
-            settings = JSON.parse(document.cookie);
 
-            //Clear out typefaces to readd to DOM
+            //Cookie found, load and Apply cookie settings to app
+            try {
+                settings = JSON.parse(document.cookie);
+
+            } catch (e) {
+                clearSettings();
+                loadSettings();
+
+                console.log(e);
+            }
+
+
+            //Clear out typefaces to read to DOM
             var temp_settings = settings.typeArray;
             settings.typeArray = [];
 
