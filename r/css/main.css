@@ -17,7 +17,8 @@ Author: Andrew Battenburg
     --letter-spacing: 0rem;
     --background-color:         rgba(255,255,255,0.996);
     --text-color:               rgba(17,17,17,0.996);
-    --accent-color:             rgba(205,205,205,1);
+    --accent-color:             rgba(205,205,205,0.996);
+
 
     /*transform: translateZ(0);*/
 }
@@ -35,6 +36,7 @@ aside {
     border-right: .1rem solid var(--accent-color);
     box-sizing: border-box;
     overflow-y: auto;
+    transition: .5s height;
 }
 
 .logo {
@@ -51,7 +53,6 @@ main {
 }
 
 body {
-    /*display: flex;*/
     background-color: var(--background-color);
     color: var(--text-color);
 }
@@ -317,7 +318,7 @@ input[type=range]:focus::-ms-fill-upper {
    ========================================================================== */
 
 #text_board {
-    margin: 2rem 1rem;
+    margin: 1.5rem 1rem;
     border-bottom: .1rem solid var(--accent-color);
 
 }
@@ -392,10 +393,10 @@ input[type=range]:focus::-ms-fill-upper {
     line-height: 1;
     border-bottom: .1rem solid var(--accent-color);
     margin: 0 1rem 1rem 1rem;
-    padding-bottom: .5rem;
     font-weight: normal;
-    min-height: 3rem;
-    word-break: break-word;
+    height: 3rem;
+    word-break: break-word; /*Tries to break on word, then letter*/
+    overflow-y: hidden;
 }
 
 
@@ -466,12 +467,15 @@ select option, select optgroup {
     color: black;
 }
 
-textarea {
+textarea, input[type=text] {
     width: 100%;
     background-color: transparent;
     border: .1rem solid var(--accent-color);
     box-sizing: border-box;
     margin-bottom: 1rem;
+}
+input[type=text] {
+    padding: .35rem;
 }
 
 label.button {

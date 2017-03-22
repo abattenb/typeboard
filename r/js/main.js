@@ -17,6 +17,15 @@ window.addEventListener('load', function() {
         }
     });
 
+    //Mobile Menu Toggle
+    document.addEventListener('click', function(event){
+        if (event.target.classList.contains('toggle_menu')) {
+            Typeboard.toggleMenu();
+        }
+    });
+
+
+
     //Font Size slider
     document.getElementById('fontSize').addEventListener('input', function(){
         Typeboard.updateSize(this.value);
@@ -63,6 +72,5 @@ window.addEventListener('load', function() {
        Typeboard.clearSettings();
        Typeboard.loadSettings();
     }, false);
-
 
 });

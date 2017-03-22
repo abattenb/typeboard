@@ -1,0 +1,55 @@
+/*
+Type Board - Mobile Stylesheet
+Author: Andrew Battenburg
+*/
+
+@media (max-width: 45em) {
+    aside {
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3rem;
+        width: 100%;
+        overflow: hidden;
+
+        padding: 0.4rem;
+        border-right: none;
+        border-bottom: .1rem solid var(--accent-color);
+        background-color: var(--background-color);
+    }
+
+    aside .toggle_menu.toggle_top {
+        position: absolute;
+        top: .5rem;
+        right: .5rem;
+    }
+
+    aside.open {
+        height: 100vh;
+        overflow: auto;
+        transition: .5s height;
+
+    }
+
+    .logo {
+        width: 2.2rem;
+    }
+
+    h1 {
+        font-size: 1.1rem;
+        margin: 0;
+    }
+
+    main {
+        margin-top: 3rem;
+        margin-left: 0;
+    }
+
+
+
+}
+@media (min-width: 45em) {
+    aside .toggle_menu{
+        display: none;
+    }
+}

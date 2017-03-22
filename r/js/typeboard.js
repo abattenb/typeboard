@@ -2,7 +2,7 @@
  * Type Board
  * Created by Andrew on 3/7/2017.
  *
- * So far IE11 is out.
+ * So far IE11, Edge is out.
  */
 
 
@@ -311,6 +311,19 @@ Typeboard = (function () {
     }
 
 
+    //Toggles open and close the mobile menu
+    var toggleMenu = function () {
+        var toggleClass = document.getElementsByTagName('aside')[0].className;
+
+        document.getElementsByTagName('aside')[0].className  = (toggleClass == 'open') ? '' : 'open';
+
+
+        document.getElementsByTagName('aside')[0].scrollTop = 0;
+
+
+    }
+
+
     //Loads settings from local cookie if exists
     //Inits app data with settings
     var loadSettings = function(){
@@ -344,10 +357,10 @@ Typeboard = (function () {
                 settings = JSON.parse(document.cookie);
 
             } catch (e) {
+                console.log(e);
                 clearSettings();
                 loadSettings();
 
-                console.log(e);
             }
 
 
@@ -441,7 +454,8 @@ Typeboard = (function () {
         toggleItalics:toggleItalics,
         clearSettings:clearSettings,
         randomColors:randomColors,
-        randomTypeface:randomTypeface
+        randomTypeface:randomTypeface,
+        toggleMenu:toggleMenu
 
     };
 }());
