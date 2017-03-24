@@ -9,7 +9,6 @@
 //TODO: Google Analyics + Domain
 //TODO: Handling async delays on ajax loads
 //TODO: Test
-//TODO: Mobile... layout
 
 //TODO: Favorites/Hide Type
 //TODO: Generate CSS code
@@ -17,6 +16,7 @@
 //TODO: Save random colors into palette
 //TODO: Add 'unwind' function to get previous random
 //TODO: Add direct color adjustment
+//TODO: Figure out build tools
 
 //TODO: Generate share url + read from url
 //TODO: Add local typefaces to dropdown list?
@@ -39,7 +39,7 @@ Typeboard = (function () {
     //Typeboard Variables
 
     var key = 'AIzaSyBbtvvx9DFYu8-CbOHPTaBOdQVT-P_zg9Q';
-    var settings = [];
+    var settings = {};
     var gFontsList = [];
     var charmap;
 
@@ -178,7 +178,7 @@ Typeboard = (function () {
             settings[settingsKey] = settingsValue;
         }
         //Update cookie
-        document.cookie = JSON.stringify(settings);
+        cookie.set("settings", JSON.stringify(settings));
         //console.log(settings);
     }
 
@@ -193,7 +193,7 @@ Typeboard = (function () {
         //Clears settings
         settings = '';
         //clear cookie
-        document.cookie = '';
+        cookie.empty();
         //clear random color settings
         document.getElementsByTagName('body')[0].style = '';
     }
@@ -323,7 +323,7 @@ Typeboard = (function () {
     //Inits app data with settings
     var loadSettings = function(){
         //If no settings cookie, create with default
-        if(document.cookie == '' || document.cookie == null) {
+        if(cookie("settings") == '' || cookie("settings") == null) {
             settings = {
                 "typeArray" : [],
                 "theme" : "theme_black_white",
@@ -338,18 +338,15 @@ Typeboard = (function () {
                 addTypeface(genColumnID(), localTypefaces[i]);
             }
 
-            document.cookie = JSON.stringify(settings);
+            cookie.set("settings", JSON.stringify(settings), {expire: 180});
 
         } else {
 
             //Cookie found, load and Apply cookie settings to app
             try {
-                console.log(settings);
-                settings = JSON.parse(document.cookie);
-
+                settings = JSON.parse(cookie("settings"));
             } catch (e) {
                 console.log(e);
-                console.log(settings);
                 clearSettings();
             }
 
