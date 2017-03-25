@@ -37,6 +37,7 @@ aside {
     box-sizing: border-box;
     overflow-y: auto;
     transition: .5s height;
+    z-index: 1;
 }
 
 .logo {
@@ -206,12 +207,13 @@ aside::-webkit-scrollbar-thumb,
 }
 
 
+
 /* ==========================================================================
     Sliders
    ========================================================================== */
 input[type=range] {
     -webkit-appearance: none;
-    margin: 1rem 0;
+    margin: .75rem 0;
     width: 100%;
 }
 input[type=range]:focus {
@@ -303,42 +305,35 @@ input[type=range]:focus::-ms-fill-upper {
     width: 1.5rem;
     margin-right: 0.7rem;
 }
+
 [pro-mode="true"] h1 {font-size: 1.1rem;}
 [pro-mode="true"] hr {margin: .5rem 0;}
 [pro-mode="true"] aside {padding: .5rem;}
 [pro-mode="true"] #text_board {margin: .5rem;}
 [pro-mode="true"] textarea {margin: 0rem;}
 [pro-mode="true"] #text_board pre {margin: 0rem;}
+[pro-mode="true"] #tabs {margin: 0.25rem 0.5rem 0 .5rem;}
 [pro-mode="true"] .type_column .charmap {padding: 0 .25rem;}
 
-[pro-mode="true"] input[type=range] {margin: .65rem 0;}
+[pro-mode="true"] .typeboard_controls input[type=range] {margin: .5rem 0;}
 [pro-mode="true"] #type_list li {height: 1.5rem;}
 [pro-mode="true"] #type_list button {
     height: 1.5rem;
     width: 1.5rem;
 }
 
+[pro-mode="true"] .typeboard_controls select,
+[pro-mode="true"] .typeboard_controls input {
+    margin: 0rem;
+    padding: 0;
 
-[pro-mode="true"] .typeboard_controls .control_addon #themeSelector,
-[pro-mode="true"] .typeboard_controls .control_addon #typeDropdown {
-    margin-bottom: 0rem;
 }
 
-[pro-mode="true"] .typeboard_controls .control_addon {
-    display: flex;
-}
-[pro-mode="true"] .typeboard_controls .control_addon button {
-    margin-left: .25rem;
-}
-[pro-mode="true"] .typeboard_controls .control_addon button svg {
-    margin: 0;
-}
-[pro-mode="true"] .typeboard_controls .control_addon button span {
-    display: none;
-}
-[pro-mode="true"] footer {
-    display: none;
-}
+[pro-mode="true"] .typeboard_controls .control_addon {display: flex;}
+[pro-mode="true"] .typeboard_controls .control_addon button {margin-left: .25rem;}
+[pro-mode="true"] .typeboard_controls .control_addon button svg {margin: 0;}
+[pro-mode="true"] .typeboard_controls .control_addon button span {display: none;}
+[pro-mode="true"] footer {display: none;}
 
 
 /* ==========================================================================
@@ -381,18 +376,70 @@ input[type=range]:focus::-ms-fill-upper {
 
 
 /* ==========================================================================
-    Type Dropdown
+    Dropdowns
    ========================================================================== */
-#themeSelector {
+
+
+select {
+    width: 100%;
     margin-bottom: 1rem;
+    padding: .35rem;
+}
+select option, select optgroup {
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
-#typeDropdown{
+
+input[type=text]{
     box-sizing: border-box;
     width: 100%;
     margin-bottom: 1rem;
     cursor: text;
+    padding: .35rem;
 }
+
+
+/*AutoComplete*/
+
+.autocomplete-suggestions {
+    text-align: left;
+    cursor: pointer;
+    color: var(--text-color);
+    border: 1px solid var(--accent-color);
+    border-top: 0;
+    background: var(--background-color);
+
+    box-shadow: -1px 1px 3px var(--accent-color);
+
+    /* core styles should not be changed */
+    position: absolute;
+    display: none;
+    z-index: 9999;
+    max-height: 254px;
+    overflow: hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+.autocomplete-suggestion {
+    position: relative;
+    padding: 0 .6em;
+    line-height: 23px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+.autocomplete-suggestion b {
+    font-weight: 400;
+    text-decoration: underline;
+}
+.autocomplete-suggestion.selected {
+    background: var(--text-color);
+    color: var(--background-color);
+}
+
 
 
 /* ==========================================================================
@@ -441,6 +488,39 @@ input[type=range]:focus::-ms-fill-upper {
 
 }
 
+
+/* ==========================================================================
+    Tabs
+   ========================================================================== */
+#tabs {
+    display: flex;
+    margin: 1rem 1rem 0 1rem;
+    border-bottom: .1rem solid var(--text-color);
+    overflow-x: auto;
+}
+
+#tabs button {
+    margin-right: .5rem;
+    border-bottom: none;
+    transform: translateY(0rem);
+    box-shadow: 0 0rem 0 var(--text-color);
+}
+#tabs button.current {
+    background: var(--text-color);
+    color: var(--background-color);
+    cursor: default;
+    pointer-events: none;
+}
+
+#tabs button.current svg {
+    fill: var(--background-color);
+}
+/* ==========================================================================
+    CSS Output
+   ========================================================================== */
+#output {
+    white-space: pre;
+}
 
 /* ==========================================================================
     Text Board
@@ -555,9 +635,7 @@ button, .button {
     text-decoration: none;
     padding: .2rem .5rem;
     border: .1rem solid var(--text-color);
-    transform: translateY(-.1rem);
-    box-shadow: 0 .1rem 0 var(--text-color);
-    transition: .1s box-shadow, .1s transform;
+    transition: .1s background-color, .1s color;
 }
 
 
@@ -566,16 +644,24 @@ button:focus,
 .button:hover,
 .button:focus {
     cursor: pointer;
-    transform: translateY(-.2rem);
-    box-shadow: 0 .2rem 0 var(--text-color);
-    transition: .1s box-shadow, .1s transform;
+    background-color: var(--text-color);
+    color: var(--background-color);
+    transition: .1s background-color, .1s color;
+}
+
+
+button:hover svg,
+button:focus svg,
+.button:hover svg,
+.button:focus svg {
+    fill: var(--background-color);
+    transition: .1s background-color, .1s color;
 }
 
 button:active,
 .button:active {
-    transform: translateY(0rem);
-    box-shadow: 0 0rem 0 var(--text-color);
-    transition: .1s box-shadow, .1s transform;
+    background-color: var(--accent-color);
+    transition: .1s background-color, .1s color;
 }
 
 button svg,
@@ -586,13 +672,15 @@ button svg,
     align-self: center;
 }
 
-
-select {
-    width: 100%;
-    background-color: transparent;
+button.disabled,
+button[disabled] {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    pointer-events: none;
 }
-select option, select optgroup {
-    color: black;
+button .disabled svg,
+button[disabled] svg {
+    fill: var(--accent-color);
 }
 
 textarea, input[type=text] {
@@ -600,7 +688,6 @@ textarea, input[type=text] {
     background-color: transparent;
     border: .1rem solid var(--text-color);
     box-sizing: border-box;
-    margin-bottom: 1rem;
 }
 input[type=text] {
     padding: .35rem;
@@ -609,47 +696,6 @@ input[type=text] {
 label.button {
     display: inline-block;
 }
-
-/* ==========================================================================
-   AutoComplete
-   ========================================================================== */
-
-.autocomplete-suggestions {
-    text-align: left;
-    cursor: pointer;
-    color: var(--text-color);
-    border: 1px solid var(--accent-color);
-    border-top: 0;
-    background: var(--background-color);
-    background: white;
-
-    box-shadow: -1px 1px 3px var(--accent-color);
-
-    /* core styles should not be changed */
-    position: absolute;
-    display: none;
-    z-index: 9999;
-    max-height: 254px;
-    overflow: hidden;
-    overflow-y: auto;
-    box-sizing: border-box;
-}
-.autocomplete-suggestion {
-    position: relative;
-    padding: 0 .6em;
-    line-height: 23px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 1rem;
-    color: var(--text-color);
-}
-.autocomplete-suggestion b {
-    font-weight: 400;
-    text-decoration: underline;
-}
-.autocomplete-suggestion.selected { background: var(--accent-color); }
-
 
 
 /* ==========================================================================
@@ -715,6 +761,12 @@ label.button {
 
 /*Color Themes*/
 
+.theme.theme_grey_tan {
+    --background-color:         rgba(204, 200, 175, 0.996);
+    --text-color:               rgba(73, 71, 59, 0.996);
+    --accent-color:             rgba(177, 172, 152, 0.996);
+}
+
 .theme.theme_yellow_pink {
     --background-color:         rgba(255, 0, 100, 0.996);
     --text-color:               rgba(255, 255, 0, 0.996);
@@ -746,6 +798,12 @@ label.button {
     --text-color:               rgba(187, 215, 52, 0.996);
     --background-color:         rgba(64, 44, 53, 0.996);
     --accent-color:             rgba(217, 7, 118, 0.996);
+}
+
+.theme.theme_sea_royal {
+    --text-color:               rgba(131, 230, 179, 0.996);
+    --background-color:         rgba(88, 28, 53, 0.996);
+    --accent-color:             rgba(87, 123, 49, 0.996);
 }
 
 

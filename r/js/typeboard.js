@@ -11,7 +11,7 @@
 //TODO: Test
 
 //TODO: Favorites/Hide Type
-//TODO: Browser type
+//TODO: Browse type
 //TODO: Generate CSS code
 //TODO: Save random colors into palette
 //TODO: Add 'unwind' function to get previous random
@@ -184,7 +184,7 @@ Typeboard = (function () {
             settings[settingsKey] = settingsValue;
         }
         //Update cookie
-        cookie.set("settings", JSON.stringify(settings));
+        cookie.set("settings", JSON.stringify(settings), {expires: 100});
         //console.log(settings);
     }
 
@@ -202,6 +202,8 @@ Typeboard = (function () {
         cookie.empty();
         //clear random color settings
         document.getElementsByTagName('body')[0].style = '';
+        //Clears output CSS
+        document.querySelector('#output').innerHTML = '';
     }
 
     //Changes CSS theme
@@ -239,7 +241,7 @@ Typeboard = (function () {
     //Toggles Pro Mode
     var togglePro = function (proChecked) {
         updatePro(proChecked);
-        cookie.set("pro", proChecked);
+        cookie.set("pro", proChecked, {expires: 100});
     }
 
     //Update Pro Mode checkbox
@@ -326,18 +328,24 @@ Typeboard = (function () {
 
 
     //Gets the current type list through Google Fonts API
-    var loadGFontsList = function(){
+    var loadGFontsList = function(callback){
         var url = "https://www.googleapis.com/webfonts/v1/webfonts?key=" + key;
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                gFontsList = JSON.parse(xhttp.responseText).items;
+                if(this.status == 200) {
+                    gFontsList = JSON.parse(xhttp.responseText).items;
+                    console.log(gFontsList.length + " Google fonts loaded.");
+                    callback(true);
+                } else {
+                    console.log("STATUS CODE: " + this.status);
+                    callback(false);
+                }
             }
         }
         xhttp.open("GET", url, true);
         xhttp.send();
-    }
-
+    };
 
     //Toggles open and close the mobile menu
     var toggleMenu = function () {
@@ -351,7 +359,7 @@ Typeboard = (function () {
     //Inits app data with settings
     var loadSettings = function(){
         //If no settings cookie, create with default
-        if(cookie("settings") == '' || cookie("settings") == null) {
+        if(cookie("settings") == '' || cookie("settings") == {} || cookie("settings") == null) {
             settings = {
                 "typeArray" : [],
                 "theme" : "theme_black_white",
@@ -408,57 +416,58 @@ Typeboard = (function () {
 
 
     var init = function () {
-        //Loads settings from cookie
-        loadGFontsList();
-        loadCharMap();
 
-
-
+        //Feature detection of CSS Variables
         var browserCanUseCssVariables = function() {
             return window.CSS && window.CSS.supports && window.CSS.supports('--fake-var', 0);
         }
-
         if (!browserCanUseCssVariables()){
             document.getElementById('featureDetection').className = '';
             document.getElementById('featureDetection').getElementsByTagName('button')[0].addEventListener('click', function(){
                 document.getElementById('featureDetection').className = 'hidden';
             });
-
-            //alert('Your browser does not support CSS Variables and/or CSS.supports. :-(');
         }
 
+        loadCharMap();
 
-        //https://goodies.pixabay.com/javascript/auto-complete/demo.html
-        new autoComplete({
-            selector: 'input[id="typeDropdown"]',
-            minChars: 2,
-            source: function(term, suggest){
-                term = term.toLowerCase();
-                var choices = gFontsList;
-                var matches = [];
-                for (var i = 0; i < choices.length; i++)
-                    if (~choices[i].family.toLowerCase().indexOf(term)) matches.push(choices[i].family);
-                suggest(matches);},
-            onSelect: function(e, term, item){
-                var typeName = item.getAttribute('data-val');
-                addTypeface(genColumnID(), typeName);
-                document.getElementById('typeDropdown').value = "";
+        //Fetches Google Fonts list
+        loadGFontsList(function(response){
+            //Once GFonts is loaded, init AutoComplete
+            if(response){
+                try {
+                    //https://goodies.pixabay.com/javascript/auto-complete/demo.html
+                    new autoComplete({
+                        selector: 'input[id="typeDropdown"]',
+                        minChars: 2,
+                        source: function(term, suggest){
+                            term = term.toLowerCase();
+                            var choices = gFontsList;
+                            var matches = [];
+                            for (var i = 0; i < choices.length; i++)
+                                if (~choices[i].family.toLowerCase().indexOf(term)) matches.push(choices[i].family);
+                            suggest(matches);},
+                        onSelect: function(e, term, item){
+                            var typeName = item.getAttribute('data-val');
+                            addTypeface(genColumnID(), typeName);
+                            document.getElementById('typeDropdown').value = "";
+                        }
+                    });
+                } catch (e) {
+                    console.log("AutoComplete failed to init.");
+                    console.log(e);
+                }
+
+                //Load settings after GFonts loaded
+                loadSettings();
             }
         });
 
 
-
-
-        setTimeout(function() {
-            loadSettings();
-            console.log("                  /)              /)");
-            console.log("_/_      __   _  (/_ __ __  __  _(/ ");
-            console.log("(__(_/_ /_)__(/_/_) (_)(_(_/ (_(_(_ ");
-            console.log("  .-/.-/                            ");
-            console.log(" (_/(_/                             ");
-            console.log(gFontsList.length + " Google fonts loaded.")
-
-        }, 600);
+        console.log("                  /)              /)");
+        console.log("_/_      __   _  (/_ __ __  __  _(/ ");
+        console.log("(__(_/_ /_)__(/_/_) (_)(_(_/ (_(_(_ ");
+        console.log("  .-/.-/                            ");
+        console.log(" (_/(_/                             ");
 
     };
 
