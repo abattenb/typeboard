@@ -297,43 +297,51 @@ input[type=range]:focus::-ms-fill-upper {
 /* ==========================================================================
     Pro Mode
    ========================================================================== */
-[pro-mode="true"] h2,
-[pro-mode="true"] .sub_header {
-    display: none;
-}
-[pro-mode="true"] .logo {
-    width: 1.5rem;
-    margin-right: 0.7rem;
-}
 
-[pro-mode="true"] h1 {font-size: 1.1rem;}
+[pro-mode="true"] h2 {display: none;}
 [pro-mode="true"] hr {margin: .5rem 0;}
-[pro-mode="true"] aside {padding: .5rem;}
-[pro-mode="true"] #text_board {margin: .5rem;}
-[pro-mode="true"] textarea {margin: 0rem;}
-[pro-mode="true"] #text_board pre {margin: 0rem;}
-[pro-mode="true"] #tabs {margin: 0.25rem 0.5rem 0 .5rem;}
-[pro-mode="true"] .type_column .charmap {padding: 0 .25rem;}
-
-[pro-mode="true"] .typeboard_controls input[type=range] {margin: .5rem 0;}
-[pro-mode="true"] #type_list li {height: 1.5rem;}
-[pro-mode="true"] #type_list button {
-    height: 1.5rem;
-    width: 1.5rem;
-}
-
-[pro-mode="true"] .typeboard_controls select,
-[pro-mode="true"] .typeboard_controls input {
-    margin: 0rem;
-    padding: 0;
-
-}
 
 [pro-mode="true"] .typeboard_controls .control_addon {display: flex;}
 [pro-mode="true"] .typeboard_controls .control_addon button {margin-left: .25rem;}
 [pro-mode="true"] .typeboard_controls .control_addon button svg {margin: 0;}
 [pro-mode="true"] .typeboard_controls .control_addon button span {display: none;}
 [pro-mode="true"] footer {display: none;}
+[pro-mode="true"] #text_board {margin: .5rem;}
+[pro-mode="true"] #text_board pre {margin: 0rem;}
+[pro-mode="true"] textarea {margin: 0rem;}
+[pro-mode="true"] #tabs {margin: 0.25rem 0.5rem 0 .5rem;}
+[pro-mode="true"] .type_column .charmap {padding: 0 .25rem;}
+
+[pro-mode="true"] .typeboard_controls input,
+[pro-mode="true"] .typeboard_controls select {
+    margin: 0rem;
+}
+
+@media (min-width: 45em) {
+
+    [pro-mode="true"] .sub_header {display: none;}
+    [pro-mode="true"] .logo {
+        width: 1.5rem;
+        margin-right: 0.7rem;
+    }
+
+    [pro-mode="true"] h1 {font-size: 1.1rem;}
+    [pro-mode="true"] aside {padding: .5rem;}
+
+    [pro-mode="true"] .typeboard_controls input[type=range] {margin: .5rem 0;}
+    [pro-mode="true"] #type_list li {height: 1.5rem;}
+    [pro-mode="true"] #type_list button {
+        height: 1.5rem;
+        width: 1.5rem;
+    }
+
+    [pro-mode="true"] .typeboard_controls input,
+    [pro-mode="true"] .typeboard_controls select {
+        padding: 0;
+    }
+
+
+}
 
 
 /* ==========================================================================
@@ -345,7 +353,6 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .checkbox + label {
-    background-color: var(--background-color);
     display: flex;
     cursor: pointer;
     padding: 0.5rem 0;
@@ -363,7 +370,6 @@ input[type=range]:focus::-ms-fill-upper {
     height: 1rem;
     background: var(--text-color);
     color: var(--background-color);
-    transition: .1s color;
     line-height: 1.3;
     margin-right: 0.6rem;
     text-align: center;
@@ -371,7 +377,6 @@ input[type=range]:focus::-ms-fill-upper {
 
 .checkbox:checked + label:before {
     content: '\2714';
-    transition: .1s color;
 }
 
 
@@ -635,6 +640,7 @@ button, .button {
     text-decoration: none;
     padding: .2rem .5rem;
     border: .1rem solid var(--text-color);
+    color: var(--text-color);
     transition: .1s background-color, .1s color;
 }
 

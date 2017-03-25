@@ -202,8 +202,6 @@ Typeboard = (function () {
         cookie.empty();
         //clear random color settings
         document.getElementsByTagName('body')[0].style = '';
-        //Clears output CSS
-        document.querySelector('#output').innerHTML = '';
     }
 
     //Changes CSS theme
