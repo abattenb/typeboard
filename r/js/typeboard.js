@@ -11,8 +11,8 @@
 //TODO: Test
 
 //TODO: Favorites/Hide Type
+//TODO: Browser type
 //TODO: Generate CSS code
-//TODO: Redo the way cookies are handled (path, expire)
 //TODO: Save random colors into palette
 //TODO: Add 'unwind' function to get previous random
 //TODO: Add direct color adjustment
@@ -86,11 +86,17 @@ Typeboard = (function () {
 
 
         //Creates a type control button on side pane
-        var typeControl = document.createElement('button');
+        var typeControl = document.createElement('li');
         typeControl.innerHTML = typeface;
         typeControl.setAttribute('type_id', typeId);
         typeControl.style.fontFamily = typeface;
-        document.getElementById('type_list').appendChild(typeControl);
+
+        //Creates remove type button
+        var removeType = document.createElement('button');
+        removeType.innerHTML = 'X';
+        removeType.setAttribute('remove_type_id', typeId);
+
+        document.querySelector('#type_list ul').appendChild(typeControl).appendChild(removeType);
 
         //Adds type column to DOM
         addTypeColumn(typeId, typeface);
@@ -131,7 +137,7 @@ Typeboard = (function () {
         removeTypeColumn(typeId);
 
         //Remove button
-        document.querySelector("#type_list button[type_id='" + typeId + "'").remove();
+        document.querySelector("#type_list [type_id='" + typeId + "']").remove();
 
     }
 
@@ -189,7 +195,7 @@ Typeboard = (function () {
         //Clears samples
         document.querySelector('#text_board pre').innerHTML = '';
         //Clears type list
-        document.querySelector('#type_list').innerHTML = '';
+        document.querySelector('#type_list ul').innerHTML = '';
         //Clears settings
         settings = '';
         //clear cookie
@@ -228,6 +234,28 @@ Typeboard = (function () {
         document.getElementById('text_input').innerHTML = text_value;
         updateSettings("sampleText", text_value);
     }
+
+
+    //Toggles Pro Mode
+    var togglePro = function (proChecked) {
+        updatePro(proChecked);
+        cookie.set("pro", proChecked);
+    }
+
+    //Update Pro Mode checkbox
+    var updatePro = function(pro) {
+        //Sets the checkbox
+        if (pro.toString() === 'true'){
+            document.getElementById('togglePro').checked = true;
+        } else {
+            document.getElementById('togglePro').checked = false;
+        }
+
+        document.getElementsByTagName('body')[0].setAttribute("pro-mode", pro);
+
+        //document.getElementById('type_board').style.setProperty('--font-style', italic, null);
+    }
+
 
     //Reads italic toggle state boolean from checkbox
     var toggleItalics = function (italicChecked){
@@ -338,7 +366,7 @@ Typeboard = (function () {
                 addTypeface(genColumnID(), localTypefaces[i]);
             }
 
-            cookie.set("settings", JSON.stringify(settings), {expire: 180});
+            cookie.set("settings", JSON.stringify(settings), {expires: 180});
 
         } else {
 
@@ -361,6 +389,12 @@ Typeboard = (function () {
             }
 
         }
+
+        if (cookie("pro") == '' || cookie("pro") == null) {
+            cookie.set("pro", false, {expires: 100});
+        }
+
+        updatePro(cookie("pro"));
 
         //Update app with settings
         updateItalics(settings.italic);                 //Italic
@@ -432,6 +466,7 @@ Typeboard = (function () {
     return {
         init:init,
         loadSettings:loadSettings,
+        togglePro:togglePro,
         removeTypeface:removeTypeface,
         updateSize:updateSize,
         updateWeight:updateWeight,

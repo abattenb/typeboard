@@ -45,6 +45,12 @@ Author: Andrew Battenburg
         margin-left: 0;
     }
 
+    #type_list button {
+        height: 3rem;
+        width: 3rem;
+        font-size: 1.2rem;
+
+    }
 
 
 }

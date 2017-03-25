@@ -63,6 +63,12 @@ h1 {
     margin: 0 0 .2rem 0;
 }
 
+h2 {
+    font-size: 1.3rem;
+    font-weight: 100;
+    margin: 0 0 .5rem 0;
+}
+
 .sub_header {
     font-size: .8rem;
     position: relative;
@@ -195,6 +201,11 @@ aside::-webkit-scrollbar-thumb,
     margin-left: 1rem;
 }
 
+.typeboard_controls .control_addon {
+    display: block;
+}
+
+
 /* ==========================================================================
     Sliders
    ========================================================================== */
@@ -282,8 +293,100 @@ input[type=range]:focus::-ms-fill-upper {
 
 
 /* ==========================================================================
+    Pro Mode
+   ========================================================================== */
+[pro-mode="true"] h2,
+[pro-mode="true"] .sub_header {
+    display: none;
+}
+[pro-mode="true"] .logo {
+    width: 1.5rem;
+    margin-right: 0.7rem;
+}
+[pro-mode="true"] h1 {font-size: 1.1rem;}
+[pro-mode="true"] hr {margin: .5rem 0;}
+[pro-mode="true"] aside {padding: .5rem;}
+[pro-mode="true"] #text_board {margin: .5rem;}
+[pro-mode="true"] textarea {margin: 0rem;}
+[pro-mode="true"] #text_board pre {margin: 0rem;}
+[pro-mode="true"] .type_column .charmap {padding: 0 .25rem;}
+
+[pro-mode="true"] input[type=range] {margin: .65rem 0;}
+[pro-mode="true"] #type_list li {height: 1.5rem;}
+[pro-mode="true"] #type_list button {
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+
+[pro-mode="true"] .typeboard_controls .control_addon #themeSelector,
+[pro-mode="true"] .typeboard_controls .control_addon #typeDropdown {
+    margin-bottom: 0rem;
+}
+
+[pro-mode="true"] .typeboard_controls .control_addon {
+    display: flex;
+}
+[pro-mode="true"] .typeboard_controls .control_addon button {
+    margin-left: .25rem;
+}
+[pro-mode="true"] .typeboard_controls .control_addon button svg {
+    margin: 0;
+}
+[pro-mode="true"] .typeboard_controls .control_addon button span {
+    display: none;
+}
+[pro-mode="true"] footer {
+    display: none;
+}
+
+
+/* ==========================================================================
+    Checkboxes
+   ========================================================================== */
+
+.checkbox {
+    display: none;
+}
+
+.checkbox + label {
+    background-color: var(--background-color);
+    display: flex;
+    cursor: pointer;
+    padding: 0.5rem 0;
+    user-select: none;
+}
+
+
+
+
+.checkbox + label:before {
+    content: '';
+    justify-content: center;
+    font-size: 14px;
+    width: 1rem;
+    height: 1rem;
+    background: var(--text-color);
+    color: var(--background-color);
+    transition: .1s color;
+    line-height: 1.3;
+    margin-right: 0.6rem;
+    text-align: center;
+}
+
+.checkbox:checked + label:before {
+    content: '\2714';
+    transition: .1s color;
+}
+
+
+/* ==========================================================================
     Type Dropdown
    ========================================================================== */
+#themeSelector {
+    margin-bottom: 1rem;
+}
+
 #typeDropdown{
     box-sizing: border-box;
     width: 100%;
@@ -298,20 +401,46 @@ input[type=range]:focus::-ms-fill-upper {
 
 #type_list{}
 
-#type_list button {
+
+#type_list ul {
+    padding: 0;
+}
+#type_list li {
     display: flex;
-    width: 100%;
-    height: 2rem;
-    line-height: 1;
+    align-items: center;
+    border-bottom: .1rem solid var(--accent-color);
+    list-style-type: none;
 }
-#type_list button:after {
-    content:"\00d7";
+#type_list li:first-of-type {
+    border-top: .1rem solid var(--accent-color);
+
+}
+#type_list button {
     font-family: Arial;
-    font-weight: bold;
-    flex: 0;
+    justify-content: center;
+    height: 2rem;
+    width: 2rem;
+    text-align: center;
     margin-left: auto;
-    font-size: 1.2rem;
+    font-size: 0.8rem;
+    border: none;
+    box-shadow: none;
+    transform: translateY(0rem);
+    color: var(--text-color);
+    background-color: var(--background-color);
+    transition: .1s color, .1s background-color;
 }
+
+#type_list button:hover,
+#type_list button:hover,
+#type_list button:active {
+    transform: translateY(0rem);
+    color: var(--background-color);
+    background-color: var(--text-color);
+    transition: .1s color, .1s background-color;
+
+}
+
 
 /* ==========================================================================
     Text Board
@@ -428,7 +557,6 @@ button, .button {
     border: .1rem solid var(--text-color);
     transform: translateY(-.1rem);
     box-shadow: 0 .1rem 0 var(--text-color);
-    /*border-radius: .1rem;*/
     transition: .1s box-shadow, .1s transform;
 }
 
@@ -470,7 +598,7 @@ select option, select optgroup {
 textarea, input[type=text] {
     width: 100%;
     background-color: transparent;
-    border: .1rem solid var(--accent-color);
+    border: .1rem solid var(--text-color);
     box-sizing: border-box;
     margin-bottom: 1rem;
 }

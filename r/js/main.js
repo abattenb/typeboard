@@ -12,8 +12,8 @@ window.addEventListener('load', function() {
 
     //Remove Typeface
     document.getElementById('type_list').addEventListener('click', function(event) {
-        if (event.target.hasAttributes('type_id')) {
-            Typeboard.removeTypeface(event.target.getAttribute('type_id'));
+        if (event.target.hasAttribute('remove_type_id')) {
+            Typeboard.removeTypeface(event.target.getAttribute('remove_type_id'));
         }
     });
 
@@ -24,6 +24,10 @@ window.addEventListener('load', function() {
         }
     });
 
+    //Pro Mode
+    document.getElementById('togglePro').addEventListener('change', function(){
+        Typeboard.togglePro(this.checked);
+    }, false);
 
 
     //Font Size slider
