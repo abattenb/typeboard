@@ -292,7 +292,9 @@ input[type=range]:focus::-ms-fill-upper {
     background: var(--accent-color);
 }
 
-
+.typeboard_controls #undo_colors {
+    display: none;
+}
 
 /* ==========================================================================
     Pro Mode
@@ -316,6 +318,10 @@ input[type=range]:focus::-ms-fill-upper {
 [pro-mode="true"] .typeboard_controls select {
     margin: 0rem;
 }
+[pro-mode="true"] .typeboard_controls #undo_colors {
+    display: flex;
+}
+
 
 @media (min-width: 45em) {
 

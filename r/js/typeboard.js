@@ -14,7 +14,6 @@
 //TODO: Browse type
 //TODO: Generate CSS code
 //TODO: Save random colors into palette
-//TODO: Add 'unwind' function to get previous random
 //TODO: Add direct color adjustment
 //TODO: Figure out build tools
 
@@ -42,6 +41,7 @@ Typeboard = (function () {
     var settings = {};
     var gFontsList = [];
     var charmap;
+    var randomColorsArray = [];
 
     //Used to both seed initial typefaces and prevent calling font APIs
     var localTypefaces = ['Arial', 'Times New Roman', 'Courier'];
@@ -198,9 +198,10 @@ Typeboard = (function () {
         document.querySelector('#type_list ul').innerHTML = '';
         //Clears settings
         settings = '';
-        //clear cookie
+        //Clears all cookies
         cookie.empty();
         //clear random color settings
+        randomColorsArray = [];
         document.getElementsByTagName('body')[0].style = '';
     }
 
@@ -305,10 +306,27 @@ Typeboard = (function () {
         var textColor = randomRGBA(0.996);
         var backgroundColor =  randomRGBA(0.996);
         var accentColor = randomRGBA(0.996);
+
+        var colorObject = [textColor, backgroundColor, accentColor];
+
+        randomColorsArray.push(colorObject);
+
+        //Saves last 99 random colors
+        while(randomColorsArray.length > 99) {
+            randomColorsArray.shift();
+        }
+
+        //console.log(randomColorsArray);
+
+        updateRandomColor(textColor, backgroundColor, accentColor);
+    };
+
+
+    var updateRandomColor = function(textColor, backgroundColor, accentColor) {
         document.getElementsByTagName('body')[0].style.setProperty('--text-color', textColor, null);
         document.getElementsByTagName('body')[0].style.setProperty('--background-color', backgroundColor, null);
         document.getElementsByTagName('body')[0].style.setProperty('--accent-color', accentColor, null);
-    }
+    };
 
     //Accepts an opacity value
     //Returns a random RGBA formatted for CSS
@@ -318,6 +336,21 @@ Typeboard = (function () {
         var blue = Math.floor(Math.random() * 257);
         return "rgba(" + red + ", " + green + ", " + blue + ", " + opacity + ")";
     }
+
+    //Applies the previous random palette
+    var undoRandom = function(){
+
+        if(randomColorsArray.length > 1){
+            randomColorsArray.pop();
+            var tempColorArray = randomColorsArray[randomColorsArray.length-1];
+            updateRandomColor(tempColorArray[0], tempColorArray[1], tempColorArray[2]);
+        } else if (randomColorsArray.length == 1){
+            randomColorsArray.pop();
+            updateTheme('theme_black_white');
+        } else {
+            console.log("No random colors.");
+        }
+    };
 
     var randomTypeface = function() {
         var random = Math.floor(Math.random() * (gFontsList.length + 1 ));
@@ -483,6 +516,7 @@ Typeboard = (function () {
         toggleItalics:toggleItalics,
         clearSettings:clearSettings,
         randomColors:randomColors,
+        undoRandom:undoRandom,
         randomTypeface:randomTypeface,
         toggleMenu:toggleMenu
 

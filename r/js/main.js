@@ -65,6 +65,10 @@ window.addEventListener('load', function() {
     document.getElementById('random_colors').addEventListener('click', function(){
        Typeboard.randomColors();
     }, false);
+    //Random color theme
+    document.getElementById('undo_colors').addEventListener('click', function(){
+       Typeboard.undoRandom();
+    }, false);
 
     //Random color theme
     document.getElementById('random_typeface').addEventListener('click', function(){
