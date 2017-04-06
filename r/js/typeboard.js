@@ -216,7 +216,7 @@ Typeboard = (function () {
                 option[j].removeAttribute('selected');
             }
         }
-        document.getElementsByTagName('body')[0].style = '';
+        document.getElementsByTagName('body')[0].removeAttribute('style');
         document.getElementsByTagName('body')[0].className = "theme " + newTheme;
 
         var themeOption = document.getElementById('themeSelector').querySelector('[value=' + newTheme + ']');
