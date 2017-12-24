@@ -4,8 +4,9 @@
     <main>
       <SampleText/>
       <div class="characterBoard">
-        <Typeface/>
-        <Typeface/>
+        <div v-for="(typeface, $index) in settings.selectedType" :key="$index">
+        <Typeface :typeface="typeface"/>
+        </div>
       </div>
     </main>
   </div>

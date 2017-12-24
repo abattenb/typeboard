@@ -1,7 +1,7 @@
 <template>
-  <div class="typeColumn">
+  <div class="typeColumn" :style="{fontFamily: typeface}">
     <h2 class="typeface">
-        Arial
+        {{ typeface }}
     </h2>
     <div class="charmap">
         <div>&nbsp;</div>
@@ -721,6 +721,7 @@
 <script>
 export default {
   name: 'Typeface',
+  props: ['typeface'],
   data() {
     return {
     };
