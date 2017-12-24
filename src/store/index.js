@@ -11,7 +11,7 @@ const store = new Vuex.Store({
     settings: {
       selectedType: ['Arial', 'Times New Roman', 'Courier'],
       theme: 'theme_gold_teal',
-      fontSize: '1',
+      fontSize: '2',
       fontWeight: '400',
       letterspacing: '1',
       italics: 'normal',
