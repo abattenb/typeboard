@@ -8,7 +8,11 @@ Author: Andrew Battenburg
   ==========================================================================  */
 
 @import 'blankType.css';
+@import 'proMode.css';
+@import 'sliders.css';
+@import 'mobile.css';
 @import 'themes.css';
+
 /*==========================================================================
   Global
   ==========================================================================  */
@@ -27,8 +31,20 @@ Author: Andrew Battenburg
 
 html {
   overflow: hidden;
+  font-family: sans-serif;
 }
 
+#app {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: .2s all;
+}
+
+body {
+  margin: 0;
+}
+
+/* Sidebar */
 aside {
   position: fixed;
   padding: 1rem;
@@ -42,35 +58,17 @@ aside {
   z-index: 1;
 }
 
-.logo {
-  float: left;
-  margin-right: 1rem;
-  fill: var(--text-color);
-  width: 3.6rem;
-}
-
-main {
-  margin-left: 20rem;
-  height: 100vh;
-  overflow-x: hidden;
-  overflow-y: scroll;
-}
-
-body {
-  background-color: var(--background-color);
-  color: var(--text-color);
-}
-
 h1 {
   font-family: Tahoma, sans-serif;
   padding: 0;
   margin: 0 0 .2rem 0;
 }
 
-h2 {
-  font-size: 1.3rem;
-  font-weight: 100;
-  margin: 0 0 .5rem 0;
+.logo {
+  float: left;
+  margin-right: 1rem;
+  fill: var(--text-color);
+  width: 3.6rem;
 }
 
 .sub_header {
@@ -95,6 +93,22 @@ footer {
 footer a {
   color: var(--text-color);
 }
+
+/* Main Area */
+main {
+  margin-left: 20rem;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+
+h2 {
+  font-size: 1.3rem;
+  font-weight: 100;
+  margin: 0 0 .5rem 0;
+}
+
 
 /*==========================================================================
   Text Selection
@@ -162,221 +176,6 @@ main::-webkit-scrollbar-track, aside::-webkit-scrollbar-track, .autocomplete-sug
 
 main::-webkit-scrollbar-thumb, aside::-webkit-scrollbar-thumb, .autocomplete-suggestions::-webkit-scrollbar-thumb, #text_board pre::-webkit-scrollbar-thumb {
   background-color: var(--text-color);
-}
-
-/*==========================================================================
-  Controls
-  ==========================================================================  */
-
-.typeboard_controls {}
-
-.typeboard_controls .control {
-  display: flex;
-}
-
-.typeboard_controls .control>* {
-  align-self: center;
-}
-
-.typeboard_controls .control span {
-  flex: 0 6rem;
-  text-align: right;
-}
-
-.typeboard_controls .control button {
-  margin-left: 1rem;
-}
-
-.typeboard_controls .control_addon {
-  display: block;
-}
-
-/*==========================================================================
-  Sliders
-  ==========================================================================  */
-
-input[type=range] {
-  -webkit-appearance: none;
-  margin: .75rem 0;
-  width: 100%;
-}
-
-input[type=range]:focus {
-  /*outline: none;*/
-}
-
-input[type=range]::-webkit-slider-runnable-track {
-  width: 100%;
-  height: .5rem;
-  cursor: pointer;
-  background: var(--accent-color);
-}
-
-input[type=range]::-webkit-slider-thumb {
-  height: 1rem;
-  width: 1rem;
-  background: var(--text-color);
-  cursor: pointer;
-  -webkit-appearance: none;
-  margin-top: -.25rem;
-}
-
-input[type=range]:focus::-webkit-slider-runnable-track {
-  background: var(--accent-color);
-}
-
-input[type=range]::-moz-range-track {
-  width: 100%;
-  height: .5rem;
-  cursor: pointer;
-  background: var(--accent-color);
-}
-
-input[type=range]::-moz-range-thumb {
-  height: 1rem;
-  width: 1rem;
-  background: var(--text-color);
-  cursor: pointer;
-  -webkit-appearance: none;
-  margin-top: -.25rem;
-  border-radius: 0;
-  border: none;
-}
-
-input[type=range]::-ms-track {
-  width: 100%;
-  height: 8.4px;
-  cursor: pointer;
-  animate: 0.2s;
-  background: transparent;
-  border-color: transparent;
-  border-width: 16px 0;
-  color: transparent;
-}
-
-input[type=range]::-ms-fill-lower {
-  background: var(--accent-color);
-  border: 0.2px solid #010101;
-  border-radius: 2.6px;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-}
-
-input[type=range]::-ms-fill-upper {
-  background: var(--accent-color);
-  border: 0.2px solid #010101;
-  border-radius: 2.6px;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-}
-
-input[type=range]::-ms-thumb {
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  border: 1px solid #000000;
-  height: 36px;
-  width: 16px;
-  border-radius: 3px;
-  background: #ffffff;
-  cursor: pointer;
-}
-
-input[type=range]:focus::-ms-fill-lower {
-  background: var(--accent-color);
-}
-
-input[type=range]:focus::-ms-fill-upper {
-  background: var(--accent-color);
-}
-
-.typeboard_controls #undo_colors {
-  display: none;
-}
-
-/*==========================================================================
-  Pro Mode
-  ==========================================================================  */
-
-[pro-mode="true"] h2 {
-  display: none;
-}
-
-[pro-mode="true"] hr {
-  margin: .5rem 0;
-}
-
-[pro-mode="true"] .typeboard_controls .control_addon {
-  display: flex;
-}
-
-[pro-mode="true"] .typeboard_controls .control_addon button {
-  margin-left: .25rem;
-}
-
-[pro-mode="true"] .typeboard_controls .control_addon button svg {
-  margin: 0;
-}
-
-[pro-mode="true"] .typeboard_controls .control_addon button span {
-  display: none;
-}
-
-[pro-mode="true"] footer {
-  display: none;
-}
-
-[pro-mode="true"] #text_board {
-  margin: .5rem;
-}
-
-[pro-mode="true"] #text_board pre {
-  margin: 0rem;
-}
-
-[pro-mode="true"] textarea {
-  margin: 0rem;
-}
-
-[pro-mode="true"] #tabs {
-  margin: 0.25rem 0.5rem 0 .5rem;
-}
-
-[pro-mode="true"] .type_column .charmap {
-  padding: 0 .25rem;
-}
-
-[pro-mode="true"] .typeboard_controls input, [pro-mode="true"] .typeboard_controls select {
-  margin: 0rem;
-}
-
-[pro-mode="true"] .typeboard_controls #undo_colors {
-  display: flex;
-}
-
-@media (min-width: 45em) {
-  [pro-mode="true"] .sub_header {
-    display: none;
-  }
-  [pro-mode="true"] .logo {
-    width: 1.5rem;
-    margin-right: 0.7rem;
-  }
-  [pro-mode="true"] h1 {
-    font-size: 1.1rem;
-  }
-  [pro-mode="true"] aside {
-    padding: .5rem;
-  }
-  [pro-mode="true"] .typeboard_controls input[type=range] {
-    margin: .5rem 0;
-  }
-  [pro-mode="true"] #type_list li {
-    height: 1.5rem;
-  }
-  [pro-mode="true"] #type_list button {
-    height: 1.5rem;
-    width: 1.5rem;
-  }
-  [pro-mode="true"] .typeboard_controls input, [pro-mode="true"] .typeboard_controls select {
-    padding: 0;
-  }
 }
 
 /*==========================================================================

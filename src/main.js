@@ -3,7 +3,9 @@
 import Vue from 'vue';
 
 import '@/assets/styles/styles.css';
+
 import App from './App';
+
 
 Vue.config.productionTip = false;
 
