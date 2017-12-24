@@ -98,7 +98,7 @@
         <select
           class="button"
           title="Chooses a theme"
-          v-model="theme">
+          v-model="settings.theme">
           <!--Themes need to be in a optgroup-->
           <!-- Gray/Grey is a joke :) -->
           <optgroup label="Light Themes">
@@ -125,7 +125,7 @@
           </optgroup>
         </select>
 
-
+        <!-- TODO: Add random color -->
         <button type="button" id="undo_colors" title="Undo random colors">
           <svg xmlns="http://www.w3.org/2000/svg" height="100" viewBox="0 0 100 100"><path d="M28 26c2 2 3 4 5 6C35 33 41 38 36 41c-1 1-6 1-9 1 -3 0-6 0-9 0 -5 0-15 1-17-2 -2-3-1-13-1-17 0-3 0-6 0-8 0-5-1-10 4-11C7 4 9 7 11 9c2 2 3 4 5 5C25 7 34 1 48 0c20-1 36 10 44 21 4 6 8 14 9 24 1 10-1 19-5 27 -7 14-20 25-38 27 -18 2-33-5-42-14 -1-1-3-3-3-5 0-2 3-4 5-6 1-1 4-5 6-5 2 0 4 4 6 5 7 6 20 11 32 7 10-3 18-10 21-20 5-12 1-24-5-32C71 22 61 16 48 17 39 17 34 21 28 26z"/><path d="M58 30c1 10 1 22 0 32 -3 1-8 1-12 1 -4 0-9 1-12-1 -1-2-1-5 0-7 4-1 11 0 16-1 0-4 0-8 0-13 0-4-1-9 1-12C53 29 57 29 58 30z"/></svg>
         </button>
@@ -139,6 +139,8 @@
 
       <!-- Settings -->
       <h2>Settings</h2>
+      <!-- TODO: Add ProMode -->
+      <!-- TODO: Add Reset -->
       <div class="control">
         <div>
           <input type="checkbox" id="togglePro" class="checkbox" />
@@ -181,22 +183,16 @@ export default {
   name: 'Sidebar',
   data() {
     return {
-      theme: 'theme_black_white',
-      settings: {
-        fontSize: '1',
-        fontWeight: '400',
-        letterspacing: '1',
-        italics: false,
-      },
+      settings: '',
     };
   },
   created() {
     // TODO: Load previous settings from localStorage
-    this.theme = this.$store.getters.getTheme;
+    this.settings = this.$store.getters.getSettings;
   },
   watch: {
-    theme() {
-      this.$store.commit('setTheme', this.theme);
+    settings() {
+      this.$store.dispatch('setSettings', this.settings);
     },
   },
 };

@@ -3,7 +3,10 @@
     <Sidebar/>
     <main>
       <SampleText/>
-      <Typeface/>
+      <div class="characterBoard">
+        <Typeface/>
+        <Typeface/>
+      </div>
     </main>
   </div>
 </template>
@@ -13,15 +16,22 @@ import Sidebar from './components/Sidebar';
 import SampleText from './components/SampleText';
 import Typeface from './components/Typeface';
 
+/* eslint-disable no-console */
+
 export default {
   name: 'app',
   data() {
     return {
+      settings: '',
     };
+  },
+  created() {
+    this.settings = this.$store.getters.getSettings;
+    console.log(this.settings);
   },
   computed: {
     currentTheme() {
-      return this.$store.getters.getTheme;
+      return this.settings.theme;
     },
   },
   components: {
@@ -33,5 +43,8 @@ export default {
 </script>
 
 <style>
+.characterBoard {
+  display: flex;
+}
 
 </style>

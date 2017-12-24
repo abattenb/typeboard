@@ -3,17 +3,32 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
+// TODO: Update strict and handle Vuex + v-model
+
 const store = new Vuex.Store({
-  strict: process.env.NODE_ENV !== 'production',
+  strict: false,
   state: {
-    theme: 'theme_black_white',
+    settings: {
+      selectedType: ['Arial', 'Times New Roman', 'Courier'],
+      theme: 'theme_gold_teal',
+      fontSize: '1',
+      fontWeight: '400',
+      letterspacing: '1',
+      italics: 'normal',
+      sampleText: 'Sphinx of black quartz, judge my vow.',
+    },
   },
   getters: {
-    getTheme: state => state.theme,
+    getSettings: state => state.settings,
+  },
+  actions: {
+    setSettings(context, settings) {
+      context.commit('SET_SETTINGS', settings);
+    },
   },
   mutations: {
-    setTheme(state, themeName) {
-      state.theme = themeName;
+    SET_SETTINGS(state, settings) {
+      state.settings = settings;
     },
   },
 });
