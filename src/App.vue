@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="theme_black_white">
+  <div id="app" :class="currentTheme">
     <Sidebar/>
     <main>
       <SampleText/>
@@ -15,6 +15,15 @@ import Typeface from './components/Typeface';
 
 export default {
   name: 'app',
+  data() {
+    return {
+    };
+  },
+  computed: {
+    currentTheme() {
+      return this.$store.getters.getTheme;
+    },
+  },
   components: {
     Sidebar,
     SampleText,

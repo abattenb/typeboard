@@ -192,10 +192,11 @@ export default {
   },
   created() {
     // TODO: Load previous settings from localStorage
+    this.theme = this.$store.getters.getTheme;
   },
   watch: {
     theme() {
-      console.log(this.theme);
+      this.$store.commit('setTheme', this.theme);
     },
   },
 };

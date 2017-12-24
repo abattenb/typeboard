@@ -2,15 +2,16 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 
+import store from '@/store';
 import '@/assets/styles/styles.css';
 
 import App from './App';
-
 
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
 new Vue({
+  store,
   el: '#app',
   template: '<App/>',
   components: { App },
