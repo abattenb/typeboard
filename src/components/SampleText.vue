@@ -6,9 +6,7 @@
         placeholder="Sample Text">
       </textarea>
       <!-- Have to be on one line.. Pre tag and all -->
-      <pre
-        class="textSample"
-        :style="fullStyles"><div v-for="(typeface, $index) in settings.selectedType" :key="$index" :style="{fontFamily: typeface}">{{ settings.sampleText }}</div></pre>
+      <pre class="textSample"><div v-for="(typeface, $index) in settings.selectedType" :key="$index" :style="{fontFamily: typeface}">{{ settings.sampleText }}</div></pre>
     </div>
   </div>
 </template>
@@ -51,16 +49,6 @@ export default {
   ],
   data() {
     return {};
-  },
-  computed: {
-    fullStyles() {
-      const fullStyles = {};
-      fullStyles.fontSize = `${this.settings.fontSize}rem`;
-      fullStyles.fontWeight = `${this.settings.fontWeight}`;
-      fullStyles.letterSpacing = `${this.settings.letterSpacing}rem`;
-      console.log(fullStyles);
-      return fullStyles;
-    },
   },
 };
 </script>

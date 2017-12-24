@@ -67,7 +67,7 @@
       </div>
 
       <div>
-        <input type="checkbox" id="toggleItalics" class="checkbox" />
+        <input type="checkbox" id="toggleItalics" class="checkbox" v-model="settings.italics" />
         <label for="toggleItalics" title="Toggle type italics">
           Italics
         </label>
@@ -136,7 +136,7 @@
         </button>
       </div>
 
-
+      <hr>
 
       <!-- Settings -->
       <h2>Settings</h2>

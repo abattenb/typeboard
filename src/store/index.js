@@ -14,7 +14,7 @@ const store = new Vuex.Store({
       fontSize: '2',
       fontWeight: '400',
       letterSpacing: '0',
-      italics: 'normal',
+      italics: true,
       sampleText: 'Sphinx of black quartz, judge my vow.',
     },
   },

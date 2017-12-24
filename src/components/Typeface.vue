@@ -3,7 +3,7 @@
     <h2 class="typeface">
         {{ typeface }}
     </h2>
-    <div class="charmap">
+    <div class="charmap" :style="fullStyles">
         <div>&nbsp;</div>
         <div>!</div>
         <div>"</div>
@@ -667,8 +667,6 @@
 
 <style scoped>
 
-.typeColumn {}
-
 .typeColumn {
   flex: 1;
 }
@@ -692,6 +690,7 @@
 
 .typeColumn .charmap div {
   line-height: 1.5;
+  letter-spacing: 0;
   font-size: var(--column-font-size);
   font-weight: var(--font-weight);
   font-style: var(--font-style);
@@ -712,8 +711,8 @@
   margin: 0 1rem 1rem 1rem;
   font-weight: normal;
   height: 3rem;
-  word-break: break-word;
   /*Tries to break on word, then letter*/
+  word-break: break-word;
   overflow-y: hidden;
 }
 </style>
@@ -721,10 +720,11 @@
 <script>
 export default {
   name: 'Typeface',
-  props: ['typeface'],
+  props: [
+    'typeface',
+  ],
   data() {
-    return {
-    };
+    return {};
   },
 };
 </script>

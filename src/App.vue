@@ -1,12 +1,12 @@
 <template>
-  <div id="app" :class="currentTheme">
+  <div id="app" :class="currentTheme" :style="fullStyles">
     <Sidebar/>
     <main>
       <SampleText :settings="settings" />
       <div class="characterBoard">
         <!-- TODO: Add Typeboarc component to columns -->
         <div v-for="(typeface, $index) in settings.selectedType" :key="$index">
-          <Typeface :typeface="typeface"/>
+          <Typeface :typeface="typeface" :settings="settings"/>
         </div>
       </div>
     </main>
@@ -29,11 +29,24 @@ export default {
   },
   created() {
     this.settings = this.$store.getters.getSettings;
-    console.log(this.settings);
   },
   computed: {
     currentTheme() {
       return this.settings.theme;
+    },
+    fullStyles() {
+      const italics = this.settings.italics ? 'italic' : 'normal';
+      const fullStyles = `
+      --column-font-size: ${this.settings.fontSize}rem;
+      --font-weight: ${this.settings.fontWeight};
+      --letter-spacing: ${this.settings.letterSpacing}rem;
+      --font-style: ${italics};
+      `;
+      // fullStyles.fontSize = `${this.settings.fontSize}rem`;
+      // fullStyles.fontWeight = `${this.settings.fontWeight}`;
+      // fullStyles.letterSpacing = `${this.settings.letterSpacing}rem`;
+      return fullStyles;
+      // return '--column-font-size:3rem;';
     },
   },
   components: {

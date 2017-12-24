@@ -10,7 +10,7 @@ Author: Andrew Battenburg
 /* TODO:" Add black type for missing glyphs  */
 @import 'blankType.css';
 @import 'proMode.css';
-@import 'sliders.css';
+@import 'inputs.css';
 @import 'mobile.css';
 @import 'themes.css';
 
@@ -166,114 +166,19 @@ h2 {
   Scroll Bars
   ==========================================================================  */
 
-main::-webkit-scrollbar, aside::-webkit-scrollbar, .autocomplete-suggestions::-webkit-scrollbar, #text_board pre::-webkit-scrollbar {
+::-webkit-scrollbar {
   height: .5rem;
   width: .5rem;
 }
 
-main::-webkit-scrollbar-track, aside::-webkit-scrollbar-track, .autocomplete-suggestions::-webkit-scrollbar-track, #text_board pre::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background-color: var(--accent-color);
 }
 
-main::-webkit-scrollbar-thumb, aside::-webkit-scrollbar-thumb, .autocomplete-suggestions::-webkit-scrollbar-thumb, #text_board pre::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background-color: var(--text-color);
 }
 
-/*==========================================================================
-  Checkboxes
-  ==========================================================================  */
-
-.checkbox {
-  display: none;
-}
-
-.checkbox+label {
-  display: flex;
-  cursor: pointer;
-  padding: 0.5rem 0;
-  user-select: none;
-}
-
-.checkbox+label:before {
-  content: '';
-  justify-content: center;
-  font-size: 14px;
-  width: 1rem;
-  height: 1rem;
-  background: var(--text-color);
-  color: var(--background-color);
-  line-height: 1.3;
-  margin-right: 0.6rem;
-  text-align: center;
-}
-
-.checkbox:checked+label:before {
-  content: '\2714';
-}
-
-/*==========================================================================
-  Dropdowns
-  ==========================================================================  */
-
-select {
-  width: 100%;
-  margin-bottom: 1rem;
-  padding: .35rem;
-}
-
-select option, select optgroup {
-  background-color: var(--background-color);
-  color: var(--text-color);
-}
-
-input[type=text] {
-  box-sizing: border-box;
-  width: 100%;
-  margin-bottom: 1rem;
-  cursor: text;
-  padding: .35rem;
-}
-
-/*AutoComplete*/
-
-.autocomplete-suggestions {
-  text-align: left;
-  cursor: pointer;
-  color: var(--text-color);
-  border: 1px solid var(--accent-color);
-  border-top: 0;
-  background: var(--background-color);
-  box-shadow: -1px 1px 3px var(--accent-color);
-  /* core styles should not be changed */
-  position: absolute;
-  display: none;
-  z-index: 9999;
-  max-height: 254px;
-  overflow: hidden;
-  overflow-y: auto;
-  box-sizing: border-box;
-}
-
-.autocomplete-suggestion {
-  position: relative;
-  padding: 0 .6em;
-  line-height: 23px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 1rem;
-  color: var(--text-color);
-}
-
-.autocomplete-suggestion b {
-  font-weight: 400;
-  text-decoration: underline;
-}
-
-.autocomplete-suggestion.selected {
-  background: var(--text-color);
-  color: var(--background-color);
-}
 
 /*==========================================================================
   Typelist
@@ -364,73 +269,6 @@ input[type=text] {
   font-style: italic;
 }
 
-/*==========================================================================
-  Buttons, Inputs
-  ==========================================================================  */
-
-::placeholder {
-  color: var(--accent-color);
-}
-
-button, .button {
-  display: flex;
-  font-size: 1rem;
-  background: none;
-  text-decoration: none;
-  padding: .2rem .5rem;
-  border: .1rem solid var(--text-color);
-  color: var(--text-color);
-  transition: .1s background-color, .1s color;
-}
-
-button:hover, button:focus, .button:hover, .button:focus {
-  cursor: pointer;
-  background-color: var(--text-color);
-  color: var(--background-color);
-  transition: .1s background-color, .1s color;
-}
-
-button:hover svg, button:focus svg, .button:hover svg, .button:focus svg {
-  fill: var(--background-color);
-  transition: .1s background-color, .1s color;
-}
-
-button:active, .button:active {
-  background-color: var(--accent-color);
-  transition: .1s background-color, .1s color;
-}
-
-button svg, .button svg {
-  height: 1rem;
-  fill: var(--text-color);
-  margin-right: .5rem;
-  align-self: center;
-}
-
-button.disabled, button[disabled] {
-  border-color: var(--accent-color);
-  color: var(--accent-color);
-  pointer-events: none;
-}
-
-button .disabled svg, button[disabled] svg {
-  fill: var(--accent-color);
-}
-
-textarea, input[type=text] {
-  width: 100%;
-  background-color: transparent;
-  border: .1rem solid var(--text-color);
-  box-sizing: border-box;
-}
-
-input[type=text] {
-  padding: .35rem;
-}
-
-label.button {
-  display: inline-block;
-}
 
 /*==========================================================================
   Utils
