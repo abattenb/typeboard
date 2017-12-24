@@ -2,7 +2,7 @@
   <div id="app" :class="currentTheme">
     <Sidebar/>
     <main>
-      <SampleText :settings="settings" :sampleText="settings.sampleText" />
+      <SampleText :settings="settings" />
       <div class="characterBoard">
         <!-- TODO: Add Typeboarc component to columns -->
         <div v-for="(typeface, $index) in settings.selectedType" :key="$index">

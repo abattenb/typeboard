@@ -5,11 +5,10 @@
         v-model="settings.sampleText"
         placeholder="Sample Text">
       </textarea>
+      <!-- Have to be on one line.. Pre tag and all -->
       <pre
-        v-for="(typeface, $index) in settings.selectedType"
-        :key="$index"
         class="textSample"
-        :style="{fontFamily: typeface}">{{ settings.sampleText }}</pre>
+        :style="fullStyles"><div v-for="(typeface, $index) in settings.selectedType" :key="$index" :style="{fontFamily: typeface}">{{ settings.sampleText }}</div></pre>
     </div>
   </div>
 </template>
@@ -43,14 +42,25 @@
 </style>
 
 <script>
+/* eslint-disable no-console */
+
 export default {
   name: 'SampleText',
   props: [
     'settings',
   ],
   data() {
-    return {
-    };
+    return {};
+  },
+  computed: {
+    fullStyles() {
+      const fullStyles = {};
+      fullStyles.fontSize = `${this.settings.fontSize}rem`;
+      fullStyles.fontWeight = `${this.settings.fontWeight}`;
+      fullStyles.letterSpacing = `${this.settings.letterSpacing}rem`;
+      console.log(fullStyles);
+      return fullStyles;
+    },
   },
 };
 </script>

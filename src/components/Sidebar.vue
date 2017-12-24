@@ -60,10 +60,10 @@
           max="5"
           step="0.05"
           title="Adjust type letter spacing"
-          v-model="settings.letterspacing">
+          v-model="settings.letterSpacing">
           <input
             type="number"
-            v-model="settings.letterspacing">
+            v-model="settings.letterSpacing">
       </div>
 
       <div>

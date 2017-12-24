@@ -13,7 +13,7 @@ const store = new Vuex.Store({
       theme: 'theme_gold_teal',
       fontSize: '2',
       fontWeight: '400',
-      letterspacing: '1',
+      letterSpacing: '0',
       italics: 'normal',
       sampleText: 'Sphinx of black quartz, judge my vow.',
     },
