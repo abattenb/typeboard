@@ -1,9 +1,10 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
     <Sidebar/>
-    <SampleText/>
-    <Typeface/>
+    <main>
+      <SampleText/>
+      <Typeface/>
+    </main>
   </div>
 </template>
 

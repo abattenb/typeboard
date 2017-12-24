@@ -1,3 +1,724 @@
-#app {
-  color: red;
+/*
+Type Board
+Author: Andrew Battenburg
+*/
+
+/*==========================================================================
+  Imports
+  ==========================================================================  */
+
+@import 'blankType.css';
+@import 'themes.css';
+/*==========================================================================
+  Global
+  ==========================================================================  */
+
+:root {
+  /*Default settings*/
+  --column-font-size: 1rem;
+  --font-weight: 400;
+  --font-style: normal;
+  --letter-spacing: 0rem;
+  --background-color: rgba(255, 255, 255, 0.996);
+  --text-color: rgba(17, 17, 17, 0.996);
+  --accent-color: rgba(205, 205, 205, 0.996);
+  /*transform: translateZ(0);*/
+}
+
+html {
+  overflow: hidden;
+}
+
+aside {
+  position: fixed;
+  padding: 1rem;
+  top: 0;
+  bottom: 0;
+  width: 20rem;
+  border-right: .1rem solid var(--accent-color);
+  box-sizing: border-box;
+  overflow-y: auto;
+  transition: .5s height;
+  z-index: 1;
+}
+
+.logo {
+  float: left;
+  margin-right: 1rem;
+  fill: var(--text-color);
+  width: 3.6rem;
+}
+
+main {
+  margin-left: 20rem;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+h1 {
+  font-family: Tahoma, sans-serif;
+  padding: 0;
+  margin: 0 0 .2rem 0;
+}
+
+h2 {
+  font-size: 1.3rem;
+  font-weight: 100;
+  margin: 0 0 .5rem 0;
+}
+
+.sub_header {
+  font-size: .8rem;
+  position: relative;
+  left: 0.3rem;
+}
+
+hr {
+  margin: 1rem 0;
+  height: 0;
+  border: none;
+  border-top: .1rem solid var(--accent-color);
+}
+
+footer {
+  font-size: .8rem;
+  text-align: center;
+  line-height: 1.75;
+}
+
+footer a {
+  color: var(--text-color);
+}
+
+/*==========================================================================
+  Text Selection
+  ==========================================================================  */
+
+::selection {
+  color: var(--background-color);
+  background-color: var(--text-color);
+}
+
+::-moz-selection {
+  color: var(--background-color);
+  background-color: var(--text-color);
+}
+
+/*==========================================================================
+  Feature Modal
+  ==========================================================================  */
+
+#featureDetection {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  background: white;
+  padding: 1rem;
+  overflow: auto;
+}
+
+#featureDetection * {
+  max-width: 35rem;
+  margin: 0 auto;
+}
+
+#featureDetection h1 {
+  font-size: 1.5rem;
+}
+
+#featureDetection p {
+  line-height: 1.45;
+  margin-bottom: 1rem;
+}
+
+#featureDetection img {
+  position: relative;
+  width: 100px;
+  left: 46%;
+  top: 2rem;
+}
+
+/*==========================================================================
+  Scroll Bars
+  ==========================================================================  */
+
+main::-webkit-scrollbar, aside::-webkit-scrollbar, .autocomplete-suggestions::-webkit-scrollbar, #text_board pre::-webkit-scrollbar {
+  height: .5rem;
+  width: .5rem;
+}
+
+main::-webkit-scrollbar-track, aside::-webkit-scrollbar-track, .autocomplete-suggestions::-webkit-scrollbar-track, #text_board pre::-webkit-scrollbar-track {
+  background-color: var(--accent-color);
+}
+
+main::-webkit-scrollbar-thumb, aside::-webkit-scrollbar-thumb, .autocomplete-suggestions::-webkit-scrollbar-thumb, #text_board pre::-webkit-scrollbar-thumb {
+  background-color: var(--text-color);
+}
+
+/*==========================================================================
+  Controls
+  ==========================================================================  */
+
+.typeboard_controls {}
+
+.typeboard_controls .control {
+  display: flex;
+}
+
+.typeboard_controls .control>* {
+  align-self: center;
+}
+
+.typeboard_controls .control span {
+  flex: 0 6rem;
+  text-align: right;
+}
+
+.typeboard_controls .control button {
+  margin-left: 1rem;
+}
+
+.typeboard_controls .control_addon {
+  display: block;
+}
+
+/*==========================================================================
+  Sliders
+  ==========================================================================  */
+
+input[type=range] {
+  -webkit-appearance: none;
+  margin: .75rem 0;
+  width: 100%;
+}
+
+input[type=range]:focus {
+  /*outline: none;*/
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: .5rem;
+  cursor: pointer;
+  background: var(--accent-color);
+}
+
+input[type=range]::-webkit-slider-thumb {
+  height: 1rem;
+  width: 1rem;
+  background: var(--text-color);
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -.25rem;
+}
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: var(--accent-color);
+}
+
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: .5rem;
+  cursor: pointer;
+  background: var(--accent-color);
+}
+
+input[type=range]::-moz-range-thumb {
+  height: 1rem;
+  width: 1rem;
+  background: var(--text-color);
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -.25rem;
+  border-radius: 0;
+  border: none;
+}
+
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: transparent;
+  border-color: transparent;
+  border-width: 16px 0;
+  color: transparent;
+}
+
+input[type=range]::-ms-fill-lower {
+  background: var(--accent-color);
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+
+input[type=range]::-ms-fill-upper {
+  background: var(--accent-color);
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+
+input[type=range]::-ms-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 16px;
+  border-radius: 3px;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+input[type=range]:focus::-ms-fill-lower {
+  background: var(--accent-color);
+}
+
+input[type=range]:focus::-ms-fill-upper {
+  background: var(--accent-color);
+}
+
+.typeboard_controls #undo_colors {
+  display: none;
+}
+
+/*==========================================================================
+  Pro Mode
+  ==========================================================================  */
+
+[pro-mode="true"] h2 {
+  display: none;
+}
+
+[pro-mode="true"] hr {
+  margin: .5rem 0;
+}
+
+[pro-mode="true"] .typeboard_controls .control_addon {
+  display: flex;
+}
+
+[pro-mode="true"] .typeboard_controls .control_addon button {
+  margin-left: .25rem;
+}
+
+[pro-mode="true"] .typeboard_controls .control_addon button svg {
+  margin: 0;
+}
+
+[pro-mode="true"] .typeboard_controls .control_addon button span {
+  display: none;
+}
+
+[pro-mode="true"] footer {
+  display: none;
+}
+
+[pro-mode="true"] #text_board {
+  margin: .5rem;
+}
+
+[pro-mode="true"] #text_board pre {
+  margin: 0rem;
+}
+
+[pro-mode="true"] textarea {
+  margin: 0rem;
+}
+
+[pro-mode="true"] #tabs {
+  margin: 0.25rem 0.5rem 0 .5rem;
+}
+
+[pro-mode="true"] .type_column .charmap {
+  padding: 0 .25rem;
+}
+
+[pro-mode="true"] .typeboard_controls input, [pro-mode="true"] .typeboard_controls select {
+  margin: 0rem;
+}
+
+[pro-mode="true"] .typeboard_controls #undo_colors {
+  display: flex;
+}
+
+@media (min-width: 45em) {
+  [pro-mode="true"] .sub_header {
+    display: none;
+  }
+  [pro-mode="true"] .logo {
+    width: 1.5rem;
+    margin-right: 0.7rem;
+  }
+  [pro-mode="true"] h1 {
+    font-size: 1.1rem;
+  }
+  [pro-mode="true"] aside {
+    padding: .5rem;
+  }
+  [pro-mode="true"] .typeboard_controls input[type=range] {
+    margin: .5rem 0;
+  }
+  [pro-mode="true"] #type_list li {
+    height: 1.5rem;
+  }
+  [pro-mode="true"] #type_list button {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+  [pro-mode="true"] .typeboard_controls input, [pro-mode="true"] .typeboard_controls select {
+    padding: 0;
+  }
+}
+
+/*==========================================================================
+  Checkboxes
+  ==========================================================================  */
+
+.checkbox {
+  display: none;
+}
+
+.checkbox+label {
+  display: flex;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  user-select: none;
+}
+
+.checkbox+label:before {
+  content: '';
+  justify-content: center;
+  font-size: 14px;
+  width: 1rem;
+  height: 1rem;
+  background: var(--text-color);
+  color: var(--background-color);
+  line-height: 1.3;
+  margin-right: 0.6rem;
+  text-align: center;
+}
+
+.checkbox:checked+label:before {
+  content: '\2714';
+}
+
+/*==========================================================================
+  Dropdowns
+  ==========================================================================  */
+
+select {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: .35rem;
+}
+
+select option, select optgroup {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+input[type=text] {
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 1rem;
+  cursor: text;
+  padding: .35rem;
+}
+
+/*AutoComplete*/
+
+.autocomplete-suggestions {
+  text-align: left;
+  cursor: pointer;
+  color: var(--text-color);
+  border: 1px solid var(--accent-color);
+  border-top: 0;
+  background: var(--background-color);
+  box-shadow: -1px 1px 3px var(--accent-color);
+  /* core styles should not be changed */
+  position: absolute;
+  display: none;
+  z-index: 9999;
+  max-height: 254px;
+  overflow: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.autocomplete-suggestion {
+  position: relative;
+  padding: 0 .6em;
+  line-height: 23px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+.autocomplete-suggestion b {
+  font-weight: 400;
+  text-decoration: underline;
+}
+
+.autocomplete-suggestion.selected {
+  background: var(--text-color);
+  color: var(--background-color);
+}
+
+/*==========================================================================
+  Typelist
+  ==========================================================================  */
+
+#type_list {}
+
+#type_list ul {
+  padding: 0;
+}
+
+#type_list li {
+  display: flex;
+  align-items: center;
+  border-bottom: .1rem solid var(--accent-color);
+  list-style-type: none;
+}
+
+#type_list li:first-of-type {
+  border-top: .1rem solid var(--accent-color);
+}
+
+#type_list button {
+  font-family: Arial;
+  justify-content: center;
+  height: 2rem;
+  width: 2rem;
+  text-align: center;
+  margin-left: auto;
+  font-size: 0.8rem;
+  border: none;
+  box-shadow: none;
+  transform: translateY(0rem);
+  color: var(--text-color);
+  background-color: var(--background-color);
+  transition: .1s color, .1s background-color;
+}
+
+#type_list button:hover, #type_list button:hover, #type_list button:active {
+  transform: translateY(0rem);
+  color: var(--background-color);
+  background-color: var(--text-color);
+  transition: .1s color, .1s background-color;
+}
+
+/*==========================================================================
+  Tabs
+  ==========================================================================  */
+
+#tabs {
+  display: flex;
+  margin: 1rem 1rem 0 1rem;
+  border-bottom: .1rem solid var(--text-color);
+  overflow-x: auto;
+}
+
+#tabs button {
+  margin-right: .5rem;
+  border-bottom: none;
+  transform: translateY(0rem);
+  box-shadow: 0 0rem 0 var(--text-color);
+}
+
+#tabs button.current {
+  background: var(--text-color);
+  color: var(--background-color);
+  cursor: default;
+  pointer-events: none;
+}
+
+#tabs button.current svg {
+  fill: var(--background-color);
+}
+
+/*==========================================================================
+  Css Output
+  ==========================================================================  */
+
+#output {
+  white-space: pre;
+}
+
+/*==========================================================================
+  Text Board
+  ==========================================================================  */
+
+#text_board {
+  margin: 1.5rem 1rem;
+  border-bottom: .1rem solid var(--accent-color);
+}
+
+#text_board pre {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  font-family: inherit;
+  margin-top: 0;
+}
+
+#text_board .text_sample {
+  font-size: var(--column-font-size);
+  font-weight: var(--font-weight);
+  font-style: var(--font-style);
+  letter-spacing: var(--letter-spacing);
+  margin: .5rem 0;
+}
+
+/*==========================================================================
+  Typeboard
+  ==========================================================================  */
+
+#char_board {
+  display: flex;
+}
+
+.type_column {}
+
+.type_column {
+  flex: 1;
+}
+
+.type_column .charmap {
+  padding: 0 1rem;
+  box-shadow: 1px 0px 0px var(--accent-color);
+}
+
+.type_column:last-of-type .charmap {
+  margin-right: 0;
+  box-shadow: none;
+}
+
+.type_column .charmap {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-content: flex-start;
+}
+
+.type_column .charmap div {
+  line-height: 1.5;
+  font-size: var(--column-font-size);
+  font-weight: var(--font-weight);
+  font-style: var(--font-style);
+  width: calc(1.5 * var(--column-font-size));
+  align-self: center;
+  text-align: center;
+  border: .1rem solid var(--background-color);
+}
+
+.type_column .charmap div:hover, .type_column .charmap div:focus {
+  border: .1rem solid var(--text-color);
+}
+
+.type_column h2 {
+  font-style: normal;
+  line-height: 1;
+  border-bottom: .1rem solid var(--accent-color);
+  margin: 0 1rem 1rem 1rem;
+  font-weight: normal;
+  height: 3rem;
+  word-break: break-word;
+  /*Tries to break on word, then letter*/
+  overflow-y: hidden;
+}
+
+/*==========================================================================
+  Modifiers
+  ==========================================================================  */
+
+.italics {
+  font-style: italic;
+}
+
+/*==========================================================================
+  Buttons, Inputs
+  ==========================================================================  */
+
+::placeholder {
+  color: var(--accent-color);
+}
+
+button, .button {
+  display: flex;
+  font-size: 1rem;
+  background: none;
+  text-decoration: none;
+  padding: .2rem .5rem;
+  border: .1rem solid var(--text-color);
+  color: var(--text-color);
+  transition: .1s background-color, .1s color;
+}
+
+button:hover, button:focus, .button:hover, .button:focus {
+  cursor: pointer;
+  background-color: var(--text-color);
+  color: var(--background-color);
+  transition: .1s background-color, .1s color;
+}
+
+button:hover svg, button:focus svg, .button:hover svg, .button:focus svg {
+  fill: var(--background-color);
+  transition: .1s background-color, .1s color;
+}
+
+button:active, .button:active {
+  background-color: var(--accent-color);
+  transition: .1s background-color, .1s color;
+}
+
+button svg, .button svg {
+  height: 1rem;
+  fill: var(--text-color);
+  margin-right: .5rem;
+  align-self: center;
+}
+
+button.disabled, button[disabled] {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+  pointer-events: none;
+}
+
+button .disabled svg, button[disabled] svg {
+  fill: var(--accent-color);
+}
+
+textarea, input[type=text] {
+  width: 100%;
+  background-color: transparent;
+  border: .1rem solid var(--text-color);
+  box-sizing: border-box;
+}
+
+input[type=text] {
+  padding: .35rem;
+}
+
+label.button {
+  display: inline-block;
+}
+
+/*==========================================================================
+  Utils
+  ==========================================================================  */
+
+.hidden, *[hidden] {
+  display: none;
 }
