@@ -33,6 +33,7 @@ const defaultSettings = {
   italics: false,
   sampleText: 'Sphinx of black quartz, judge my vow.',
   proMode: false,
+  customColors: '',
 };
 
 export default {
@@ -74,13 +75,20 @@ export default {
       return this.settings.proMode;
     },
     fullStyles() {
+      let colors = '';
+      for(let key in this.settings.customColors[0]) {
+        colors += `${key}: ${this.settings.customColors[0][key]};`;
+      }
+      console.log(colors);
+      // colors = '--color: red';
+
       const italics = this.settings.italics ? 'italic' : 'normal';
       const fullStyles = `
         --column-font-size: ${this.settings.fontSize}rem;
         --font-weight: ${this.settings.fontWeight};
         --letter-spacing: ${this.settings.letterSpacing}rem;
         --font-style: ${italics};`;
-      return fullStyles;
+      return `${fullStyles}${colors}`;
     },
   },
   components: {

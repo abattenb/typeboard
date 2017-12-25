@@ -201,7 +201,16 @@ export default {
       this.$emit('reset');
     },
     randomPallete() {
-      console.log(this.randomColor());
+      const newPallete = {
+        '--text-color': this.randomColor(),
+        '--background-color': this.randomColor(),
+        '--accent-color': this.randomColor(),
+      };
+      if (this.settings.customColors === '') {
+        this.settings.customColors = [newPallete];
+      } else {
+        this.settings.customColors.unshift(newPallete);
+      }
     },
     randomColor() {
       // Returns a random RGBA formatted for CSS
