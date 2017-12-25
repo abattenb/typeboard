@@ -27,7 +27,7 @@ import Typeface from './components/Typeface';
 const defaultSettings = {
   selectedType: ['Arial', 'Times New Roman', 'Courier'],
   theme: 'theme_black_white',
-  fontSize: '2',
+  fontSize: '1',
   fontWeight: '400',
   letterSpacing: '0',
   italics: false,

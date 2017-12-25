@@ -1,10 +1,7 @@
 /*==========================================================================
-  Buttons, Inputs
+  Buttons
   ==========================================================================  */
 
-::placeholder {
-  color: var(--accent-color);
-}
 
 button, .button {
   display: flex;
@@ -51,16 +48,28 @@ button .disabled svg, button[disabled] svg {
   fill: var(--accent-color);
 }
 
-textarea, input[type=text] {
-  width: 100%;
-  background-color: transparent;
-  border: .1rem solid var(--text-color);
-  box-sizing: border-box;
+/*==========================================================================
+  Inputs
+  ==========================================================================  */
+
+::placeholder {
+  color: var(--accent-color);
 }
 
-input[type=text] {
+textarea, input {
+  box-sizing: border-box;
+  color: var(--text-color);
+  width: 100%;
   padding: .35rem;
+  background-color: transparent;
+  border: .1rem solid var(--text-color);
+  margin-bottom: 1rem;
 }
+
+textarea {
+  margin: 0;
+}
+
 
 label.button {
   display: inline-block;
@@ -114,14 +123,6 @@ select option, select optgroup {
   color: var(--text-color);
 }
 
-input[type=text] {
-  box-sizing: border-box;
-  width: 100%;
-  margin-bottom: 1rem;
-  cursor: text;
-  padding: .35rem;
-}
-
 /*AutoComplete*/
 
 .autocomplete-suggestions {
@@ -169,8 +170,9 @@ input[type=text] {
 
 input[type=range] {
   -webkit-appearance: none;
-  margin: .75rem 0;
-  width: 100%;
+  margin: 0;
+  padding: .25rem 0;
+  border: none;
 }
 
 input[type=range]:focus {
