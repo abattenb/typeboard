@@ -19,8 +19,6 @@
 
     <div class="typeboardControls">
 
-      <div>{{ settings }}</div>
-
       <!-- Type Settings -->
       <h2>Type Settings</h2>
       <div class="control">
@@ -155,7 +153,7 @@
               Pro Mode
           </label>
         </div>
-        <button type="button" id="clearSettings" title="Resets all settings and cookies">
+        <button type="button" id="clearSettings" title="Resets all settings and cookies" @click="reset">
           <svg xmlns="http://www.w3.org/2000/svg" height="100" viewBox="0 0 100 100"><path d="M28 26c3 3 5 5 8 8 1 1 2 2 2 3 0 2-1 4-2 5 -2 1-5 0-8 0 -5 0-11 0-16 0 -2 0-6 0-8 0 -3-1-3-5-3-10 0-5 0-11 0-16 0-2 0-6 0-8 1-1 3-3 5-2 2 0 4 3 6 5 1 1 3 2 4 4 0 0 1 1 1 1 0 0 2-2 3-3 7-6 17-10 29-11 11 0 19 3 26 6 7 4 13 9 17 15 4 6 8 14 9 24 1 10-1 20-5 27C87 86 75 97 56 99c-10 1-20-1-27-4 -5-2-10-6-14-10 -1-1-3-3-3-5 0-1 1-2 2-3 2-2 3-3 5-5 1-1 2-2 3-2 1 0 3 2 4 3 3 3 7 6 11 8 6 3 14 4 22 1 6-2 12-5 16-10 4-4 7-10 8-17 2-16-7-28-17-34 -6-3-13-5-21-4C38 19 32 22 28 26z"/></svg>
           Reset All
         </button>
@@ -198,6 +196,9 @@ export default {
   methods: {
     removeType(typeface) {
       this.settings.selectedType = this.settings.selectedType.filter(type => type !== typeface);
+    },
+    reset() {
+      this.$emit('reset');
     },
   },
 };

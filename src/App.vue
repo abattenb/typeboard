@@ -4,7 +4,7 @@
     :class="currentTheme"
     :style="fullStyles"
     :pro-mode="isProMode">
-    <Sidebar :settings="settings"/>
+    <Sidebar :settings="settings" @reset="resetSettings"/>
     <main>
       <SampleText :settings="settings" />
       <div class="characterBoard">
@@ -22,41 +22,48 @@ import Sidebar from './components/Sidebar';
 import SampleText from './components/SampleText';
 import Typeface from './components/Typeface';
 
-/* eslint-disable no-console */
+/* eslint-disable */
+
+const defaultSettings = {
+  selectedType: ['Arial', 'Times New Roman', 'Courier'],
+  theme: 'theme_black_white',
+  fontSize: '2',
+  fontWeight: '400',
+  letterSpacing: '0',
+  italics: false,
+  sampleText: 'Sphinx of black quartz, judge my vow.',
+  proMode: false,
+};
 
 export default {
   name: 'app',
   data() {
     return {
-      settings: {
-        selectedType: ['Arial', 'Times New Roman', 'Courier'],
-        theme: 'theme_black_white',
-        fontSize: '2',
-        fontWeight: '400',
-        letterSpacing: '0',
-        italics: false,
-        sampleText: 'Sphinx of black quartz, judge my vow.',
-        proMode: false,
-      },
+      settings: '',
     };
   },
   created() {
     if (localStorage.getItem('settings') !== null) {
       this.settings = JSON.parse(localStorage.getItem('settings'));
+    } else {
+      this.settings = defaultSettings;
     }
   },
   watch: {
     settings: {
       handler() {
-        this.save();
+        this.saveSettings();
       },
       deep: true,
     },
   },
   methods: {
-    save() {
-      console.log(this.settings);
+    saveSettings() {
       localStorage.setItem('settings', JSON.stringify(this.settings));
+    },
+    resetSettings() {
+      localStorage.removeItem('settings');
+      this.settings = defaultSettings;
     },
   },
   computed: {
