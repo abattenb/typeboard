@@ -19,7 +19,7 @@
 
     <div class="typeboardControls">
 
-      <!-- <div>{{ settings }}</div> -->
+      <div>{{ settings }}</div>
 
       <!-- Type Settings -->
       <h2>Type Settings</h2>
@@ -188,10 +188,11 @@
 
 export default {
   name: 'Sidebar',
+  props: [
+    'settings',
+  ],
   data() {
     return {
-      settings: '',
-      proMode: '',
     };
   },
   methods: {
@@ -199,21 +200,10 @@ export default {
       this.settings.selectedType = this.settings.selectedType.filter(type => type !== typeface);
     },
   },
-  created() {
-    // TODO: Load previous settings from localStorage
-    this.settings = this.$store.getters.getSettings;
-  },
-  watch: {
-    settings() {
-      this.$store.dispatch('setSettings', this.settings);
-    },
-  },
 };
 </script>
 
 <style scoped>
-
-.typeboardControls {}
 
 .typeboardControls .control {
   display: flex;

@@ -6,6 +6,7 @@
         placeholder="Sample Text">
       </textarea>
       <!-- Have to be on one line.. Pre tag and all -->
+      {{settings}}
       <pre class="textSample"><div v-for="(typeface, $index) in settings.selectedType" :key="$index" :style="{fontFamily: typeface}">{{ settings.sampleText }}</div></pre>
     </div>
   </div>

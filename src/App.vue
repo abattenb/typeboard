@@ -4,13 +4,13 @@
     :class="currentTheme"
     :style="fullStyles"
     :pro-mode="isProMode">
-    <Sidebar/>
+    <Sidebar :settings="settings"/>
     <main>
       <SampleText :settings="settings" />
       <div class="characterBoard">
         <!-- TODO: Add Typeboarc component to columns -->
         <div v-for="(typeface, $index) in settings.selectedType" :key="$index">
-          <Typeface :typeface="typeface" :settings="settings"/>
+          <Typeface :typeface="typeface"/>
         </div>
       </div>
     </main>
@@ -28,12 +28,36 @@ export default {
   name: 'app',
   data() {
     return {
-      settings: '',
-      proMode: '',
+      settings: {
+        selectedType: ['Arial', 'Times New Roman', 'Courier'],
+        theme: 'theme_black_white',
+        fontSize: '2',
+        fontWeight: '400',
+        letterSpacing: '0',
+        italics: false,
+        sampleText: 'Sphinx of black quartz, judge my vow.',
+        proMode: false,
+      },
     };
   },
   created() {
-    this.settings = this.$store.getters.getSettings;
+    if (localStorage.getItem('settings') !== null) {
+      this.settings = JSON.parse(localStorage.getItem('settings'));
+    }
+  },
+  watch: {
+    settings: {
+      handler() {
+        this.save();
+      },
+      deep: true,
+    },
+  },
+  methods: {
+    save() {
+      console.log(this.settings);
+      localStorage.setItem('settings', JSON.stringify(this.settings));
+    },
   },
   computed: {
     currentTheme() {
