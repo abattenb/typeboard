@@ -40,7 +40,6 @@ export default {
       return this.settings.theme;
     },
     isProMode() {
-      console.log(this.settings.proMode);
       return this.settings.proMode;
     },
     fullStyles() {

@@ -179,51 +179,6 @@ h2 {
   background-color: var(--text-color);
 }
 
-
-/*==========================================================================
-  Typelist
-  ==========================================================================  */
-
-#type_list {}
-
-#type_list ul {
-  padding: 0;
-}
-
-#type_list li {
-  display: flex;
-  align-items: center;
-  border-bottom: .1rem solid var(--accent-color);
-  list-style-type: none;
-}
-
-#type_list li:first-of-type {
-  border-top: .1rem solid var(--accent-color);
-}
-
-#type_list button {
-  font-family: Arial;
-  justify-content: center;
-  height: 2rem;
-  width: 2rem;
-  text-align: center;
-  margin-left: auto;
-  font-size: 0.8rem;
-  border: none;
-  box-shadow: none;
-  transform: translateY(0rem);
-  color: var(--text-color);
-  background-color: var(--background-color);
-  transition: .1s color, .1s background-color;
-}
-
-#type_list button:hover, #type_list button:hover, #type_list button:active {
-  transform: translateY(0rem);
-  color: var(--background-color);
-  background-color: var(--text-color);
-  transition: .1s color, .1s background-color;
-}
-
 /*==========================================================================
   Tabs
   ==========================================================================  */

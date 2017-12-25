@@ -84,9 +84,16 @@
           <span>Random Typeface</span>
         </button>
       </div>
+      <br>
 
-      <div id="type_list">
-        <ul></ul>
+      <div class="typeList">
+        <div
+          v-for="(typeface, $index) in settings.selectedType"
+          :key="$index"
+          :style="{fontFamily: typeface}">
+          {{ typeface }}
+          <button @click="removeType(typeface)">×</button>
+        </div>
       </div>
 
       <hr>
@@ -187,6 +194,11 @@ export default {
       proMode: '',
     };
   },
+  methods: {
+    removeType(typeface) {
+      this.settings.selectedType = this.settings.selectedType.filter(type => type !== typeface);
+    },
+  },
   created() {
     // TODO: Load previous settings from localStorage
     this.settings = this.$store.getters.getSettings;
@@ -228,6 +240,51 @@ export default {
 .typeboardControls #undo_colors {
   display: none;
 }
+
+/* Typelist */
+
+.typeList {}
+
+.typeList {
+  padding: 0;
+}
+
+.typeList > div {
+  display: flex;
+  align-items: center;
+  border-bottom: .1rem solid var(--accent-color);
+  list-style-type: none;
+}
+
+.typeList div:first-of-type {
+  border-top: .1rem solid var(--accent-color);
+}
+
+.typeList button {
+  font-family: Arial;
+  justify-content: center;
+  height: 2rem;
+  width: 2rem;
+  text-align: center;
+  margin-left: auto;
+  font-size: 1.2rem;
+  border: none;
+  box-shadow: none;
+  transform: translateY(0rem);
+  color: var(--text-color);
+  background-color: var(--background-color);
+  transition: .1s color, .1s background-color;
+}
+
+.typeList button:hover,
+.typeList button:focus,
+.typeList button:active {
+  transform: translateY(0rem);
+  color: var(--background-color);
+  background-color: var(--text-color);
+  transition: .1s color, .1s background-color;
+}
+
 
 </style>
 
