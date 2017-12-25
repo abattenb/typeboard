@@ -16,6 +16,7 @@ const store = new Vuex.Store({
       letterSpacing: '0',
       italics: true,
       sampleText: 'Sphinx of black quartz, judge my vow.',
+      proMode: true,
     },
   },
   getters: {

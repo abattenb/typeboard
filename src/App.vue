@@ -1,5 +1,9 @@
 <template>
-  <div id="app" :class="currentTheme" :style="fullStyles">
+  <div 
+    id="app"
+    :class="currentTheme"
+    :style="fullStyles"
+    :pro-mode="isProMode">
     <Sidebar/>
     <main>
       <SampleText :settings="settings" />
@@ -25,6 +29,7 @@ export default {
   data() {
     return {
       settings: '',
+      proMode: '',
     };
   },
   created() {
@@ -34,19 +39,18 @@ export default {
     currentTheme() {
       return this.settings.theme;
     },
+    isProMode() {
+      console.log(this.settings.proMode);
+      return this.settings.proMode;
+    },
     fullStyles() {
       const italics = this.settings.italics ? 'italic' : 'normal';
       const fullStyles = `
-      --column-font-size: ${this.settings.fontSize}rem;
-      --font-weight: ${this.settings.fontWeight};
-      --letter-spacing: ${this.settings.letterSpacing}rem;
-      --font-style: ${italics};
-      `;
-      // fullStyles.fontSize = `${this.settings.fontSize}rem`;
-      // fullStyles.fontWeight = `${this.settings.fontWeight}`;
-      // fullStyles.letterSpacing = `${this.settings.letterSpacing}rem`;
+        --column-font-size: ${this.settings.fontSize}rem;
+        --font-weight: ${this.settings.fontWeight};
+        --letter-spacing: ${this.settings.letterSpacing}rem;
+        --font-style: ${italics};`;
       return fullStyles;
-      // return '--column-font-size:3rem;';
     },
   },
   components: {

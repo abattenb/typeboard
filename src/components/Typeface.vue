@@ -3,7 +3,7 @@
     <h2 class="typeface">
         {{ typeface }}
     </h2>
-    <div class="charmap" :style="fullStyles">
+    <div class="charmap">
         <div>&nbsp;</div>
         <div>!</div>
         <div>"</div>

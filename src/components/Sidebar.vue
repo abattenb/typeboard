@@ -1,6 +1,5 @@
 <template>
   <aside>
-    {{ settings }}
 
     <!-- Header -->
     <svg xmlns="http://www.w3.org/2000/svg" width="100" viewBox="0 0 400 400" class="logo" shape-rendering="optimizeSpeed">
@@ -144,7 +143,7 @@
       <!-- TODO: Add Reset -->
       <div class="control">
         <div>
-          <input type="checkbox" id="togglePro" class="checkbox" />
+          <input type="checkbox" id="togglePro" class="checkbox" v-model="settings.proMode"/>
           <label for="togglePro" title="Toggles Pro Mode">
               Pro Mode
           </label>
@@ -169,7 +168,7 @@
         <br>
         &copy; 2017
         &bull;
-        Andrew Battenburg
+        <a href="https://github.com/abattenb">Andrew Battenburg</a>
       </footer>
 
     </div>
@@ -185,6 +184,7 @@ export default {
   data() {
     return {
       settings: '',
+      proMode: '',
     };
   },
   created() {
