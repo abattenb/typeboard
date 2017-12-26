@@ -82,7 +82,7 @@ const themes = [
           '--accent-color': 'rgba(90, 90, 75, 0.996)',
         },
       },
-    ]
+    ],
   },
   {
     label: 'Color Themes',

@@ -106,35 +106,24 @@
       <select
         class="button"
         title="Chooses a theme"
-        v-model="settings.theme">
+        @change="addPallete">
         <!--Themes need to be in a optgroup-->
         <!-- Gray/Grey is a joke :) -->
-        <optgroup label="Light Themes">
-          <option selected value="theme_black_white">Black / White</option>
-          <option value="theme_blue_white">Blue / White</option>
-          <option value="theme_tangerine_grey">Tangerine / Grey</option>
-          <option value="theme_grey_grey">Gray / Grey</option>
-        </optgroup>
-        <optgroup label="Dark Themes">
-          <option value="theme_red_midnight">Red / Midnight</option>
-          <option value="theme_yellow_coal">Yellow / Coal</option>
-          <option value="theme_white_black">White / Black</option>
-          <option value="theme_green_black">Green / Black</option>
-        </optgroup>
-        <optgroup label="Color Themes">
-          <option value="theme_grey_tan">Grey / Tan</option>
-          <option value="theme_yellow_pink">Yellow / Pink</option>
-          <option value="theme_navy_sea">Navy / Sea</option>
-          <option value="theme_lime_forest">Lime / Forest</option>
-          <option value="theme_gold_teal">Gold / Teal</option>
-          <option value="theme_navy_gold">Navy / Gold</option>
-          <option value="theme_lime_mauve">Lime / Mauve</option>
-          <option value="theme_sea_royal">Sea / Royal</option>
+        <optgroup
+          :label="type.label"
+          v-for="(type, $index) in themes"
+          :key="$index">
+          <option 
+            :value="JSON.stringify(theme.palette)"
+            v-for="(theme, $index) in type.data"
+            :key="$index">
+            {{theme.name}}
+          </option>
         </optgroup>
       </select>
 
-      <!-- TODO: Add random color -->
-      <button type="button" id="undo_colors" title="Undo random colors">
+      <!-- TODO: Add color undo -->
+      <button type="button" title="Undo random colors" @click="undoColor">
         <svg xmlns="http://www.w3.org/2000/svg" height="100" viewBox="0 0 100 100"><path d="M28 26c2 2 3 4 5 6C35 33 41 38 36 41c-1 1-6 1-9 1 -3 0-6 0-9 0 -5 0-15 1-17-2 -2-3-1-13-1-17 0-3 0-6 0-8 0-5-1-10 4-11C7 4 9 7 11 9c2 2 3 4 5 5C25 7 34 1 48 0c20-1 36 10 44 21 4 6 8 14 9 24 1 10-1 19-5 27 -7 14-20 25-38 27 -18 2-33-5-42-14 -1-1-3-3-3-5 0-2 3-4 5-6 1-1 4-5 6-5 2 0 4 4 6 5 7 6 20 11 32 7 10-3 18-10 21-20 5-12 1-24-5-32C71 22 61 16 48 17 39 17 34 21 28 26z"/><path d="M58 30c1 10 1 22 0 32 -3 1-8 1-12 1 -4 0-9 1-12-1 -1-2-1-5 0-7 4-1 11 0 16-1 0-4 0-8 0-13 0-4-1-9 1-12C53 29 57 29 58 30z"/></svg>
       </button>
       <button type="button" id="random_colors" title="Randomizes theme colors" @click="randomPallete">
@@ -182,6 +171,9 @@
 </template>
 
 <script>
+
+import themes from '@/assets/styles/themes';
+
 /* eslint-disable no-console */
 
 export default {
@@ -191,6 +183,7 @@ export default {
   ],
   data() {
     return {
+      themes,
     };
   },
   methods: {
@@ -200,17 +193,31 @@ export default {
     reset() {
       this.$emit('reset');
     },
+    addPallete(event) {
+      // console.log(JSON.parse(event.target.value));
+      this.addColor(JSON.parse(event.target.value));
+    },
     randomPallete() {
       const newPallete = {
         '--text-color': this.randomColor(),
         '--background-color': this.randomColor(),
         '--accent-color': this.randomColor(),
       };
-      if (this.settings.customColors === '') {
-        this.settings.customColors = [newPallete];
+      this.addColor(newPallete);
+    },
+    addColor(palette) {
+      if (this.settings.colorHistory === '') {
+        this.settings.colorHistory = [palette];
+      } else if (this.settings.colorHistory.length >= 100) {
+        // Keeps a list of 100 most recent palletes
+        this.settings.colorHistory = this.settings.colorHistory.slice(0, 100);
+        this.settings.colorHistory.unshift(palette);
       } else {
-        this.settings.customColors.unshift(newPallete);
+        this.settings.colorHistory.unshift(palette);
       }
+    },
+    undoColor() {
+      this.settings.colorHistory.shift();
     },
     randomColor() {
       // Returns a random RGBA formatted for CSS
@@ -251,10 +258,7 @@ export default {
   flex: 0 2rem;
 }
 
-
 /* typelist */
-
-.typelist {}
 
 .typelist {
   padding: 0;
@@ -295,8 +299,4 @@ export default {
   background-color: var(--text-color);
   transition: .1s color, .1s background-color;
 }
-
-
 </style>
-
-

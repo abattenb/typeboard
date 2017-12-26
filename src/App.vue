@@ -1,7 +1,6 @@
 <template>
   <div 
     id="app"
-    :class="currentTheme"
     :style="fullStyles"
     :pro-mode="isProMode">
     <Sidebar :settings="settings" @reset="resetSettings"/>
@@ -33,7 +32,7 @@ const defaultSettings = {
   italics: false,
   sampleText: 'Sphinx of black quartz, judge my vow.',
   proMode: false,
-  customColors: '',
+  colorHistory: '',
 };
 
 export default {
@@ -68,16 +67,13 @@ export default {
     },
   },
   computed: {
-    currentTheme() {
-      return this.settings.theme;
-    },
     isProMode() {
       return this.settings.proMode;
     },
     fullStyles() {
       let colors = '';
-      for(let key in this.settings.customColors[0]) {
-        colors += `${key}: ${this.settings.customColors[0][key]};`;
+      for(let key in this.settings.colorHistory[0]) {
+        colors += `${key}: ${this.settings.colorHistory[0][key]};`;
       }
       console.log(colors);
       // colors = '--color: red';
