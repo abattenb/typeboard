@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import api from 'axios';
+
 import Sidebar from './components/Sidebar';
 import SampleText from './components/SampleText';
 import Typeface from './components/Typeface';
@@ -38,9 +40,17 @@ export default {
   data() {
     return {
       settings: '',
+      google_api: 'https://www.googleapis.com/webfonts/v1/webfonts?key=',
+      google_api_key: process.env.GOOGLE_API_KEY,
     };
   },
   created() {
+    console.log(process.env.GOOGLE_API_KEY);
+
+    api.get(`${this.google_api}${this.google_api_key}`)
+      .then(result => console.log(result))
+      .catch(error => console.log(error));
+
     if (localStorage.getItem('settings') !== null) {
       this.settings = JSON.parse(localStorage.getItem('settings'));
     } else {
