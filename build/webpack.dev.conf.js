@@ -48,6 +48,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'index.html',
+      favicon: 'src/assets/favicon-16x16-dev.png',
       inject: true
     }),
   ]
