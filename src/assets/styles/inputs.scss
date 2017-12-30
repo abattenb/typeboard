@@ -2,7 +2,6 @@
   Buttons
   ==========================================================================  */
 
-
 button, .button {
   display: flex;
   font-size: 1rem;
@@ -12,40 +11,42 @@ button, .button {
   border: .1rem solid var(--text-color);
   color: var(--text-color);
   transition: .1s background-color, .1s color;
-}
 
-button:hover, button:focus, .button:hover, .button:focus {
-  cursor: pointer;
-  background-color: var(--text-color);
-  color: var(--background-color);
-  transition: .1s background-color, .1s color;
-}
+  &:hover,
+  &:focus {
+    cursor: pointer;
+    background-color: var(--text-color);
+    color: var(--background-color);
+    transition: .1s background-color, .1s color;
 
-button:hover svg, button:focus svg, .button:hover svg, .button:focus svg {
-  fill: var(--background-color);
-  transition: .1s background-color, .1s color;
-}
+    svg {
+      fill: var(--background-color);
+      transition: .1s background-color, .1s color;
+    }
+  }
 
-button:active, .button:active {
-  background-color: var(--accent-color);
-  transition: .1s background-color, .1s color;
-}
+  &:active {
+    background-color: var(--accent-color);
+    transition: .1s background-color, .1s color;
+  }
 
-button svg, .button svg {
-  height: 1rem;
-  fill: var(--text-color);
-  margin-right: .5rem;
-  align-self: center;
-}
+  svg {
+    height: 1rem;
+    fill: var(--text-color);
+    margin-right: .5rem;
+    align-self: center;
+  }
 
-button.disabled, button[disabled] {
-  border-color: var(--accent-color);
-  color: var(--accent-color);
-  pointer-events: none;
-}
-
-button .disabled svg, button[disabled] svg {
-  fill: var(--accent-color);
+  &.disabled,
+  &[disabled] {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    pointer-events: none;
+  
+    svg {
+      fill: var(--accent-color);
+    }
+  } 
 }
 
 /*==========================================================================

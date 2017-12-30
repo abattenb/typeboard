@@ -1,0 +1,97 @@
+/*==========================================================================
+  Pro Mode
+  ==========================================================================  */
+
+[pro-mode="true"] {
+  h2 {
+    display: none;
+  }
+
+  hr {
+    margin: .5rem 0;
+  }
+
+  .typeboard_controls {
+    .control_addon {
+      display: flex;
+    }
+
+    .control_addon button {
+      margin-left: .25rem;
+    }
+
+    .control_addon button svg {
+      margin: 0;
+    }
+
+    .control_addon button span {
+      display: none;
+    }
+
+    input, 
+    select {
+      margin: 0rem;
+    }
+
+    #undo_colors {
+      display: flex;
+    }
+  }
+
+  footer {
+    display: none;
+  }
+
+  #text_board {
+    margin: .5rem;
+  }
+
+  #text_board pre {
+    margin: 0rem;
+  }
+
+  textarea {
+    margin: 0rem;
+  }
+
+  #tabs {
+    margin: 0.25rem 0.5rem 0 .5rem;
+  }
+
+  .type_column .charmap {
+    padding: 0 .25rem;
+  }
+
+}
+
+
+@media (min-width: 45em) {
+  [pro-mode="true"] {
+    .sub_header {
+      display: none;
+    }
+    .logo {
+      width: 1.5rem;
+      margin-right: 0.7rem;
+    }
+    h1 {
+      font-size: 1.1rem;
+    }
+    aside {
+      padding: .5rem;
+    }
+    .typeboard_controls input[type=range] {
+      margin: .5rem 0;
+    }
+    #type_list li {
+      height: 1.5rem;
+    }
+    #type_list button {
+      height: 1.5rem;
+      width: 1.5rem;
+    }
+    .typeboard_controls input, .typeboard_controls select {
+      padding: 0;
+    }
+  }
+}
