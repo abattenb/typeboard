@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "v-autocomplete": "^1.8.1",
     "vue": "^2.5.2"
   },
   "devDependencies": {

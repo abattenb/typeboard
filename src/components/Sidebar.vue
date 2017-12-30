@@ -78,8 +78,18 @@
 
     <!-- Type List -->
     <h2>Type List</h2>
+
+    <v-autocomplete 
+      :items="items"
+      :component-item="template"
+      :wait="0"
+      :min-len="2"
+      :get-label="getLabel" 
+      @update-items="updateItems"/>
+
+
     <div class="">
-      <input type="text" class="button" placeholder="Google Font Search">
+      <input type="text" id="typeDropdown" class="button" placeholder="Google Font Search">
       <button type="button" title="Adds a random Google typeface">
         <svg xmlns="http://www.w3.org/2000/svg" height="100" viewBox="0 0 100 100"><path d="M14 0c1 2 1 4 2 6 2 1 4 1 6 2 -2 1-4 1-6 2 -1 2-1 4-2 6 -1-2-1-4-2-6C10 9 8 8 6 8c2-1 4-1 6-2C13 4 13 2 14 0z"/><path d="M53 0c1 2 1 4 2 6 2 1 4 1 6 2C59 8 57 9 55 10c-1 2-1 4-2 6 -1-2-1-4-2-6 -2-1-4-1-6-2 2-1 4-1 6-2C52 4 53 2 53 0z"/><path d="M82 2c3 0 4 2 6 3 3 3 5 5 8 8 1 1 3 3 3 5 0 3-3 4-4 6 -24 24-48 48-72 72 -2 2-4 5-6 4 -2 0-3-2-4-3C8 94 6 92 3 89c-1-1-3-3-3-5 0-2 3-4 4-6C28 54 52 31 76 7 78 5 80 2 82 2zM83 11c-6 6-12 12-18 18 1 2 3 3 5 5 0 0 1 2 2 2 0 0 2-2 2-2C79 28 84 22 89 17 87 15 85 13 83 11z"/><path d="M34 4c1 4 3 8 4 12 4 1 8 2 12 4 -4 1-8 2-12 4 -1 4-2 8-4 12 -1-4-2-8-4-12 -4-1-8-2-12-4 4-1 8-2 12-3C31 12 32 8 34 4z"/><path d="M92 39c1 2 1 4 2 6 2 1 4 1 6 2 -2 0-4 1-6 2 -1 2-1 4-2 6 -1-2-1-4-2-6 -2-1-4-1-6-2 2-1 4-1 6-2C91 43 92 41 92 39z"/></svg>
         <span>Random Typeface</span>
@@ -140,7 +150,6 @@
 
     <hr>
 
-
     <!-- Settings -->
     <h2>Settings</h2>
     <div class="settings">
@@ -179,18 +188,22 @@
 <script>
 
 import themes from '@/assets/styles/themes';
+import ItemTemplate from './ItemTemplate';
 
 /* eslint-disable no-console */
 
 export default {
   name: 'Sidebar',
-  props: [
-    'settings',
-  ],
+  props: {
+    settings: Object,
+    fontList: Array,
+  },
   data() {
     return {
       themes,
       selectedTheme: '',
+      items: [],
+      template: ItemTemplate,
     };
   },
   methods: {
@@ -237,76 +250,104 @@ export default {
       const blue = Math.floor(Math.random() * 257);
       return `rgba(${red},${green},${blue}, 0.996)`;
     },
+    getLabel(item) {
+      return item.family;
+    },
+    updateItems(text) {
+      /* eslint-disable arrow-body-style */
+      this.items = this.fontList.filter((item) => {
+        return (new RegExp(text.toLowerCase())).test(item.family.toLowerCase());
+      });
+    },
   },
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 /* Typeface Controls */
 
-.typefaceControls .control {
-  display: flex;
-  margin-bottom: .25rem;
-}
+.typefaceControls {
+  .control {
+    display: flex;
+    margin-bottom: .25rem;
+  }
 
-.typefaceControls .control > * {
-  align-self: center;
-  flex: 1;
-}
+  .control > * {
+    align-self: center;
+    flex: 1;
+  }
 
-.typefaceControls .control > [type=number] {
-  flex: 0 3.5rem;
-  text-align: right;
-  margin: 0;
-  margin-right: -.75rem;
-  padding: .25rem;
-  border: none;
-  z-index: 1;
-}
-.typefaceControls .control > div {
-  flex: 0 2rem;
+  .control > [type=number] {
+    flex: 0 3.5rem;
+    text-align: right;
+    margin: 0;
+    margin-right: -.75rem;
+    padding: .25rem;
+    border: none;
+    z-index: 1;
+  }
+
+  .control > div {
+    flex: 0 2rem;
+  }
 }
 
 /* typelist */
 
 .typelist {
   padding: 0;
+
+  & > div {
+    display: flex;
+    align-items: center;
+    border-bottom: .1rem solid var(--accent-color);
+    list-style-type: none;
+  }
+
+  & > div:first-of-type {
+    border-top: .1rem solid var(--accent-color);
+  }
+
+  button {
+    font-family: Arial;
+    justify-content: center;
+    height: 2rem;
+    width: 2rem;
+    text-align: center;
+    margin-left: auto;
+    font-size: 1.2rem;
+    border: none;
+    box-shadow: none;
+    transform: translateY(0rem);
+    color: var(--text-color);
+    background-color: transparent;
+    transition: .1s color, .1s background-color;
+  }
+
+  button:hover,
+  button:focus,
+  button:active {
+    transform: translateY(0rem);
+    color: var(--background-color);
+    background-color: var(--text-color);
+    transition: .1s color, .1s background-color;
+  }
 }
 
-.typelist > div {
-  display: flex;
-  align-items: center;
-  border-bottom: .1rem solid var(--accent-color);
-  list-style-type: none;
+.v-autocomplete .v-autocomplete-input {
+  background: red;
 }
 
-.typelist > div:first-of-type {
-  border-top: .1rem solid var(--accent-color);
+.v-autocomplete-list {
+  position: absolute;
+  height: 14.6rem;
+  overflow-y: scroll;
+  background: white;
+  width: 89%;
+  border: 1px solid red;
+  transform: translateY(2rem);
+  z-index: 1;
 }
 
-.typelist button {
-  font-family: Arial;
-  justify-content: center;
-  height: 2rem;
-  width: 2rem;
-  text-align: center;
-  margin-left: auto;
-  font-size: 1.2rem;
-  border: none;
-  box-shadow: none;
-  transform: translateY(0rem);
-  color: var(--text-color);
-  background-color: transparent;
-  transition: .1s color, .1s background-color;
-}
-
-.typelist button:hover,
-.typelist button:focus,
-.typelist button:active {
-  transform: translateY(0rem);
-  color: var(--background-color);
-  background-color: var(--text-color);
-  transition: .1s color, .1s background-color;
-}
 </style>

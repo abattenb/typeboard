@@ -3,7 +3,10 @@
     id="app"
     :style="fullStyles"
     :pro-mode="isProMode">
-    <Sidebar :settings="settings" @reset="resetSettings"/>
+    <Sidebar 
+      :settings="settings" 
+      :fontList="fontList"
+      @reset="resetSettings"/>
     <main>
       <SampleText :settings="settings" />
       <div class="characterBoard">
@@ -40,15 +43,14 @@ export default {
   data() {
     return {
       settings: '',
-      google_api: 'https://www.googleapis.com/webfonts/v1/webfonts?key=',
-      google_api_key: process.env.GOOGLE_API_KEY,
+      fontList: [],
+      googleFontUrl: 'https://www.googleapis.com/webfonts/v1/webfonts?key=',
     };
   },
   created() {
-    console.log(process.env.GOOGLE_API_KEY);
-
-    api.get(`${this.google_api}${this.google_api_key}`)
-      .then(result => console.log(result))
+    // TODO: Cache result in localStorage
+    api.get(`${this.googleFontUrl}${process.env.GOOGLE_API_KEY}`)
+      .then(result => this.fontList = result.data.items)
       .catch(error => console.log(error));
 
     if (localStorage.getItem('settings') !== null) {
