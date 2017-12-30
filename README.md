@@ -2,7 +2,7 @@
 
 > A tool for comparing typefaces and glyphs.
 
-[Link](https://abattenb.github.io/typeboard/)
+[https://abattenb.github.io/typeboard](https://abattenb.github.io/typeboard/)
 
 ## Features
 
@@ -52,17 +52,15 @@ npm run build --report
 If you want to run a local instance of Typeboard, you're going to need to add
 your own local api keys for Google Fonts API.
 
-* [Google API keys](https://console.developers.google.com/apis/)
+* Go to [Google API keys](https://console.developers.google.com/apis/) and apply for a Google Fonts API key
 * Create a local key with no restrictions
-* Add the path `config/localkeys.js` to your .gitignore
+* __Add the path `config/localkeys.js` to your .gitignore__
 * Create a new file `localkeys.js` in `config`
-* Add the path `config/localkeys.js` to your .gitignore (just checking..)
+* **Add the path `config/localkeys.js` to your .gitignore (just checking..)**
 * In `localkeys.js` add the follow code where 'XXXX-XXXX' is your local key:
-
 ``` javascript
 module.exports = {
   'googleFont': 'XXXX-XXXX'
 };
-
 ```
-
+* Rebuild project
