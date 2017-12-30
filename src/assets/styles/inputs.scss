@@ -10,7 +10,7 @@ button, .button {
   padding: .2rem .5rem;
   border: .1rem solid var(--text-color);
   color: var(--text-color);
-  transition: .1s background-color, .1s color;
+  // transition: .1s background-color, .1s color;
 
   &:hover,
   &:focus {

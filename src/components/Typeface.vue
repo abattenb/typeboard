@@ -673,12 +673,7 @@
 
 .typeColumn .charmap {
   padding: 0 1rem;
-  box-shadow: 1px 0px 0px var(--accent-color);
-}
-
-.typeColumn:last-of-type .charmap {
-  margin-right: 0;
-  box-shadow: none;
+  box-shadow: .1rem 0 0 var(--accent-color);
 }
 
 .typeColumn .charmap {

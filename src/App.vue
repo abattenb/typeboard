@@ -7,7 +7,6 @@
     <main>
       <SampleText :settings="settings" />
       <div class="characterBoard">
-        <!-- TODO: Add Typeboarc component to columns -->
         <div v-for="(typeface, $index) in settings.selectedType" :key="$index">
           <Typeface :typeface="typeface"/>
         </div>
@@ -23,7 +22,7 @@ import Typeface from './components/Typeface';
 
 /* eslint-disable */
 
-const defaultSettings = {
+const defaultSettings = Object.freeze({
   selectedType: ['Arial', 'Times New Roman', 'Courier'],
   fontSize: '1',
   fontWeight: '400',
@@ -32,7 +31,7 @@ const defaultSettings = {
   sampleText: 'Sphinx of black quartz, judge my vow.',
   proMode: false,
   colorHistory: '',
-};
+});
 
 export default {
   name: 'app',
@@ -45,7 +44,7 @@ export default {
     if (localStorage.getItem('settings') !== null) {
       this.settings = JSON.parse(localStorage.getItem('settings'));
     } else {
-      this.settings = defaultSettings;
+      this.settings = this.deepCopy(defaultSettings);
     }
   },
   watch: {
@@ -57,13 +56,14 @@ export default {
     },
   },
   methods: {
+    deepCopy: object => JSON.parse(JSON.stringify(object)),
     saveSettings() {
       localStorage.setItem('settings', JSON.stringify(this.settings));
     },
     resetSettings() {
+      console.log('Settings Reset');
       localStorage.removeItem('settings');
-      this.settings = defaultSettings;
-      console.log(this.settings);
+      this.settings = this.deepCopy(defaultSettings);
     },
   },
   computed: {

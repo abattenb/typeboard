@@ -106,9 +106,15 @@
       <select
         class="button"
         title="Chooses a theme"
+        v-model="selectedTheme"
         @change="addPallete">
+        <option 
+          value=""
+          selected
+          disabled>
+          Select Theme
+        </option>
         <!--Themes need to be in a optgroup-->
-        <!-- Gray/Grey is a joke :) -->
         <optgroup
           :label="type.label"
           v-for="(type, $index) in themes"
@@ -126,7 +132,7 @@
       <button type="button" title="Undo random colors" @click="undoColor">
         <svg xmlns="http://www.w3.org/2000/svg" height="100" viewBox="0 0 100 100"><path d="M28 26c2 2 3 4 5 6C35 33 41 38 36 41c-1 1-6 1-9 1 -3 0-6 0-9 0 -5 0-15 1-17-2 -2-3-1-13-1-17 0-3 0-6 0-8 0-5-1-10 4-11C7 4 9 7 11 9c2 2 3 4 5 5C25 7 34 1 48 0c20-1 36 10 44 21 4 6 8 14 9 24 1 10-1 19-5 27 -7 14-20 25-38 27 -18 2-33-5-42-14 -1-1-3-3-3-5 0-2 3-4 5-6 1-1 4-5 6-5 2 0 4 4 6 5 7 6 20 11 32 7 10-3 18-10 21-20 5-12 1-24-5-32C71 22 61 16 48 17 39 17 34 21 28 26z"/><path d="M58 30c1 10 1 22 0 32 -3 1-8 1-12 1 -4 0-9 1-12-1 -1-2-1-5 0-7 4-1 11 0 16-1 0-4 0-8 0-13 0-4-1-9 1-12C53 29 57 29 58 30z"/></svg>
       </button>
-      <button type="button" id="random_colors" title="Randomizes theme colors" @click="randomPallete">
+      <button type="button" title="Randomizes theme colors" @click="randomPallete">
         <svg xmlns="http://www.w3.org/2000/svg" height="100" viewBox="0 0 100 100"><path d="M14 0c1 2 1 4 2 6 2 1 4 1 6 2 -2 1-4 1-6 2 -1 2-1 4-2 6 -1-2-1-4-2-6C10 9 8 8 6 8c2-1 4-1 6-2C13 4 13 2 14 0z"/><path d="M53 0c1 2 1 4 2 6 2 1 4 1 6 2C59 8 57 9 55 10c-1 2-1 4-2 6 -1-2-1-4-2-6 -2-1-4-1-6-2 2-1 4-1 6-2C52 4 53 2 53 0z"/><path d="M82 2c3 0 4 2 6 3 3 3 5 5 8 8 1 1 3 3 3 5 0 3-3 4-4 6 -24 24-48 48-72 72 -2 2-4 5-6 4 -2 0-3-2-4-3C8 94 6 92 3 89c-1-1-3-3-3-5 0-2 3-4 4-6C28 54 52 31 76 7 78 5 80 2 82 2zM83 11c-6 6-12 12-18 18 1 2 3 3 5 5 0 0 1 2 2 2 0 0 2-2 2-2C79 28 84 22 89 17 87 15 85 13 83 11z"/><path d="M34 4c1 4 3 8 4 12 4 1 8 2 12 4 -4 1-8 2-12 4 -1 4-2 8-4 12 -1-4-2-8-4-12 -4-1-8-2-12-4 4-1 8-2 12-3C31 12 32 8 34 4z"/><path d="M92 39c1 2 1 4 2 6 2 1 4 1 6 2 -2 0-4 1-6 2 -1 2-1 4-2 6 -1-2-1-4-2-6 -2-1-4-1-6-2 2-1 4-1 6-2C91 43 92 41 92 39z"/></svg>
         <span>Random Palette</span>
       </button>
@@ -139,12 +145,12 @@
     <h2>Settings</h2>
     <div class="settings">
       <div>
-        <input type="checkbox" id="togglePro" class="checkbox" v-model="settings.proMode"/>
+        <input type="checkbox" class="checkbox" v-model="settings.proMode"/>
         <label for="togglePro" title="Toggles Pro Mode">
-            Pro Mode
+          Pro Mode
         </label>
       </div>
-      <button type="button" id="clearSettings" title="Resets all settings and cookies" @click="reset">
+      <button type="button" title="Resets all settings and cookies" @click="reset">
         <svg xmlns="http://www.w3.org/2000/svg" height="100" viewBox="0 0 100 100"><path d="M28 26c3 3 5 5 8 8 1 1 2 2 2 3 0 2-1 4-2 5 -2 1-5 0-8 0 -5 0-11 0-16 0 -2 0-6 0-8 0 -3-1-3-5-3-10 0-5 0-11 0-16 0-2 0-6 0-8 1-1 3-3 5-2 2 0 4 3 6 5 1 1 3 2 4 4 0 0 1 1 1 1 0 0 2-2 3-3 7-6 17-10 29-11 11 0 19 3 26 6 7 4 13 9 17 15 4 6 8 14 9 24 1 10-1 20-5 27C87 86 75 97 56 99c-10 1-20-1-27-4 -5-2-10-6-14-10 -1-1-3-3-3-5 0-1 1-2 2-3 2-2 3-3 5-5 1-1 2-2 3-2 1 0 3 2 4 3 3 3 7 6 11 8 6 3 14 4 22 1 6-2 12-5 16-10 4-4 7-10 8-17 2-16-7-28-17-34 -6-3-13-5-21-4C38 19 32 22 28 26z"/></svg>
         Reset All
       </button>
@@ -184,6 +190,7 @@ export default {
   data() {
     return {
       themes,
+      selectedTheme: '',
     };
   },
   methods: {
@@ -191,6 +198,7 @@ export default {
       this.settings.selectedType = this.settings.selectedType.filter(type => type !== typeface);
     },
     reset() {
+      this.selectedTheme = '';
       this.$emit('reset');
     },
     addPallete(event) {
@@ -203,6 +211,7 @@ export default {
         '--accent-color': this.randomColor(),
       };
       this.addColor(newPallete);
+      this.selectedTheme = '';
     },
     addColor(palette) {
       if (this.settings.colorHistory === '') {

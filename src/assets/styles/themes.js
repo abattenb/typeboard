@@ -34,7 +34,7 @@ const themes = [
       },
       {
         id: 'grey_grey',
-        name: 'Grey /',
+        name: 'Grey / Gray',
         palette: {
           '--background-color': 'rgba(248, 250, 245, 0.996)',
           '--text-color': 'rgba(100, 100, 100, 0.996)',
@@ -89,7 +89,7 @@ const themes = [
     data: [
       {
         id: 'grey_tan',
-        name: 'Grey / tan',
+        name: 'Grey / Tan',
         palette: {
           '--background-color': 'rgba(204, 200, 175, 0.996)',
           '--text-color': 'rgba(73, 71, 59, 0.996)',
