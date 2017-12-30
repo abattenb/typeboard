@@ -194,7 +194,6 @@ export default {
       this.$emit('reset');
     },
     addPallete(event) {
-      // console.log(JSON.parse(event.target.value));
       this.addColor(JSON.parse(event.target.value));
     },
     randomPallete() {
@@ -217,7 +216,9 @@ export default {
       }
     },
     undoColor() {
-      this.settings.colorHistory.shift();
+      if (this.settings.colorHistory.length > 1) {
+        this.settings.colorHistory.shift();
+      }
     },
     randomColor() {
       // Returns a random RGBA formatted for CSS

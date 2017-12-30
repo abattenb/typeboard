@@ -159,6 +159,15 @@ const themes = [
           '--accent-color': 'rgba(87, 123, 49, 0.996)',
         },
       },
+      {
+        id: 'navy_orange',
+        name: 'Navy / Orange',
+        palette: {
+          '--background-color': 'rgba(14,58,89, 0.996)',
+          '--text-color': 'rgba(82,213,188, 0.996)',
+          '--accent-color': 'rgba(225,88,2, 0.996)',
+        },
+      },
     ],
   },
 ];

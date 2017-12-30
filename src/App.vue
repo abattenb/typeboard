@@ -25,7 +25,6 @@ import Typeface from './components/Typeface';
 
 const defaultSettings = {
   selectedType: ['Arial', 'Times New Roman', 'Courier'],
-  theme: 'theme_black_white',
   fontSize: '1',
   fontWeight: '400',
   letterSpacing: '0',
@@ -64,6 +63,7 @@ export default {
     resetSettings() {
       localStorage.removeItem('settings');
       this.settings = defaultSettings;
+      console.log(this.settings);
     },
   },
   computed: {
@@ -75,9 +75,6 @@ export default {
       for(let key in this.settings.colorHistory[0]) {
         colors += `${key}: ${this.settings.colorHistory[0][key]};`;
       }
-      console.log(colors);
-      // colors = '--color: red';
-
       const italics = this.settings.italics ? 'italic' : 'normal';
       const fullStyles = `
         --column-font-size: ${this.settings.fontSize}rem;
