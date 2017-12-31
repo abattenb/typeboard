@@ -88,13 +88,13 @@ export default {
     initSettings() {
       if (localStorage.getItem('settings') !== null) {
         this.settings = JSON.parse(localStorage.getItem('settings'));
+        log('User settings loaded', 'OK');
       } else {
         this.settings = this.deepCopy(defaultSettings);
       }
-      log('User settings loaded', 'OK');
     },
     resetSettings() {
-      console.log('Settings Reset');
+      log('Settings Reset', 'OK');
       localStorage.clear();
       this.initFontList();
       this.initSettings();
