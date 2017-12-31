@@ -13,7 +13,8 @@
   "dependencies": {
     "axios": "^0.17.1",
     "v-autocomplete": "^1.8.1",
-    "vue": "^2.5.2"
+    "vue": "^2.5.2",
+    "webfontloader": "^1.6.28"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

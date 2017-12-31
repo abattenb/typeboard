@@ -188,11 +188,11 @@
 
 <script>
 
+import WebFont from 'webfontloader';
 import { log } from '@/common/utils'; // eslint-disable-line no-unused-vars
 
 import themes from '@/assets/styles/themes';
 import ItemTemplate from './ItemTemplate';
-
 
 /* eslint-disable no-console */
 
@@ -211,13 +211,25 @@ export default {
     };
   },
   methods: {
-    addTypeface(item) {
-      this.settings.selectedType.push(item);
+    addTypeface(typeface) {
+      if (!this.settings.selectedType.includes(typeface)) {
+        this.getGoogleFont(typeface);
+        this.settings.selectedType.push(typeface);
+      }
     },
     addRandomTypeface() {
       // Rolls a random position in the array
       const randomPosition = Math.floor(Math.random() * this.fontList.length);
-      this.settings.selectedType.push(this.fontList[randomPosition]);
+      const typeface = this.fontList[randomPosition];
+      this.addTypeface(typeface);
+    },
+    getGoogleFont(typeface) {
+      const completeFamily = `${typeface}:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i`;
+      WebFont.load({
+        google: {
+          families: [completeFamily],
+        },
+      });
     },
     removeType(typeface) {
       this.settings.selectedType = this.settings.selectedType.filter(type => type !== typeface);
