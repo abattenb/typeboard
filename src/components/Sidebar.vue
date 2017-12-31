@@ -156,7 +156,7 @@
     <h2>Settings</h2>
     <div class="settings">
       <div>
-        <input type="checkbox" class="checkbox" v-model="settings.proMode"/>
+        <input type="checkbox" id="togglePro" class="checkbox" v-model="settings.proMode"/>
         <label for="togglePro" title="Toggles Pro Mode">
           Pro Mode
         </label>
