@@ -201,6 +201,7 @@ export default {
   props: {
     settings: Object,
     fontList: Array,
+    localType: Array,
   },
   data() {
     return {
@@ -209,6 +210,11 @@ export default {
       items: [],
       template: ItemTemplate,
     };
+  },
+  created() {
+    this.settings.selectedType.forEach((typeface) => {
+      this.getGoogleFont(typeface);
+    });
   },
   methods: {
     addTypeface(typeface) {
@@ -224,12 +230,17 @@ export default {
       this.addTypeface(typeface);
     },
     getGoogleFont(typeface) {
-      const completeFamily = `${typeface}:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i`;
-      WebFont.load({
-        google: {
-          families: [completeFamily],
-        },
-      });
+      // Checks against a preset list of local typefaces to prevent additional
+      // API calls and errors from not finding the specific typeface.
+      if (!this.localType.includes(typeface)) {
+        // Attempts to load all styles and weights
+        const completeFamily = `${typeface}:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i`;
+        WebFont.load({
+          google: {
+            families: [completeFamily],
+          },
+        });
+      }
     },
     removeType(typeface) {
       this.settings.selectedType = this.settings.selectedType.filter(type => type !== typeface);

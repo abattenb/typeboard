@@ -6,6 +6,7 @@
     <Sidebar 
       :settings="settings" 
       :fontList="fontList"
+      :localType="localType"
       @reset="resetSettings"/>
     <main>
       <SampleText :settings="settings" />
@@ -27,6 +28,7 @@ import SampleText from './components/SampleText';
 import Typeface from './components/Typeface';
 
 /* eslint-disable */
+const localType = ['Arial', 'Times New Roman', 'Courier'];
 
 const defaultSettings = Object.freeze({
   selectedType: ['Arial', 'Times New Roman', 'Courier'],
@@ -44,6 +46,7 @@ export default {
   data() {
     return {
       settings: '',
+      localType: localType,
       fontList: [],
       googleFontUrl: 'https://www.googleapis.com/webfonts/v1/webfonts?key=',
     };
