@@ -253,16 +253,16 @@ export default {
       return `rgba(${red},${green},${blue}, 0.996)`;
     },
     getLabel(item) {
-      return item.family;
+      return item;
     },
     updateItems(text) {
       /* eslint-disable arrow-body-style */
       this.items = this.fontList.filter((item) => {
-        return (new RegExp(text.toLowerCase())).test(item.family.toLowerCase());
+        return (new RegExp(text.toLowerCase())).test(item.toLowerCase());
       });
     },
     itemSelected(item) {
-      console.log('Selected item!', item.family);
+      console.log('Selected item!', item);
     },
   },
 };

@@ -48,16 +48,8 @@ export default {
     };
   },
   created() {
-    // TODO: Cache result in localStorage
-    api.get(`${this.googleFontUrl}${process.env.GOOGLE_API_KEY}`)
-      .then(result => this.fontList = result.data.items)
-      .catch(error => console.log(error));
-
-    if (localStorage.getItem('settings') !== null) {
-      this.settings = JSON.parse(localStorage.getItem('settings'));
-    } else {
-      this.settings = this.deepCopy(defaultSettings);
-    }
+    this.initFontList();
+    this.initSettings();
   },
   watch: {
     settings: {
@@ -72,10 +64,37 @@ export default {
     saveSettings() {
       localStorage.setItem('settings', JSON.stringify(this.settings));
     },
+    initFontList() {
+      // Check if fontListCache in localStorage exists
+      if (localStorage.getItem('fontListCache') !== null && Date.now() <= localStorage.getItem('fontsExpire')) {
+        // Load font list
+        this.fontList = JSON.parse(localStorage.getItem('fontListCache'));
+      } else {
+        // Fetch from Google Fonts API
+        api.get(`${this.googleFontUrl}${process.env.GOOGLE_API_KEY}`)
+          .then(result => {
+            // Strip just the font names
+            this.fontList = result.data.items.map(x => x.family);
+            // Cache font list in localStorage
+            localStorage.setItem('fontListCache', JSON.stringify(this.fontList));
+            // Set an expiry 1 day in the future
+            localStorage.setItem('fontsExpire', (Date.now() + 86400000));
+          })
+          .catch(error => console.log(error));
+      }
+    },
+    initSettings() {
+      if (localStorage.getItem('settings') !== null) {
+        this.settings = JSON.parse(localStorage.getItem('settings'));
+      } else {
+        this.settings = this.deepCopy(defaultSettings);
+      }
+    },
     resetSettings() {
       console.log('Settings Reset');
-      localStorage.removeItem('settings');
-      this.settings = this.deepCopy(defaultSettings);
+      localStorage.clear();
+      this.initFontList();
+      this.initSettings();
     },
   },
   computed: {

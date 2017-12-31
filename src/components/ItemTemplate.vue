@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ item.family }}
+    {{ item }}
   </div>
 </template>
 
