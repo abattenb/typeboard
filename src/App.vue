@@ -20,6 +20,7 @@
 
 <script>
 import api from 'axios';
+import { log } from './common/utils';
 
 import Sidebar from './components/Sidebar';
 import SampleText from './components/SampleText';
@@ -69,6 +70,7 @@ export default {
       if (localStorage.getItem('fontListCache') !== null && Date.now() <= localStorage.getItem('fontsExpire')) {
         // Load font list
         this.fontList = JSON.parse(localStorage.getItem('fontListCache'));
+        log('Font cache loaded', 'OK');
       } else {
         // Fetch from Google Fonts API
         api.get(`${this.googleFontUrl}${process.env.GOOGLE_API_KEY}`)
@@ -89,6 +91,7 @@ export default {
       } else {
         this.settings = this.deepCopy(defaultSettings);
       }
+      log('User settings loaded', 'OK');
     },
     resetSettings() {
       console.log('Settings Reset');

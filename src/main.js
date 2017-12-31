@@ -5,22 +5,19 @@ import Autocomplete from 'v-autocomplete';
 
 import '@/assets/styles/styles.scss';
 import App from './App';
+import { logo } from './common/utils';
 
 Vue.use(Autocomplete);
 
 Vue.config.productionTip = false;
 
+// Show logo
+logo();
+
 /* eslint-disable no-new */
+
 new Vue({
   el: '#app',
   template: '<App/>',
   components: { App },
 });
-
-/* eslint-disable no-console */
-
-console.log(`%c                  /)              /)'
-_/_      __   _  (/_ __ __  __  _(/ 
-(__(_/_ /_)__(/_/_) (_)(_(_/ (_(_(_ 
-  .-/.-/                            
- (_/(_/                             `, 'color: white');
