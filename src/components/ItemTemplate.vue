@@ -12,15 +12,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-div {
-  transition: none;
-}
-div:hover {
-  cursor: pointer;
-  color: var(--background-color);
-  background: var(--text-color);
-  transition: none;
-}
-</style>

@@ -79,17 +79,19 @@
     <!-- Type List -->
     <h2>Type List</h2>
 
-    <v-autocomplete 
-      :items="items"
-      :component-item="template"
-      :wait="0"
-      :min-len="2"
-      :get-label="getLabel" 
-      @update-items="updateItems"/>
-
 
     <div class="">
-      <input type="text" id="typeDropdown" class="button" placeholder="Google Font Search">
+
+      <v-autocomplete 
+        :items="items"
+        :component-item="template"
+        :wait="0"
+        :min-len="2"
+        :get-label="getLabel"
+        :input-attrs="{placeholder: 'Google Font Search'}"
+        @item-selected="itemSelected"
+        @update-items="updateItems"/>
+
       <button type="button" title="Adds a random Google typeface">
         <svg xmlns="http://www.w3.org/2000/svg" height="100" viewBox="0 0 100 100"><path d="M14 0c1 2 1 4 2 6 2 1 4 1 6 2 -2 1-4 1-6 2 -1 2-1 4-2 6 -1-2-1-4-2-6C10 9 8 8 6 8c2-1 4-1 6-2C13 4 13 2 14 0z"/><path d="M53 0c1 2 1 4 2 6 2 1 4 1 6 2C59 8 57 9 55 10c-1 2-1 4-2 6 -1-2-1-4-2-6 -2-1-4-1-6-2 2-1 4-1 6-2C52 4 53 2 53 0z"/><path d="M82 2c3 0 4 2 6 3 3 3 5 5 8 8 1 1 3 3 3 5 0 3-3 4-4 6 -24 24-48 48-72 72 -2 2-4 5-6 4 -2 0-3-2-4-3C8 94 6 92 3 89c-1-1-3-3-3-5 0-2 3-4 4-6C28 54 52 31 76 7 78 5 80 2 82 2zM83 11c-6 6-12 12-18 18 1 2 3 3 5 5 0 0 1 2 2 2 0 0 2-2 2-2C79 28 84 22 89 17 87 15 85 13 83 11z"/><path d="M34 4c1 4 3 8 4 12 4 1 8 2 12 4 -4 1-8 2-12 4 -1 4-2 8-4 12 -1-4-2-8-4-12 -4-1-8-2-12-4 4-1 8-2 12-3C31 12 32 8 34 4z"/><path d="M92 39c1 2 1 4 2 6 2 1 4 1 6 2 -2 0-4 1-6 2 -1 2-1 4-2 6 -1-2-1-4-2-6 -2-1-4-1-6-2 2-1 4-1 6-2C91 43 92 41 92 39z"/></svg>
         <span>Random Typeface</span>
@@ -259,6 +261,9 @@ export default {
         return (new RegExp(text.toLowerCase())).test(item.family.toLowerCase());
       });
     },
+    itemSelected(item) {
+      console.log('Selected item!', item.family);
+    },
   },
 };
 </script>
@@ -335,19 +340,5 @@ export default {
   }
 }
 
-.v-autocomplete .v-autocomplete-input {
-  background: red;
-}
-
-.v-autocomplete-list {
-  position: absolute;
-  height: 14.6rem;
-  overflow-y: scroll;
-  background: white;
-  width: 89%;
-  border: 1px solid red;
-  transform: translateY(2rem);
-  z-index: 1;
-}
 
 </style>
