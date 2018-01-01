@@ -39,21 +39,6 @@
       <div class="control">
         <input
           type="range"
-          value="400"
-          min="100"
-          max="900"
-          step="100"
-          title="Adjust type weight"
-          v-model="settings.fontWeight">
-          <input type="number" v-model="settings.fontWeight">
-          <div>
-            &nbsp;
-          </div>
-      </div>
-
-      <div class="control">
-        <input
-          type="range"
           value="0"
           min="-1.5"
           max="5"
@@ -63,6 +48,21 @@
           <input type="number" v-model="settings.letterSpacing">
           <div>
             rem
+          </div>
+      </div>
+
+      <div class="control">
+        <input
+          type="range"
+          value="400"
+          min="100"
+          max="900"
+          step="100"
+          title="Adjust type weight"
+          v-model="settings.fontWeight">
+          <input type="number" v-model="settings.fontWeight">
+          <div>
+            &nbsp;
           </div>
       </div>
 
@@ -82,14 +82,17 @@
 
     <div class="">
 
-      <v-autocomplete 
+      <v-autocomplete
+        id="search"
         :items="items"
         :component-item="template"
         :wait="0"
         :min-len="2"
-        :input-attrs="{placeholder: 'Google Font Search'}"
+        :input-attrs="{placeholder: 'Google Font Search', autofocus: true}"
+        v-model= "search"
         @item-selected="addTypeface"
         @update-items="updateItems"/>
+
 
       <button type="button" title="Adds a random Google typeface" @click="addRandomTypeface">
         <svg xmlns="http://www.w3.org/2000/svg" height="100" viewBox="0 0 100 100"><path d="M14 0c1 2 1 4 2 6 2 1 4 1 6 2 -2 1-4 1-6 2 -1 2-1 4-2 6 -1-2-1-4-2-6C10 9 8 8 6 8c2-1 4-1 6-2C13 4 13 2 14 0z"/><path d="M53 0c1 2 1 4 2 6 2 1 4 1 6 2C59 8 57 9 55 10c-1 2-1 4-2 6 -1-2-1-4-2-6 -2-1-4-1-6-2 2-1 4-1 6-2C52 4 53 2 53 0z"/><path d="M82 2c3 0 4 2 6 3 3 3 5 5 8 8 1 1 3 3 3 5 0 3-3 4-4 6 -24 24-48 48-72 72 -2 2-4 5-6 4 -2 0-3-2-4-3C8 94 6 92 3 89c-1-1-3-3-3-5 0-2 3-4 4-6C28 54 52 31 76 7 78 5 80 2 82 2zM83 11c-6 6-12 12-18 18 1 2 3 3 5 5 0 0 1 2 2 2 0 0 2-2 2-2C79 28 84 22 89 17 87 15 85 13 83 11z"/><path d="M34 4c1 4 3 8 4 12 4 1 8 2 12 4 -4 1-8 2-12 4 -1 4-2 8-4 12 -1-4-2-8-4-12 -4-1-8-2-12-4 4-1 8-2 12-3C31 12 32 8 34 4z"/><path d="M92 39c1 2 1 4 2 6 2 1 4 1 6 2 -2 0-4 1-6 2 -1 2-1 4-2 6 -1-2-1-4-2-6 -2-1-4-1-6-2 2-1 4-1 6-2C91 43 92 41 92 39z"/></svg>
@@ -208,6 +211,7 @@ export default {
       themes,
       selectedTheme: '',
       items: [],
+      search: null,
       template: ItemTemplate,
     };
   },
@@ -222,6 +226,11 @@ export default {
         this.getGoogleFont(typeface);
         this.settings.selectedType.push(typeface);
       }
+      setTimeout(() => this.clearSearch(), 0);
+    },
+    clearSearch() {
+      this.search = null;
+      this.items = [];
     },
     addRandomTypeface() {
       // Rolls a random position in the array
@@ -247,6 +256,7 @@ export default {
     },
     reset() {
       this.selectedTheme = '';
+      this.clearSearch();
       this.$emit('reset');
     },
     addPallete(event) {
