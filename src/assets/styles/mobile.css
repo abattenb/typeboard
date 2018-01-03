@@ -20,7 +20,7 @@
     top: .5rem;
     right: .5rem;
   }
-  aside.open {
+  aside.menu_open {
     height: 100vh;
     overflow: auto;
     transition: .5s height;

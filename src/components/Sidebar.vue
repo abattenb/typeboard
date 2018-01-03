@@ -1,5 +1,5 @@
 <template>
-  <aside>
+  <aside :class="{'menu_open': open}">
 
     <!-- Header -->
     <svg xmlns="http://www.w3.org/2000/svg" width="100" viewBox="0 0 400 400" class="logo" shape-rendering="optimizeSpeed">
@@ -11,7 +11,7 @@
       A Google Font comparison tool
     </div>
 
-    <button class="toggle_menu toggle_top">
+    <button class="toggle_menu toggle_top" @click="open = !open">
         Menu ☰
     </button>
 
@@ -88,7 +88,7 @@
         :component-item="template"
         :wait="0"
         :min-len="2"
-        :input-attrs="{placeholder: 'Google Font Search', autofocus: true}"
+        :input-attrs="{placeholder: 'Google Font Search'}"
         v-model= "search"
         @item-selected="addTypeface"
         @update-items="updateItems"/>
@@ -169,7 +169,7 @@
       </button>
 
 
-      <button class="toggle_menu" title="Toggles mobile menu">
+      <button class="toggle_menu" title="Toggles mobile menu"  @click="open = false">
           Close ×
       </button>
     </div>
@@ -208,6 +208,7 @@ export default {
   },
   data() {
     return {
+      open: false,
       themes,
       selectedTheme: '',
       items: [],

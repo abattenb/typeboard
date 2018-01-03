@@ -37,7 +37,7 @@ You just might find your new favorite combination, have fun with it!
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
+# serve with hot reload at localhost:1200
 npm run dev
 
 # build for production with minification

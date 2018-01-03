@@ -4,6 +4,7 @@ import Vue from 'vue';
 import Autocomplete from 'v-autocomplete';
 
 import '@/assets/styles/styles.scss';
+import '@/assets/styles/mobile.css';
 import App from './App';
 import { logo } from './common/utils';
 
